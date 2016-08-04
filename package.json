@@ -1,0 +1,10 @@
+{
+  "name": "userflow-chrome-extension",
+  "version": "1.0.0",
+  "description": "A chrome extension to allow users to create steps to be used in E2E testing",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Brian Lincoln",
+  "license": "ISC"
+}
