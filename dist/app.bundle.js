@@ -89,12 +89,14 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function FlowManager() {
-	    return _react2.default.createElement(
-	        'div',
-	        null,
-	        'Helloooo'
-	    );
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    'Helloooo'
+	  );
 	}
+
+	_reactDom2.default.render(_react2.default.createElement(FlowManager, null), document.getElementById('content'));
 
 /***/ },
 /* 4 */
