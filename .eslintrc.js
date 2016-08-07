@@ -409,7 +409,10 @@ module.exports = {
 
   "globals": {
     "console": true,
-    "process": true
+    "process": true,
+	"React": true,
+    "chrome": true
+
   },
 
   "parserOptions": {

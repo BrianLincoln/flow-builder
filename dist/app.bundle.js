@@ -78,6 +78,8 @@
 
 	'use strict';
 
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 	var _react = __webpack_require__(4);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -86,15 +88,45 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
+	var _stepCreator = __webpack_require__(182);
+
+	var _stepCreator2 = _interopRequireDefault(_stepCreator);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function FlowManager() {
-	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    'Helloooo'
-	  );
-	}
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var FlowManager = function (_React$Component) {
+	    _inherits(FlowManager, _React$Component);
+
+	    function FlowManager() {
+	        _classCallCheck(this, FlowManager);
+
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(FlowManager).apply(this, arguments));
+	    }
+
+	    _createClass(FlowManager, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'h1',
+	                    null,
+	                    'Manage flows'
+	                ),
+	                _react2.default.createElement(_stepCreator2.default, null)
+	            );
+	        }
+	    }]);
+
+	    return FlowManager;
+	}(_react2.default.Component);
 
 	_reactDom2.default.render(_react2.default.createElement(FlowManager, null), document.getElementById('content'));
 
@@ -21534,6 +21566,174 @@
 	var ReactMount = __webpack_require__(172);
 
 	module.exports = ReactMount.renderSubtreeIntoContainer;
+
+/***/ },
+/* 180 */,
+/* 181 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(4);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var FlowResult = function FlowResult(flow) {
+	    return _react2.default.createElement(
+	        'pre',
+	        null,
+	        JSON.stringify(flow, null, 4)
+	    );
+	};
+
+	exports.default = FlowResult;
+
+/***/ },
+/* 182 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(4);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _selectStepType = __webpack_require__(183);
+
+	var _selectStepType2 = _interopRequireDefault(_selectStepType);
+
+	var _flowResult = __webpack_require__(181);
+
+	var _flowResult2 = _interopRequireDefault(_flowResult);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var flow = [{ //eventually dynamic
+	    'accountId': 'g1brqz0a54b',
+	    'actions': [{
+	        'actionType': 'pageLoad',
+	        'url': 'http://eftours.com'
+	    }, {
+	        'actionType': 'input',
+	        'inputType': 'text',
+	        'selectorType': 'class',
+	        'selectorValue': 'content-section-view-trip-input',
+	        'inputValue': '1830713AH'
+	    }, {
+	        'actionType': 'click',
+	        'selectorType': 'class',
+	        'selectorValue': 'content-section-view-trip-button'
+	    }, {
+	        'actionType': 'confirmElementExists',
+	        'selectorType': 'class',
+	        'selectorValue': 'tour-header-wrapper'
+	    }]
+	}];
+
+	var FlowCreator = function FlowCreator() {
+	    return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	            'button',
+	            { id: 'create-step', onClick: handleClick },
+	            'Add Step'
+	        ),
+	        _react2.default.createElement(_selectStepType2.default, null),
+	        _react2.default.createElement(_flowResult2.default, { flow: flow })
+	    );
+	};
+
+	var handleClick = function handleClick(e) {
+	    chrome.tabs.executeScript(null, { file: 'src/browser-scripts/selection.js' });
+	    console.log(e);
+	};
+
+	exports.default = FlowCreator;
+
+/***/ },
+/* 183 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(4);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var SelectStepType = function SelectStepType() {
+	    return _react2.default.createElement(
+	        "div",
+	        null,
+	        _react2.default.createElement(
+	            "h3",
+	            null,
+	            "What should happen?"
+	        ),
+	        _react2.default.createElement(
+	            "ul",
+	            null,
+	            _react2.default.createElement(
+	                "li",
+	                null,
+	                _react2.default.createElement(
+	                    "label",
+	                    null,
+	                    "Load a page"
+	                ),
+	                _react2.default.createElement("input", { name: "step-type", type: "radio", value: "pageLoad" })
+	            ),
+	            _react2.default.createElement(
+	                "li",
+	                null,
+	                _react2.default.createElement(
+	                    "label",
+	                    null,
+	                    "Edit a field"
+	                ),
+	                _react2.default.createElement("input", { name: "step-type", type: "radio", value: "input" })
+	            ),
+	            _react2.default.createElement(
+	                "li",
+	                null,
+	                _react2.default.createElement(
+	                    "label",
+	                    null,
+	                    "Click on something"
+	                ),
+	                _react2.default.createElement("input", { name: "step-type", type: "radio", value: "click" })
+	            ),
+	            _react2.default.createElement(
+	                "li",
+	                null,
+	                _react2.default.createElement(
+	                    "label",
+	                    null,
+	                    "Check if an element exists"
+	                ),
+	                _react2.default.createElement("input", { name: "step-type", type: "radio", value: "confirmElementExists" })
+	            )
+	        )
+	    );
+	};
+
+	exports.default = SelectStepType;
 
 /***/ }
 /******/ ]);
