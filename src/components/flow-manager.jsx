@@ -1,14 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import StepCreator from './step-creator/step-creator';
+import ListFlows from './list-flows/list-flows';
+import FlowCreator from './flow-creator/step-creator';
 
 class FlowManager extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            showFlowCreator: false,
+            mode: 'list-flows'
+        };
+    }
     render() {
         return (
-            <div>
-                <h1>Manage flows</h1>
-                <StepCreator />
-            </div>
+            this.state.showFlowCreator === true ?
+                <FlowCreator /> :
+                <ListFlows />
         );
     }
 }

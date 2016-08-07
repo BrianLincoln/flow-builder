@@ -88,7 +88,11 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _stepCreator = __webpack_require__(182);
+	var _listFlows = __webpack_require__(180);
+
+	var _listFlows2 = _interopRequireDefault(_listFlows);
+
+	var _stepCreator = __webpack_require__(181);
 
 	var _stepCreator2 = _interopRequireDefault(_stepCreator);
 
@@ -103,25 +107,21 @@
 	var FlowManager = function (_React$Component) {
 	    _inherits(FlowManager, _React$Component);
 
-	    function FlowManager() {
+	    function FlowManager(props) {
 	        _classCallCheck(this, FlowManager);
 
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(FlowManager).apply(this, arguments));
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(FlowManager).call(this, props));
+
+	        _this.state = {
+	            showFlowCreator: false
+	        };
+	        return _this;
 	    }
 
 	    _createClass(FlowManager, [{
 	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                _react2.default.createElement(
-	                    'h1',
-	                    null,
-	                    'Manage flows'
-	                ),
-	                _react2.default.createElement(_stepCreator2.default, null)
-	            );
+	            return this.state.showFlowCreator === true ? _react2.default.createElement(_stepCreator2.default, null) : _react2.default.createElement(_listFlows2.default, null);
 	        }
 	    }]);
 
@@ -21568,8 +21568,7 @@
 	module.exports = ReactMount.renderSubtreeIntoContainer;
 
 /***/ },
-/* 180 */,
-/* 181 */
+/* 180 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21584,18 +21583,46 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var FlowResult = function FlowResult(flow) {
+	var ListFlows = function ListFlows() {
 	    return _react2.default.createElement(
-	        'pre',
+	        'div',
 	        null,
-	        JSON.stringify(flow, null, 4)
+	        _react2.default.createElement(
+	            'h2',
+	            null,
+	            'Flows'
+	        ),
+	        _react2.default.createElement(
+	            'ul',
+	            null,
+	            _react2.default.createElement(
+	                'li',
+	                null,
+	                'Flow 1 -- search'
+	            ),
+	            _react2.default.createElement(
+	                'li',
+	                null,
+	                'Flow 2 -- lead form'
+	            ),
+	            _react2.default.createElement(
+	                'li',
+	                null,
+	                'Flow 2 -- lead form'
+	            ),
+	            _react2.default.createElement(
+	                'li',
+	                null,
+	                'Flow 2 -- lead form'
+	            )
+	        )
 	    );
 	};
 
-	exports.default = FlowResult;
+	exports.default = ListFlows;
 
 /***/ },
-/* 182 */
+/* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21608,11 +21635,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _selectStepType = __webpack_require__(183);
+	var _selectStepType = __webpack_require__(182);
 
 	var _selectStepType2 = _interopRequireDefault(_selectStepType);
 
-	var _flowResult = __webpack_require__(181);
+	var _flowResult = __webpack_require__(183);
 
 	var _flowResult2 = _interopRequireDefault(_flowResult);
 
@@ -21662,7 +21689,7 @@
 	exports.default = FlowCreator;
 
 /***/ },
-/* 183 */
+/* 182 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -21734,6 +21761,32 @@
 	};
 
 	exports.default = SelectStepType;
+
+/***/ },
+/* 183 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(4);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var FlowResult = function FlowResult(flow) {
+	    return _react2.default.createElement(
+	        'pre',
+	        null,
+	        JSON.stringify(flow, null, 4)
+	    );
+	};
+
+	exports.default = FlowResult;
 
 /***/ }
 /******/ ]);

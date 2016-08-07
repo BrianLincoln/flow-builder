@@ -1,6 +1,6 @@
 import React from 'react';
 import SelectStepType from './select-step-type';
-import FlowResult from '../flow-result';
+import FlowResult from './flow-result';
 
 let flow = [
     {  //eventually dynamic
