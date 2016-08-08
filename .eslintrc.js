@@ -77,12 +77,6 @@ module.exports = {
       }
     ],
 
-    // style
-    "linebreak-style": [
-      "error",
-      "windows"
-    ],
-
     // error prevention
     // http://eslint.org/docs/rules/no-case-declarations.html
     "no-case-declarations": [
@@ -411,10 +405,12 @@ module.exports = {
     "console": true,
     "process": true,
 	"React": true,
-    "chrome": true
+    "chrome": true,
+    "observer": true,
+    "observable": true
 
   },
-
+  "parser": "babel-eslint",
   "parserOptions": {
     "sourceType": "module"
   },
