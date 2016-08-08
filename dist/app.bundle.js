@@ -92,9 +92,13 @@
 
 	var _listFlows2 = _interopRequireDefault(_listFlows);
 
-	var _stepCreator = __webpack_require__(181);
+	var _stepCreator = __webpack_require__(182);
 
 	var _stepCreator2 = _interopRequireDefault(_stepCreator);
+
+	var _store = __webpack_require__(185);
+
+	var _store2 = _interopRequireDefault(_store);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -113,7 +117,9 @@
 	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(FlowManager).call(this, props));
 
 	        _this.state = {
-	            showFlowCreator: false
+	            showFlowCreator: false,
+	            mode: 'list-flows',
+	            flows: _store2.default.flows
 	        };
 	        return _this;
 	    }
@@ -121,7 +127,7 @@
 	    _createClass(FlowManager, [{
 	        key: 'render',
 	        value: function render() {
-	            return this.state.showFlowCreator === true ? _react2.default.createElement(_stepCreator2.default, null) : _react2.default.createElement(_listFlows2.default, null);
+	            return this.state.showFlowCreator === true ? _react2.default.createElement(_stepCreator2.default, null) : _react2.default.createElement(_listFlows2.default, { flows: this.state.flows });
 	        }
 	    }]);
 
@@ -21581,9 +21587,20 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _flow = __webpack_require__(181);
+
+	var _flow2 = _interopRequireDefault(_flow);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var ListFlows = function ListFlows() {
+	var ListFlows = function ListFlows(props) {
+	    ListFlows.propTypes = {
+	        flows: _react2.default.PropTypes.object
+	    };
+	    var flowNodes = props.flows.map(function (flow) {
+	        return _react2.default.createElement(_flow2.default, { flow: flow, key: flow.id });
+	    });
+
 	    return _react2.default.createElement(
 	        'div',
 	        null,
@@ -21593,30 +21610,20 @@
 	            'Flows'
 	        ),
 	        _react2.default.createElement(
+	            'button',
+	            { onClick: handleNewFlowButtonClick },
+	            'Add a flow'
+	        ),
+	        _react2.default.createElement(
 	            'ul',
 	            null,
-	            _react2.default.createElement(
-	                'li',
-	                null,
-	                'Flow 1 -- search'
-	            ),
-	            _react2.default.createElement(
-	                'li',
-	                null,
-	                'Flow 2 -- lead form'
-	            ),
-	            _react2.default.createElement(
-	                'li',
-	                null,
-	                'Flow 2 -- lead form'
-	            ),
-	            _react2.default.createElement(
-	                'li',
-	                null,
-	                'Flow 2 -- lead form'
-	            )
+	            flowNodes
 	        )
 	    );
+	};
+
+	var handleNewFlowButtonClick = function handleNewFlowButtonClick(event) {
+	    console.log(event);
 	};
 
 	exports.default = ListFlows;
@@ -21635,11 +21642,40 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _selectStepType = __webpack_require__(182);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Flow = function Flow(props) {
+	    Flow.propTypes = {
+	        flow: _react2.default.PropTypes.object
+	    };
+	    return _react2.default.createElement(
+	        'div',
+	        null,
+	        props.flow.flowName
+	    );
+	};
+
+	exports.default = Flow;
+
+/***/ },
+/* 182 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(4);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _selectStepType = __webpack_require__(183);
 
 	var _selectStepType2 = _interopRequireDefault(_selectStepType);
 
-	var _flowResult = __webpack_require__(183);
+	var _flowResult = __webpack_require__(184);
 
 	var _flowResult2 = _interopRequireDefault(_flowResult);
 
@@ -21689,7 +21725,7 @@
 	exports.default = FlowCreator;
 
 /***/ },
-/* 182 */
+/* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -21763,7 +21799,7 @@
 	exports.default = SelectStepType;
 
 /***/ },
-/* 183 */
+/* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21787,6 +21823,70 @@
 	};
 
 	exports.default = FlowResult;
+
+/***/ },
+/* 185 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var AppStore = function AppStore() {
+	    _classCallCheck(this, AppStore);
+
+	    this.accountId = 'g1brqz0a54b';
+	    this.flows = [{
+	        'id': '2gzz24abasd',
+	        'flowName': 'Flow Numero Uno',
+	        'steps': [{
+	            'actionType': 'pageLoad',
+	            'url': 'http://google.com'
+	        }, {
+	            'actionType': 'input',
+	            'inputType': 'text',
+	            'selectorType': 'class',
+	            'selectorValue': 'content-section-view-trip-input',
+	            'inputValue': '1830713AH'
+	        }, {
+	            'actionType': 'click',
+	            'selectorType': 'class',
+	            'selectorValue': 'content-section-view-trip-button'
+	        }, {
+	            'actionType': 'confirmElementExists',
+	            'selectorType': 'class',
+	            'selectorValue': 'tour-header-wrapper'
+	        }]
+	    }, {
+	        'id': 'tffd3a433eef',
+	        'flowName': 'Flow Two',
+	        'steps': [{
+	            'actionType': 'pageLoad',
+	            'url': 'http://google.com'
+	        }, {
+	            'actionType': 'input',
+	            'inputType': 'text',
+	            'selectorType': 'class',
+	            'selectorValue': 'content-section-view-trip-input',
+	            'inputValue': '1830713AH'
+	        }, {
+	            'actionType': 'click',
+	            'selectorType': 'class',
+	            'selectorValue': 'content-section-view-trip-button'
+	        }, {
+	            'actionType': 'confirmElementExists',
+	            'selectorType': 'class',
+	            'selectorValue': 'tour-header-wrapper'
+	        }]
+	    }];
+	};
+
+	var singleton = new AppStore();
+	exports.default = singleton;
 
 /***/ }
 /******/ ]);
