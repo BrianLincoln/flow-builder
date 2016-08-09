@@ -6,7 +6,7 @@ const Flow = (props) => {
     };
     return (
         <div>
-            {props.flow.flowName}
+            {props.flow.name}
         </div>
     );
 };

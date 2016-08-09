@@ -12,23 +12,32 @@ class FlowManager extends React.Component {
     constructor(props) {
         super(props);
 
-        console.log("Manager");
+        console.log('Manager');
         console.log(props);
 
-        this.changeMode = this.changeMode.bind(this);
+        this.createNewFlow = this.createNewFlow.bind(this);
         this.state = {
             showFlowCreator: false,
             mode: 'list-flows'
         };
     }
-    changeMode (mode) {
-        this.setState({ mode });
+    createNewFlow (mode) {
+        console.log('createNewFlow');
+        console.log(this.props);
+        console.log(this.props.actions);
+        console.log(this.props.actions.addFlow);
+        this.props.actions.addFlow();
+        //this.setState({ mode });
     }
     render() {
         const { flows, actions } = this.props;
+        console.log('render');
+        console.log(typeof(this.createNewFlow));
+        console.log(this.props);
+        console.log(flows);
         switch (this.state.mode) {
             case 'list-flows':
-                return <ListFlows actions={actions} changeMode={this.changeMode} flows={flows}  />;
+                return <ListFlows actions={actions} createNewFlow={this.createNewFlow} flows={flows}  />;
             case 'flow-creator':
                 return <FlowCreator />;
         }

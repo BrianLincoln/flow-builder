@@ -23265,6 +23265,8 @@
 	    value: true
 	});
 
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(3);
@@ -23305,10 +23307,10 @@
 
 	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(FlowManager).call(this, props));
 
-	        console.log("Manager");
+	        console.log('Manager');
 	        console.log(props);
 
-	        _this.changeMode = _this.changeMode.bind(_this);
+	        _this.createNewFlow = _this.createNewFlow.bind(_this);
 	        _this.state = {
 	            showFlowCreator: false,
 	            mode: 'list-flows'
@@ -23317,9 +23319,14 @@
 	    }
 
 	    _createClass(FlowManager, [{
-	        key: 'changeMode',
-	        value: function changeMode(mode) {
-	            this.setState({ mode: mode });
+	        key: 'createNewFlow',
+	        value: function createNewFlow(mode) {
+	            console.log('createNewFlow');
+	            console.log(this.props);
+	            console.log(this.props.actions);
+	            console.log(this.props.actions.addFlow);
+	            this.props.actions.addFlow();
+	            //this.setState({ mode });
 	        }
 	    }, {
 	        key: 'render',
@@ -23328,9 +23335,13 @@
 	            var flows = _props.flows;
 	            var actions = _props.actions;
 
+	            console.log('render');
+	            console.log(_typeof(this.createNewFlow));
+	            console.log(this.props);
+	            console.log(flows);
 	            switch (this.state.mode) {
 	                case 'list-flows':
-	                    return _react2.default.createElement(_listFlows2.default, { actions: actions, changeMode: this.changeMode, flows: flows });
+	                    return _react2.default.createElement(_listFlows2.default, { actions: actions, createNewFlow: this.createNewFlow, flows: flows });
 	                case 'flow-creator':
 	                    return _react2.default.createElement(_flowCreator2.default, null);
 	            }
@@ -23369,6 +23380,8 @@
 	    value: true
 	});
 
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
 	var _react = __webpack_require__(3);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -23380,9 +23393,12 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var ListFlows = function ListFlows(props) {
+	    console.log('~~list flows');
+	    console.log(props);
+	    console.log(_typeof(props.createNewFlow));
 	    ListFlows.propTypes = {
-	        changeMode: _react2.default.PropTypes.function,
-	        flows: _react2.default.PropTypes.object
+	        createNewFlow: _react2.default.PropTypes.function,
+	        flows: _react2.default.PropTypes.array
 	    };
 	    var flowNodes = props.flows.map(function (flow) {
 	        return _react2.default.createElement(_flow2.default, { flow: flow, key: flow.id });
@@ -23397,7 +23413,7 @@
 	        ),
 	        _react2.default.createElement(
 	            'button',
-	            { onClick: props.changeMode.bind(undefined, 'flow-creator') },
+	            { onClick: props.createNewFlow.bind(undefined, 'flow-creator') },
 	            'Add a flow'
 	        ),
 	        _react2.default.createElement(
@@ -23433,7 +23449,7 @@
 	    return _react2.default.createElement(
 	        'div',
 	        null,
-	        props.flow.flowName
+	        props.flow.name
 	    );
 	};
 
@@ -23574,6 +23590,27 @@
 	var initialState = [{
 	    'id': '2gzz24abasd',
 	    'name': 'Flow Numero Uno',
+	    'steps': [{
+	        'actionType': 'pageLoad',
+	        'url': 'http://google.com'
+	    }, {
+	        'actionType': 'input',
+	        'inputType': 'text',
+	        'selectorType': 'class',
+	        'selectorValue': 'content-section-view-trip-input',
+	        'inputValue': '1830713AH'
+	    }, {
+	        'actionType': 'click',
+	        'selectorType': 'class',
+	        'selectorValue': 'content-section-view-trip-button'
+	    }, {
+	        'actionType': 'confirmElementExists',
+	        'selectorType': 'class',
+	        'selectorValue': 'tour-header-wrapper'
+	    }]
+	}, {
+	    'id': 'u434s9ffs9h',
+	    'name': 'Flow 2',
 	    'steps': [{
 	        'actionType': 'pageLoad',
 	        'url': 'http://google.com'
