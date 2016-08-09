@@ -1,6 +1,6 @@
 import React from 'react';
 
-const FlowCreator = () => {
+const FlowCreator = (props) => {
     return (
         <div>
             new thing

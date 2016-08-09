@@ -63,7 +63,7 @@ export default function flows (state = initialState, action) {
             return [
                 {
                     id: 'abc1234',
-                    name: '',
+                    name: 'new flow',
                     steps: []
                 },
                 ...state

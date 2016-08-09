@@ -9,3 +9,12 @@ export function deleteFlow(id) {
 export function editFlow(id, name, steps) {
     return { type: types.EDIT_FLOW, id, name, steps };
 }
+
+
+//UI actions
+export function showFlowList() {
+    return { type: types.SHOW_FLOW_LIST };
+}
+export function showFlowEditor(id) {
+    return { type: types.SHOW_FLOW_EDITOR, id };
+}
