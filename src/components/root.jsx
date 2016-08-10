@@ -13,32 +13,37 @@ class FlowManager extends React.Component {
         super(props);
 
         this.createNewFlow = this.createNewFlow.bind(this);
+        this.showFlowEditor = this.showFlowEditor.bind(this);
 
     }
-    createNewFlow (mode) {
+    createNewFlow () {
         this.props.actions.addFlow();
     }
+    showFlowEditor (id) {
+        this.props.actions.setCurrentFlow(id);
+        this.props.actions.changeView('flow-editor');
+    }
     render() {
-        const { flows, actions, currentView } = this.props;
-        switch (currentView) {
+        const { flows, uiState } = this.props;
+        switch (uiState.currentView) {
             case 'flow-editor':
-                return <FlowEditor />;
+                return <FlowEditor flowId={uiState.currentFlowId} />;
             case 'flow-list':
             default:
-                return <ListFlows actions={actions} createNewFlow={this.createNewFlow} flows={flows}  />;
+                return <ListFlows createNewFlow={this.createNewFlow} flows={flows} showFlowEditor={this.showFlowEditor} />;
         }
     }
 }
 
 FlowManager.propTypes = {
     actions: React.PropTypes.object.isRequired,
-    currentView: React.PropTypes.string.isRequired,
-    flows: React.PropTypes.array.isRequired
+    flows: React.PropTypes.array.isRequired,
+    uiState: React.PropTypes.array.isRequired
 };
 
 function mapStateToProps(state) {
     return {
-        currentView: state.currentView,
+        uiState: state.uiState,
         flows: state.flows
     };
 }

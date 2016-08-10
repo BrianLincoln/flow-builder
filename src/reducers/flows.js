@@ -60,9 +60,10 @@ const initialState = [
 export default function flows (state = initialState, action) {
     switch (action.type) {
         case ADD_FLOW:
+            console.log("ADD_FLOW");
             return [
                 {
-                    id: 'abc1234',
+                    id: Math.random(), //this obviously sucks and should not be how ids are created
                     name: 'new flow',
                     steps: []
                 },

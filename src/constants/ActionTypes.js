@@ -4,5 +4,5 @@ export const EDIT_FLOW = 'EDIT_FLOW';
 
 
 //UI actions
-export const SHOW_FLOW_LIST = 'SHOW_FLOW_LIST';
-export const SHOW_FLOW_EDITOR = 'SHOW_FLOW_EDITOR';
+export const CHANGE_VIEW = 'CHANGE_VIEW';
+export const SET_CURRENT_FLOW = 'SET_CURRENT_FLOW';

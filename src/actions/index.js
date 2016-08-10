@@ -12,9 +12,11 @@ export function editFlow(id, name, steps) {
 
 
 //UI actions
-export function showFlowList() {
-    return { type: types.SHOW_FLOW_LIST };
+export function changeView(viewToShow) {
+    console.log("~~~" + viewToShow);
+    return { type: types.CHANGE_VIEW, viewToShow };
 }
-export function showFlowEditor(id) {
-    return { type: types.SHOW_FLOW_EDITOR, id };
+export function setCurrentFlow(flowId) {
+    console.log("~~~" + flowId);
+    return { type: types.SET_CURRENT_FLOW, flowId };
 }

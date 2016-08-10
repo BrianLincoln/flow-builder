@@ -2,10 +2,11 @@ import React from 'react';
 
 const Flow = (props) => {
     Flow.propTypes = {
-        flow: React.PropTypes.object
+        flow: React.PropTypes.object.isRequired,
+        showFlowEditor: React.PropTypes.func.isRequired
     };
     return (
-        <div>
+        <div onClick={props.showFlowEditor.bind(this, props.flow.id)} >
             {props.flow.name}
         </div>
     );

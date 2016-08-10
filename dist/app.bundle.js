@@ -23306,29 +23306,35 @@
 	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(FlowManager).call(this, props));
 
 	        _this.createNewFlow = _this.createNewFlow.bind(_this);
+	        _this.showFlowEditor = _this.showFlowEditor.bind(_this);
 
 	        return _this;
 	    }
 
 	    _createClass(FlowManager, [{
 	        key: 'createNewFlow',
-	        value: function createNewFlow(mode) {
+	        value: function createNewFlow() {
 	            this.props.actions.addFlow();
+	        }
+	    }, {
+	        key: 'showFlowEditor',
+	        value: function showFlowEditor(id) {
+	            this.props.actions.setCurrentFlow(id);
+	            this.props.actions.changeView('flow-editor');
 	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var _props = this.props;
 	            var flows = _props.flows;
-	            var actions = _props.actions;
-	            var currentView = _props.currentView;
+	            var uiState = _props.uiState;
 
-	            switch (currentView) {
+	            switch (uiState.currentView) {
 	                case 'flow-editor':
-	                    return _react2.default.createElement(_flowEditor2.default, null);
+	                    return _react2.default.createElement(_flowEditor2.default, { flowId: uiState.currentFlowId });
 	                case 'flow-list':
 	                default:
-	                    return _react2.default.createElement(_listFlows2.default, { actions: actions, createNewFlow: this.createNewFlow, flows: flows });
+	                    return _react2.default.createElement(_listFlows2.default, { createNewFlow: this.createNewFlow, flows: flows, showFlowEditor: this.showFlowEditor });
 	            }
 	        }
 	    }]);
@@ -23338,13 +23344,13 @@
 
 	FlowManager.propTypes = {
 	    actions: _react2.default.PropTypes.object.isRequired,
-	    currentView: _react2.default.PropTypes.string.isRequired,
-	    flows: _react2.default.PropTypes.array.isRequired
+	    flows: _react2.default.PropTypes.array.isRequired,
+	    uiState: _react2.default.PropTypes.array.isRequired
 	};
 
 	function mapStateToProps(state) {
 	    return {
-	        currentView: state.currentView,
+	        uiState: state.uiState,
 	        flows: state.flows
 	    };
 	}
@@ -23379,11 +23385,12 @@
 
 	var ListFlows = function ListFlows(props) {
 	    ListFlows.propTypes = {
-	        createNewFlow: _react2.default.PropTypes.function,
-	        flows: _react2.default.PropTypes.array
+	        createNewFlow: _react2.default.PropTypes.func.isRequired,
+	        flows: _react2.default.PropTypes.array.isRequired,
+	        showFlowEditor: _react2.default.PropTypes.func.isRequired
 	    };
 	    var flowNodes = props.flows.map(function (flow) {
-	        return _react2.default.createElement(_flow2.default, { flow: flow, key: flow.id });
+	        return _react2.default.createElement(_flow2.default, { flow: flow, key: flow.id, showFlowEditor: props.showFlowEditor });
 	    });
 	    return _react2.default.createElement(
 	        'div',
@@ -23397,6 +23404,11 @@
 	            'button',
 	            { onClick: props.createNewFlow.bind(undefined, 'flow-editor') },
 	            'Add a flow'
+	        ),
+	        _react2.default.createElement(
+	            'a',
+	            { onClick: props.showFlowEditor.bind(undefined, '878') },
+	            ' barf '
 	        ),
 	        _react2.default.createElement(
 	            'ul',
@@ -23426,11 +23438,12 @@
 
 	var Flow = function Flow(props) {
 	    Flow.propTypes = {
-	        flow: _react2.default.PropTypes.object
+	        flow: _react2.default.PropTypes.object.isRequired,
+	        showFlowEditor: _react2.default.PropTypes.func.isRequired
 	    };
 	    return _react2.default.createElement(
 	        'div',
-	        null,
+	        { onClick: props.showFlowEditor.bind(undefined, props.flow.id) },
 	        props.flow.name
 	    );
 	};
@@ -23454,10 +23467,14 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var FlowCreator = function FlowCreator(props) {
+	    FlowCreator.propTypes = {
+	        flowId: _react2.default.PropTypes.string.isRequired
+	    };
 	    return _react2.default.createElement(
 	        'div',
 	        null,
-	        'new thing'
+	        'new thing',
+	        props.flowId
 	    );
 	};
 
@@ -23467,7 +23484,7 @@
 /* 211 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -23475,8 +23492,8 @@
 	exports.addFlow = addFlow;
 	exports.deleteFlow = deleteFlow;
 	exports.editFlow = editFlow;
-	exports.showFlowList = showFlowList;
-	exports.showFlowEditor = showFlowEditor;
+	exports.changeView = changeView;
+	exports.setCurrentFlow = setCurrentFlow;
 
 	var _ActionTypes = __webpack_require__(212);
 
@@ -23495,11 +23512,13 @@
 	}
 
 	//UI actions
-	function showFlowList() {
-	    return { type: types.SHOW_FLOW_LIST };
+	function changeView(viewToShow) {
+	    console.log("~~~" + viewToShow);
+	    return { type: types.CHANGE_VIEW, viewToShow: viewToShow };
 	}
-	function showFlowEditor(id) {
-	    return { type: types.SHOW_FLOW_EDITOR, id: id };
+	function setCurrentFlow(flowId) {
+	    console.log("~~~" + flowId);
+	    return { type: types.SET_CURRENT_FLOW, flowId: flowId };
 	}
 
 /***/ },
@@ -23516,8 +23535,8 @@
 	var EDIT_FLOW = exports.EDIT_FLOW = 'EDIT_FLOW';
 
 	//UI actions
-	var SHOW_FLOW_LIST = exports.SHOW_FLOW_LIST = 'SHOW_FLOW_LIST';
-	var SHOW_FLOW_EDITOR = exports.SHOW_FLOW_EDITOR = 'SHOW_FLOW_EDITOR';
+	var CHANGE_VIEW = exports.CHANGE_VIEW = 'CHANGE_VIEW';
+	var SET_CURRENT_FLOW = exports.SET_CURRENT_FLOW = 'SET_CURRENT_FLOW';
 
 /***/ },
 /* 213 */
@@ -23638,8 +23657,9 @@
 
 	    switch (action.type) {
 	        case _ActionTypes.ADD_FLOW:
+	            console.log("ADD_FLOW");
 	            return [{
-	                id: 'abc1234',
+	                id: Math.random(), //this obviously sucks and should not be how ids are created
 	                name: 'new flow',
 	                steps: []
 	            }].concat(_toConsumableArray(state));
@@ -23669,21 +23689,24 @@
 
 	var _ActionTypes = __webpack_require__(212);
 
-	var initialState = {
+	var initialState = [{
+	    currentFlowId: undefined,
 	    currentView: 'flow-list'
-	};
+	}];
 
 	function flows() {
 	    var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];
 	    var action = arguments[1];
 
 	    switch (action.type) {
-	        case _ActionTypes.SHOW_FLOW_LIST:
-	            state.currentView = 'flow-list';
-	            return state;
-	        case _ActionTypes.SHOW_FLOW_EDITOR:
-	            state.currentView = 'flow-editor';
-	            return state;
+	        case _ActionTypes.CHANGE_VIEW:
+	            console.log("CHANGE_VIEW");
+	            console.log(action.viewToShow);
+	            return Object.assign([], state, { currentView: action.viewToShow });
+	        case _ActionTypes.SET_CURRENT_FLOW:
+	            console.log("SET_CURRENT_FLOW");
+	            console.log(action.flowId);
+	            return Object.assign([], state, { currentFlowId: action.flowId });
 	        default:
 	            return state;
 	    }
