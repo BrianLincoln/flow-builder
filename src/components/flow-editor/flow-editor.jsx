@@ -5,9 +5,10 @@ class FlowCreator extends React.Component {
 
     constructor(props) {
         super(props);
+        this.handleNameFieldChange = this.handleNameFieldChange.bind(this);
     }
 
-    handleNameFieldChange = (event) => {
+    handleNameFieldChange (event) {
         this.setState({ 'name': event.target.value });
     }
 
@@ -16,7 +17,7 @@ class FlowCreator extends React.Component {
             <div>
                 <button onClick={this.props.showFlowList.bind(this)}>Back</button>
                 {this.props.flowId}
-                <input onChange={this.state.handleNameFieldChange} type="text" />
+                <input onChange={this.handleNameFieldChange} type="text" />
             </div>
         );
     }

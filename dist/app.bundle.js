@@ -23317,10 +23317,21 @@
 	            this.props.actions.addFlow();
 	        }
 	    }, {
+	        key: 'editFlow',
+	        value: function editFlow(id, name, steps) {
+	            this.props.actions.editFlow(id, name, steps);
+	        }
+	    }, {
 	        key: 'showFlowEditor',
 	        value: function showFlowEditor(id) {
 	            this.props.actions.setCurrentFlow(id);
 	            this.props.actions.changeView('flow-editor');
+	        }
+	    }, {
+	        key: 'showFlowList',
+	        value: function showFlowList() {
+	            this.props.actions.setCurrentFlow(undefined);
+	            this.props.actions.changeView('flow-list');
 	        }
 	    }, {
 	        key: 'render',
@@ -23331,7 +23342,7 @@
 
 	            switch (uiState.currentView) {
 	                case 'flow-editor':
-	                    return _react2.default.createElement(_flowEditor2.default, { flowId: uiState.currentFlowId });
+	                    return _react2.default.createElement(_flowEditor2.default, { editFlow: this.editFlow, flowId: uiState.currentFlowId, showFlowList: this.showFlowList });
 	                case 'flow-list':
 	                default:
 	                    return _react2.default.createElement(_listFlows2.default, { createNewFlow: this.createNewFlow, flows: flows, showFlowEditor: this.showFlowEditor });
@@ -23460,22 +23471,61 @@
 	    value: true
 	});
 
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 	var _react = __webpack_require__(3);
 
 	var _react2 = _interopRequireDefault(_react);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var FlowCreator = function FlowCreator(props) {
-	    FlowCreator.propTypes = {
-	        flowId: _react2.default.PropTypes.string.isRequired
-	    };
-	    return _react2.default.createElement(
-	        'div',
-	        null,
-	        'new thing',
-	        props.flowId
-	    );
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var FlowCreator = function (_React$Component) {
+	    _inherits(FlowCreator, _React$Component);
+
+	    function FlowCreator(props) {
+	        _classCallCheck(this, FlowCreator);
+
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(FlowCreator).call(this, props));
+
+	        _this.handleNameFieldChange = _this.handleNameFieldChange.bind(_this);
+	        return _this;
+	    }
+
+	    _createClass(FlowCreator, [{
+	        key: 'handleNameFieldChange',
+	        value: function handleNameFieldChange(event) {
+	            this.setState({ 'name': event.target.value });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'button',
+	                    { onClick: this.props.showFlowList.bind(this) },
+	                    'Back'
+	                ),
+	                this.props.flowId,
+	                _react2.default.createElement('input', { onChange: this.handleNameFieldChange, type: 'text' })
+	            );
+	        }
+	    }]);
+
+	    return FlowCreator;
+	}(_react2.default.Component);
+
+	FlowCreator.propTypes = {
+	    editFlow: _react2.default.PropTypes.func.isRequired,
+	    flowId: _react2.default.PropTypes.string.isRequired,
+	    showFlowList: _react2.default.PropTypes.func.isRequired
 	};
 
 	exports.default = FlowCreator;
@@ -23657,7 +23707,6 @@
 
 	    switch (action.type) {
 	        case _ActionTypes.ADD_FLOW:
-	            console.log("ADD_FLOW");
 	            return [{
 	                id: Math.random(), //this obviously sucks and should not be how ids are created
 	                name: 'new flow',
@@ -23669,7 +23718,7 @@
 	            });
 	        case _ActionTypes.EDIT_FLOW:
 	            return state.map(function (flow) {
-	                Object.assign({}, flow, { name: action.name, steps: action.steps });
+	                Object.assign({}, flow, { id: action.id, name: action.name, steps: action.steps });
 	            });
 	        default:
 	            return state;
