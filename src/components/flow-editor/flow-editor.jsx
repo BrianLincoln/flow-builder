@@ -1,5 +1,5 @@
 import React from 'react';
-
+import FlowResult from './flow-result';
 
 class FlowCreator extends React.Component {
 
@@ -18,6 +18,7 @@ class FlowCreator extends React.Component {
                 <button onClick={this.props.showFlowList.bind(this)}>Back</button>
                 {this.props.flowId}
                 <input onChange={this.handleNameFieldChange} type="text" />
+
             </div>
         );
     }

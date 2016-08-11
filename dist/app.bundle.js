@@ -82,7 +82,7 @@
 
 	var _root2 = _interopRequireDefault(_root);
 
-	var _configureStore = __webpack_require__(213);
+	var _configureStore = __webpack_require__(214);
 
 	var _configureStore2 = _interopRequireDefault(_configureStore);
 
@@ -23283,7 +23283,7 @@
 
 	var _reactRedux = __webpack_require__(179);
 
-	var _actions = __webpack_require__(211);
+	var _actions = __webpack_require__(212);
 
 	var Actions = _interopRequireWildcard(_actions);
 
@@ -23477,6 +23477,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _flowResult = __webpack_require__(211);
+
+	var _flowResult2 = _interopRequireDefault(_flowResult);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -23534,6 +23538,35 @@
 /* 211 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(3);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var FlowResult = function FlowResult(props) {
+	    FlowResult.propTypes = {
+	        name: _react2.default.PropTypes.string.isRequired
+	    };
+	    return _react2.default.createElement(
+	        'pre',
+	        null,
+	        JSON.stringify(props.name, null, 4)
+	    );
+	};
+
+	exports.default = FlowResult;
+
+/***/ },
+/* 212 */
+/***/ function(module, exports, __webpack_require__) {
+
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
@@ -23545,7 +23578,7 @@
 	exports.changeView = changeView;
 	exports.setCurrentFlow = setCurrentFlow;
 
-	var _ActionTypes = __webpack_require__(212);
+	var _ActionTypes = __webpack_require__(213);
 
 	var types = _interopRequireWildcard(_ActionTypes);
 
@@ -23572,7 +23605,7 @@
 	}
 
 /***/ },
-/* 212 */
+/* 213 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -23589,7 +23622,7 @@
 	var SET_CURRENT_FLOW = exports.SET_CURRENT_FLOW = 'SET_CURRENT_FLOW';
 
 /***/ },
-/* 213 */
+/* 214 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23601,7 +23634,7 @@
 
 	var _redux = __webpack_require__(186);
 
-	var _reducers = __webpack_require__(214);
+	var _reducers = __webpack_require__(215);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -23614,7 +23647,7 @@
 	}
 
 /***/ },
-/* 214 */
+/* 215 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23625,11 +23658,11 @@
 
 	var _redux = __webpack_require__(186);
 
-	var _flows = __webpack_require__(215);
+	var _flows = __webpack_require__(216);
 
 	var _flows2 = _interopRequireDefault(_flows);
 
-	var _uiState = __webpack_require__(216);
+	var _uiState = __webpack_require__(217);
 
 	var _uiState2 = _interopRequireDefault(_uiState);
 
@@ -23643,7 +23676,7 @@
 	exports.default = rootReducer;
 
 /***/ },
-/* 215 */
+/* 216 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23653,7 +23686,7 @@
 	});
 	exports.default = flows;
 
-	var _ActionTypes = __webpack_require__(212);
+	var _ActionTypes = __webpack_require__(213);
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
@@ -23726,7 +23759,7 @@
 	}
 
 /***/ },
-/* 216 */
+/* 217 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23736,7 +23769,7 @@
 	});
 	exports.default = flows;
 
-	var _ActionTypes = __webpack_require__(212);
+	var _ActionTypes = __webpack_require__(213);
 
 	var initialState = [{
 	    currentFlowId: undefined,
