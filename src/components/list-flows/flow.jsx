@@ -6,7 +6,7 @@ const Flow = (props) => {
         showFlowEditor: React.PropTypes.func.isRequired
     };
     return (
-        <div onClick={props.showFlowEditor.bind(this, props.flow.id)} >
+        <div onClick={props.showFlowEditor.bind(this, props.flow)} >
             {props.flow.name}
         </div>
     );

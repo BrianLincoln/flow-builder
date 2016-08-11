@@ -74,7 +74,10 @@ export default function flows (state = initialState, action) {
             });
         case EDIT_FLOW:
             return state.map((flow) => {
-                Object.assign({}, flow, { id: action.id, name: action.name, steps: action.steps });
+                if (flow.id === action.id) {
+                    return Object.assign({}, flow, { id: action.id, name: action.name, steps: action.steps });
+                }
+                return flow;
             });
         default:
             return state;

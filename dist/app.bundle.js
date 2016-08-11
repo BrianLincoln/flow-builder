@@ -23307,7 +23307,7 @@
 
 	        _this.createNewFlow = _this.createNewFlow.bind(_this);
 	        _this.showFlowEditor = _this.showFlowEditor.bind(_this);
-
+	        _this.editFlow = _this.editFlow.bind(_this);
 	        return _this;
 	    }
 
@@ -23319,12 +23319,14 @@
 	    }, {
 	        key: 'editFlow',
 	        value: function editFlow(id, name, steps) {
+	            console.log("----editflow");
+	            console.log(id);
 	            this.props.actions.editFlow(id, name, steps);
 	        }
 	    }, {
 	        key: 'showFlowEditor',
-	        value: function showFlowEditor(id) {
-	            this.props.actions.setCurrentFlow(id);
+	        value: function showFlowEditor(flow) {
+	            this.props.actions.setCurrentFlow(flow);
 	            this.props.actions.changeView('flow-editor');
 	        }
 	    }, {
@@ -23336,13 +23338,15 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
+	            console.log("------------render root");
+	            console.log(this.props);
 	            var _props = this.props;
 	            var flows = _props.flows;
 	            var uiState = _props.uiState;
 
 	            switch (uiState.currentView) {
 	                case 'flow-editor':
-	                    return _react2.default.createElement(_flowEditor2.default, { editFlow: this.editFlow, flowId: uiState.currentFlowId, showFlowList: this.showFlowList });
+	                    return _react2.default.createElement(_flowEditor2.default, { editFlow: this.editFlow, flow: uiState.currentFlow, showFlowList: this.showFlowList });
 	                case 'flow-list':
 	                default:
 	                    return _react2.default.createElement(_listFlows2.default, { createNewFlow: this.createNewFlow, flows: flows, showFlowEditor: this.showFlowEditor });
@@ -23454,7 +23458,7 @@
 	    };
 	    return _react2.default.createElement(
 	        'div',
-	        { onClick: props.showFlowEditor.bind(undefined, props.flow.id) },
+	        { onClick: props.showFlowEditor.bind(undefined, props.flow) },
 	        props.flow.name
 	    );
 	};
@@ -23498,6 +23502,7 @@
 	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(FlowCreator).call(this, props));
 
 	        _this.handleNameFieldChange = _this.handleNameFieldChange.bind(_this);
+	        _this.handleSaveButtonClick = _this.handleSaveButtonClick.bind(_this);
 	        return _this;
 	    }
 
@@ -23507,8 +23512,20 @@
 	            this.setState({ 'name': event.target.value });
 	        }
 	    }, {
+	        key: 'handleSaveButtonClick',
+	        value: function handleSaveButtonClick(event) {
+	            console.log(event);
+	            console.log(this.props);
+	            this.props.editFlow(this.props.flow.id, this.state.name, []);
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {}
+	    }, {
 	        key: 'render',
 	        value: function render() {
+	            console.log("~~~~");
+	            console.log(this.props);
 	            return _react2.default.createElement(
 	                'div',
 	                null,
@@ -23517,8 +23534,23 @@
 	                    { onClick: this.props.showFlowList.bind(this) },
 	                    'Back'
 	                ),
-	                this.props.flowId,
-	                _react2.default.createElement('input', { onChange: this.handleNameFieldChange, type: 'text' })
+	                _react2.default.createElement(
+	                    'label',
+	                    { htmlFor: 'name' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        null,
+	                        this.props.flow.name,
+	                        ' -- ',
+	                        this.props.flow.id
+	                    ),
+	                    _react2.default.createElement('input', { onChange: this.handleNameFieldChange, id: 'name', type: 'text' })
+	                ),
+	                _react2.default.createElement(
+	                    'button',
+	                    { onClick: this.handleSaveButtonClick },
+	                    'save'
+	                )
 	            );
 	        }
 	    }]);
@@ -23528,7 +23560,7 @@
 
 	FlowCreator.propTypes = {
 	    editFlow: _react2.default.PropTypes.func.isRequired,
-	    flowId: _react2.default.PropTypes.string.isRequired,
+	    flow: _react2.default.PropTypes.object.isRequired,
 	    showFlowList: _react2.default.PropTypes.func.isRequired
 	};
 
@@ -23591,17 +23623,17 @@
 	    return { type: types.DELETE_FLOW, id: id };
 	}
 	function editFlow(id, name, steps) {
+	    console.log("*edit flow");
+	    console.log(name);
 	    return { type: types.EDIT_FLOW, id: id, name: name, steps: steps };
 	}
 
 	//UI actions
 	function changeView(viewToShow) {
-	    console.log("~~~" + viewToShow);
 	    return { type: types.CHANGE_VIEW, viewToShow: viewToShow };
 	}
-	function setCurrentFlow(flowId) {
-	    console.log("~~~" + flowId);
-	    return { type: types.SET_CURRENT_FLOW, flowId: flowId };
+	function setCurrentFlow(flow) {
+	    return { type: types.SET_CURRENT_FLOW, flow: flow };
 	}
 
 /***/ },
@@ -23751,7 +23783,10 @@
 	            });
 	        case _ActionTypes.EDIT_FLOW:
 	            return state.map(function (flow) {
-	                Object.assign({}, flow, { id: action.id, name: action.name, steps: action.steps });
+	                if (flow.id === action.id) {
+	                    return Object.assign({}, flow, { id: action.id, name: action.name, steps: action.steps });
+	                }
+	                return flow;
 	            });
 	        default:
 	            return state;
@@ -23772,7 +23807,7 @@
 	var _ActionTypes = __webpack_require__(213);
 
 	var initialState = [{
-	    currentFlowId: undefined,
+	    currentFlow: undefined,
 	    currentView: 'flow-list'
 	}];
 
@@ -23782,13 +23817,9 @@
 
 	    switch (action.type) {
 	        case _ActionTypes.CHANGE_VIEW:
-	            console.log("CHANGE_VIEW");
-	            console.log(action.viewToShow);
 	            return Object.assign([], state, { currentView: action.viewToShow });
 	        case _ActionTypes.SET_CURRENT_FLOW:
-	            console.log("SET_CURRENT_FLOW");
-	            console.log(action.flowId);
-	            return Object.assign([], state, { currentFlowId: action.flowId });
+	            return Object.assign([], state, { currentFlow: action.flow });
 	        default:
 	            return state;
 	    }
