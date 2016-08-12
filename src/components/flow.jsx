@@ -14,7 +14,6 @@ class Flow extends React.Component {
         this.setState({ showEditor: !this.state.showEditor });
     }
 
-
     render() {
         return (
             <div>

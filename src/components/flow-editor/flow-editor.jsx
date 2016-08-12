@@ -1,5 +1,4 @@
 import React from 'react';
-import FlowResult from './flow-result';
 
 class FlowEditor extends React.Component {
 
@@ -13,17 +12,13 @@ class FlowEditor extends React.Component {
         this.setState({ 'name': event.target.value });
     }
 
-    handleSaveButtonClick (event) {
-        console.log(event);
-        console.log(this.props);
+    handleSaveButtonClick () {
         this.props.editFlow(this.props.flow.id, this.state.name, []);
     }
     componentDidMount() {
 
     }
     render() {
-        console.log('~~~~');
-        console.log(this.props);
         return (
             <div>
                 <label htmlFor="name">
