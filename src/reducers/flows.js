@@ -1,4 +1,4 @@
-import { ADD_FLOW, DELETE_FLOW, EDIT_FLOW } from '../constants/ActionTypes';
+import { ADD_FLOW, DELETE_FLOW, EDIT_FLOW, ADD_STEP, DELETE_STEP, EDIT_STEP } from '../constants/ActionTypes';
 
 const initialState = [
     {
@@ -6,10 +6,12 @@ const initialState = [
         'name': 'Flow Numero Uno',
         'steps': [
             {
+                'id': 'j23lj23l4j24',
                 'actionType': 'pageLoad',
                 'url': 'http://google.com'
             },
             {
+                'id': '88234jkhkhk24',
                 'actionType': 'input',
                 'inputType': 'text',
                 'selectorType': 'class',
@@ -17,11 +19,13 @@ const initialState = [
                 'inputValue': '1830713AH'
             },
             {
+                'id': 'aawer09808er',
                 'actionType': 'click',
                 'selectorType': 'class',
                 'selectorValue': 'content-section-view-trip-button'
             },
             {
+                'id': '87zxcv789sjp',
                 'actionType': 'confirmElementExists',
                 'selectorType': 'class',
                 'selectorValue': 'tour-header-wrapper'
@@ -33,10 +37,12 @@ const initialState = [
         'name': 'Flow 2',
         'steps': [
             {
+                'id': 'mmnb35po35',
                 'actionType': 'pageLoad',
                 'url': 'http://google.com'
             },
             {
+                'id': '546727mnb832bnm',
                 'actionType': 'input',
                 'inputType': 'text',
                 'selectorType': 'class',
@@ -44,11 +50,13 @@ const initialState = [
                 'inputValue': '1830713AH'
             },
             {
+                'id': '16vmbb234mnbk',
                 'actionType': 'click',
                 'selectorType': 'class',
                 'selectorValue': 'content-section-view-trip-button'
             },
             {
+                'id': '235262klh2',
                 'actionType': 'confirmElementExists',
                 'selectorType': 'class',
                 'selectorValue': 'tour-header-wrapper'
@@ -79,6 +87,15 @@ export default function flows (state = initialState, action) {
                 }
                 return flow;
             });
+        case ADD_STEP:
+            console.log("ADD_STEP");
+            return state;
+        case DELETE_STEP:
+            console.log("DELETE_STEP");
+            return state;
+        case EDIT_STEP:
+            console.log("EDIT_STEP");
+            return state;
         default:
             return state;
     }

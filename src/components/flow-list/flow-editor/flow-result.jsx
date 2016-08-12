@@ -2,11 +2,10 @@ import React from 'react';
 
 const FlowResult = (props) => {
     FlowResult.propTypes = {
-        name: React.PropTypes.string.isRequired
+        flow: React.PropTypes.object.isRequired
     };
     return (
-        <pre>{JSON.stringify(props.name, null, 4)}</pre>
+        <pre>{JSON.stringify(props.flow, null, 4)}</pre>
     );
 };
-
 export default FlowResult;
