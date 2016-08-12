@@ -1,7 +1,7 @@
 import React from 'react';
 import FlowResult from './flow-result';
 
-class FlowCreator extends React.Component {
+class FlowEditor extends React.Component {
 
     constructor(props) {
         super(props);
@@ -22,11 +22,10 @@ class FlowCreator extends React.Component {
 
     }
     render() {
-        console.log("~~~~");
+        console.log('~~~~');
         console.log(this.props);
         return (
             <div>
-                <button onClick={this.props.showFlowList.bind(this)}>Back</button>
                 <label htmlFor="name">
                     <div>{this.props.flow.name} -- {this.props.flow.id}</div>
                     <input id="name" onChange={this.handleNameFieldChange} type="text" />
@@ -37,10 +36,9 @@ class FlowCreator extends React.Component {
     }
 }
 
-FlowCreator.propTypes = {
+FlowEditor.propTypes = {
     editFlow: React.PropTypes.func.isRequired,
-    flow: React.PropTypes.object.isRequired,
-    showFlowList: React.PropTypes.func.isRequired
+    flow: React.PropTypes.object.isRequired
 };
 
-export default FlowCreator;
+export default FlowEditor;

@@ -1,11 +1,8 @@
 import React from 'react';
-import ListFlows from './list-flows/list-flows';
-import FlowEditor from './flow-editor/flow-editor';
-
+import ListFlows from './list-flows';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as Actions from '../actions';
-
 
 class FlowManager extends React.Component {
 
@@ -20,7 +17,7 @@ class FlowManager extends React.Component {
         this.props.actions.addFlow();
     }
     editFlow(id, name, steps) {
-        console.log("----editflow");
+        console.log('----editflow');
         console.log(id);
         this.props.actions.editFlow(id, name, steps);
     }
@@ -33,15 +30,13 @@ class FlowManager extends React.Component {
         this.props.actions.changeView('flow-list');
     }
     render() {
-        console.log("------------render root");
-        console.log(this)
+        console.log('------------render root');
+        console.log(this);
         const { flows, uiState } = this.props;
         switch (uiState.currentView) {
-            case 'flow-editor':
-                return <FlowEditor editFlow={this.editFlow} flow={uiState.currentFlow} showFlowList={this.showFlowList} />;
             case 'flow-list':
             default:
-                return <ListFlows createNewFlow={this.createNewFlow} flows={flows} showFlowEditor={this.showFlowEditor} />;
+                return <ListFlows createNewFlow={this.createNewFlow} editFlow={this.editFlow} flows={flows} showFlowEditor={this.showFlowEditor} />;
         }
     }
 }
