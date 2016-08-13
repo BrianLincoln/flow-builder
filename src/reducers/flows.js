@@ -88,13 +88,26 @@ export default function flows (state = initialState, action) {
                 return flow;
             });
         case ADD_STEP:
-            console.log("ADD_STEP");
-            return state;
+            return state.map((flow) => {
+                if (flow.id === action.flowId) {
+                    const steps = flow.steps.slice();
+
+                    steps.push({
+                        id: Math.random(), //this obviously sucks and should not be how ids are created
+                        'actionType': 'confirmElementExists',
+                        'selectorType': 'class',
+                        'selectorValue': 'tour-header-wrapper'
+                    });
+
+                    return Object.assign({}, flow, { id: action.flowId, name: flow.name, steps });
+                }
+                return flow;
+            });
         case DELETE_STEP:
-            console.log("DELETE_STEP");
+            console.log('DELETE_STEP');
             return state;
         case EDIT_STEP:
-            console.log("EDIT_STEP");
+            console.log('EDIT_STEP');
             return state;
         default:
             return state;

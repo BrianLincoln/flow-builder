@@ -4,6 +4,7 @@ import Step from './step';
 const StepList = (props) => {
     StepList.propTypes = {
         flowActions: React.PropTypes.object.isRequired,
+        flowId: React.PropTypes.string.isRequired,
         stepActions: React.PropTypes.object.isRequired,
         steps: React.PropTypes.array.isRequired
     };
@@ -15,7 +16,7 @@ const StepList = (props) => {
     return (
         <div>
             <h2>Steps</h2>
-            <button onClick={props.stepActions.addStep}>add step</button>
+            <button onClick={props.stepActions.addStep.bind(this, props.flowId)}>add step</button>
             <ul className="step-list">
                 {stepNodes}
             </ul>

@@ -23,7 +23,7 @@ class FlowEditor extends React.Component {
                 </label>
                 <button onClick={this.props.flowActions.editFlow.bind(this, this.props.flow.id, this.state.name, this.props.flow.steps)}>save</button>
 
-                <StepList flowActions={this.props.flowActions} stepActions={this.props.stepActions} steps={this.props.flow.steps} />
+                <StepList flowActions={this.props.flowActions} flowId={this.props.flow.id} stepActions={this.props.stepActions} steps={this.props.flow.steps} />
 
                 <FlowResult flow={this.props.flow} />
             </div>

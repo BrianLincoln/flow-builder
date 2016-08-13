@@ -23548,7 +23548,7 @@
 	                    { onClick: this.props.flowActions.editFlow.bind(this, this.props.flow.id, this.state.name, this.props.flow.steps) },
 	                    'save'
 	                ),
-	                _react2.default.createElement(_stepList2.default, { flowActions: this.props.flowActions, stepActions: this.props.stepActions, steps: this.props.flow.steps }),
+	                _react2.default.createElement(_stepList2.default, { flowActions: this.props.flowActions, flowId: this.props.flow.id, stepActions: this.props.stepActions, steps: this.props.flow.steps }),
 	                _react2.default.createElement(_flowResult2.default, { flow: this.props.flow })
 	            );
 	        }
@@ -23616,6 +23616,7 @@
 	var StepList = function StepList(props) {
 	    StepList.propTypes = {
 	        flowActions: _react2.default.PropTypes.object.isRequired,
+	        flowId: _react2.default.PropTypes.string.isRequired,
 	        stepActions: _react2.default.PropTypes.object.isRequired,
 	        steps: _react2.default.PropTypes.array.isRequired
 	    };
@@ -23632,7 +23633,7 @@
 	        ),
 	        _react2.default.createElement(
 	            'button',
-	            { onClick: props.stepActions.addStep },
+	            { onClick: props.stepActions.addStep.bind(undefined, props.flowId) },
 	            'add step'
 	        ),
 	        _react2.default.createElement(
@@ -23679,7 +23680,7 @@
 /* 214 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -23707,9 +23708,9 @@
 	    return { type: types.EDIT_FLOW, id: id, name: name, steps: steps };
 	}
 
-	function addStep() {
-	    console.log("~~~~ addStep");
-	    return { type: types.ADD_STEP };
+	function addStep(flowId) {
+	    console.log('~~~~ addStep');
+	    return { type: types.ADD_STEP, flowId: flowId };
 	}
 	function deleteStep(id) {
 	    return { type: types.DELETE_STEP, id: id };
@@ -23883,13 +23884,33 @@
 	                return flow;
 	            });
 	        case _ActionTypes.ADD_STEP:
-	            console.log("ADD_STEP");
-	            return state;
+	            return state.map(function (flow) {
+	                console.log('initial steps');
+	                console.log(flow.steps);
+	                if (flow.id === action.flowId) {
+	                    var steps = flow.steps.slice();
+
+	                    steps.push({
+	                        id: Math.random(), //this obviously sucks and should not be how ids are created
+	                        'actionType': 'confirmElementExists',
+	                        'selectorType': 'class',
+	                        'selectorValue': 'tour-header-wrapper'
+	                    });
+
+	                    console.log('steps');
+	                    console.log(steps);
+
+	                    console.log('_______');
+	                    console.log(Object.assign({}, flow, { id: action.flowId, name: flow.name, steps: steps }));
+	                    return Object.assign({}, flow, { id: action.flowId, name: flow.name, steps: steps });
+	                }
+	                return flow;
+	            });
 	        case _ActionTypes.DELETE_STEP:
-	            console.log("DELETE_STEP");
+	            console.log('DELETE_STEP');
 	            return state;
 	        case _ActionTypes.EDIT_STEP:
-	            console.log("EDIT_STEP");
+	            console.log('EDIT_STEP');
 	            return state;
 	        default:
 	            return state;
