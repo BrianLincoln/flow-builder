@@ -82,7 +82,7 @@
 
 	var _root2 = _interopRequireDefault(_root);
 
-	var _configureStore = __webpack_require__(216);
+	var _configureStore = __webpack_require__(218);
 
 	var _configureStore2 = _interopRequireDefault(_configureStore);
 
@@ -23279,7 +23279,7 @@
 
 	var _reactRedux = __webpack_require__(179);
 
-	var _actions = __webpack_require__(214);
+	var _actions = __webpack_require__(216);
 
 	var Actions = _interopRequireWildcard(_actions);
 
@@ -23656,28 +23656,214 @@
 	    value: true
 	});
 
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(3);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _stepEditor = __webpack_require__(214);
+
+	var _stepEditor2 = _interopRequireDefault(_stepEditor);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Step = function (_React$Component) {
+	    _inherits(Step, _React$Component);
+
+	    function Step(props) {
+	        _classCallCheck(this, Step);
+
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Step).call(this, props));
+
+	        _this.handleClick = _this.handleClick.bind(_this);
+	        _this.state = {
+	            showEditor: false
+	        };
+	        return _this;
+	    }
+
+	    _createClass(Step, [{
+	        key: 'handleClick',
+	        value: function handleClick() {
+	            this.setState({ showEditor: !this.state.showEditor });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'step' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'step-type', onClick: this.handleClick },
+	                    this.props.step.actionType
+	                ),
+	                this.state.showEditor === true ? _react2.default.createElement(_stepEditor2.default, { step: this.props.step, stepActions: this.props.stepActions }) : null
+	            );
+	        }
+	    }]);
+
+	    return Step;
+	}(_react2.default.Component);
+
+	Step.propTypes = {
+	    step: _react2.default.PropTypes.object.isRequired,
+	    stepActions: _react2.default.PropTypes.object.isRequired
+	};
+	exports.default = Step;
+
+/***/ },
+/* 214 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(3);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _selectActionType = __webpack_require__(215);
+
+	var _selectActionType2 = _interopRequireDefault(_selectActionType);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var StepEditor = function (_React$Component) {
+	    _inherits(StepEditor, _React$Component);
+
+	    function StepEditor(props) {
+	        _classCallCheck(this, StepEditor);
+
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(StepEditor).call(this, props));
+
+	        _this.handleActionTypeChange = _this.handleActionTypeChange.bind(_this);
+
+	        _this.state = {
+	            actionType: props.step.actionType
+	        };
+	        return _this;
+	    }
+
+	    _createClass(StepEditor, [{
+	        key: 'handleActionTypeChange',
+	        value: function handleActionTypeChange(event) {
+	            console.log('changey');
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'label',
+	                    { htmlFor: 'action-type' },
+	                    _react2.default.createElement(_selectActionType2.default, { handleActionTypeChange: this.handleActionTypeChange }),
+	                    _react2.default.createElement(
+	                        'div',
+	                        null,
+	                        'Choose Action Type'
+	                    ),
+	                    _react2.default.createElement('input', { id: 'action-type', onChange: this.handleActionTypeChange, type: 'text', value: this.state.actionType })
+	                ),
+	                _react2.default.createElement(
+	                    'button',
+	                    null,
+	                    'save'
+	                )
+	            );
+	        }
+	    }]);
+
+	    return StepEditor;
+	}(_react2.default.Component);
+
+	StepEditor.propTypes = {
+	    step: _react2.default.PropTypes.object.isRequired,
+	    stepActions: _react2.default.PropTypes.object.isRequired
+	};
+
+	exports.default = StepEditor;
+
+/***/ },
+/* 215 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
 	var _react = __webpack_require__(3);
 
 	var _react2 = _interopRequireDefault(_react);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Step = function Step(props) {
-	    Step.propTypes = {
-	        step: _react2.default.PropTypes.object.isRequired,
-	        stepActions: _react2.default.PropTypes.object.isRequired
+	var SelectActionType = function SelectActionType(props) {
+	    SelectActionType.propTypes = {
+	        handleActionTypeChange: _react2.default.PropTypes.func.isRequired
 	    };
+	    console.log(props);
 	    return _react2.default.createElement(
-	        'div',
+	        "div",
 	        null,
-	        props.step.actionType
+	        _react2.default.createElement(
+	            "h3",
+	            null,
+	            "What should happen?"
+	        ),
+	        _react2.default.createElement(
+	            "select",
+	            { onChange: props.handleActionTypeChange.bind(undefined) },
+	            _react2.default.createElement(
+	                "option",
+	                { value: "pageLoad" },
+	                "Load a page"
+	            ),
+	            _react2.default.createElement(
+	                "option",
+	                { value: "input" },
+	                "Edit a field"
+	            ),
+	            _react2.default.createElement(
+	                "option",
+	                { value: "click" },
+	                "Click on something"
+	            ),
+	            _react2.default.createElement(
+	                "option",
+	                { value: "confirmElementExists" },
+	                "Check if an element exists"
+	            )
+	        )
 	    );
 	};
 
-	exports.default = Step;
+	exports.default = SelectActionType;
 
 /***/ },
-/* 214 */
+/* 216 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23692,7 +23878,7 @@
 	exports.deleteStep = deleteStep;
 	exports.editStep = editStep;
 
-	var _ActionTypes = __webpack_require__(215);
+	var _ActionTypes = __webpack_require__(217);
 
 	var types = _interopRequireWildcard(_ActionTypes);
 
@@ -23722,7 +23908,7 @@
 	//UI actions
 
 /***/ },
-/* 215 */
+/* 217 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -23741,7 +23927,7 @@
 	//UI actions
 
 /***/ },
-/* 216 */
+/* 218 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23753,7 +23939,7 @@
 
 	var _redux = __webpack_require__(186);
 
-	var _reducers = __webpack_require__(217);
+	var _reducers = __webpack_require__(219);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -23766,7 +23952,7 @@
 	}
 
 /***/ },
-/* 217 */
+/* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23777,11 +23963,11 @@
 
 	var _redux = __webpack_require__(186);
 
-	var _flows = __webpack_require__(218);
+	var _flows = __webpack_require__(220);
 
 	var _flows2 = _interopRequireDefault(_flows);
 
-	var _uiState = __webpack_require__(219);
+	var _uiState = __webpack_require__(221);
 
 	var _uiState2 = _interopRequireDefault(_uiState);
 
@@ -23795,7 +23981,7 @@
 	exports.default = rootReducer;
 
 /***/ },
-/* 218 */
+/* 220 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23805,7 +23991,7 @@
 	});
 	exports.default = flows;
 
-	var _ActionTypes = __webpack_require__(215);
+	var _ActionTypes = __webpack_require__(217);
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
@@ -23885,8 +24071,6 @@
 	            });
 	        case _ActionTypes.ADD_STEP:
 	            return state.map(function (flow) {
-	                console.log('initial steps');
-	                console.log(flow.steps);
 	                if (flow.id === action.flowId) {
 	                    var steps = flow.steps.slice();
 
@@ -23897,11 +24081,6 @@
 	                        'selectorValue': 'tour-header-wrapper'
 	                    });
 
-	                    console.log('steps');
-	                    console.log(steps);
-
-	                    console.log('_______');
-	                    console.log(Object.assign({}, flow, { id: action.flowId, name: flow.name, steps: steps }));
 	                    return Object.assign({}, flow, { id: action.flowId, name: flow.name, steps: steps });
 	                }
 	                return flow;
@@ -23918,7 +24097,7 @@
 	}
 
 /***/ },
-/* 219 */
+/* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23928,7 +24107,7 @@
 	});
 	exports.default = flows;
 
-	__webpack_require__(215);
+	__webpack_require__(217);
 
 	var initialState = [{
 	    currentFlow: undefined,
