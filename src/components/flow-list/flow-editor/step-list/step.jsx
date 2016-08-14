@@ -16,22 +16,21 @@ class Step extends React.Component {
 
     render() {
         return (
-            <div className="step">
-                <div className="step-type" onClick={this.handleClick}>
-                    {this.props.step.actionType}
-                </div>
+            <li className="step">
+                <button className="step-type" onClick={this.handleClick}><span className="step-number">{this.props.stepNumber + 1}.) </span> {this.props.step.actionType}</button>
                 {
                     this.state.showEditor === true ?
                         <StepEditor step={this.props.step} stepActions={this.props.stepActions} />
                         : null
                 }
-            </div>
+            </li>
         );
     }
 }
 
 Step.propTypes = {
     step: React.PropTypes.object.isRequired,
-    stepActions: React.PropTypes.object.isRequired
+    stepActions: React.PropTypes.object.isRequired,
+    stepNumber: React.PropTypes.number.isRequired
 };
 export default Step;

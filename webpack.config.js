@@ -1,4 +1,4 @@
-
+var path = require('path');
 
 module.exports = {
     entry: './src/client.js',
@@ -10,15 +10,18 @@ module.exports = {
         loaders : [
             {
                 test: /\.jsx?$/,
-                loader: 'babel'
+                loader: 'babel',
+                include: path.resolve(__dirname, 'src/')
             },
             {
                 test: require.resolve('react'),
-                loader: 'expose?React'
+                loader: 'expose?React',
+                include: path.resolve(__dirname, 'src/')
             },
             {
                 test: require.resolve('react-dom'),
-                loader: 'expose?ReactDOM'
+                loader: 'expose?ReactDOM',
+                include: path.resolve(__dirname, 'src/')
             }
         ]
     },

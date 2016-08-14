@@ -13,13 +13,9 @@ const FlowList = (props) => {
         );
     });
     return (
-        <div>
-            <h2>Flows</h2>
-            <button onClick={props.flowActions.addFlow}>Add a flow</button>
-            <ul className="flow-list">
-                {flowNodes}
-            </ul>
-        </div>
+        <ul>
+            {flowNodes}
+        </ul>
     );
 };
 

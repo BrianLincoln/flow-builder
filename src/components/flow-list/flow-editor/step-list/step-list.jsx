@@ -8,15 +8,14 @@ const StepList = (props) => {
         stepActions: React.PropTypes.object.isRequired,
         steps: React.PropTypes.array.isRequired
     };
-    const stepNodes = props.steps.map((step) => {
+    const stepNodes = props.steps.map((step, index) => {
         return (
-            <Step key={step.id} step={step} stepActions={props.stepActions} />
+            <Step key={step.id} step={step} stepActions={props.stepActions} stepNumber={index} />
         );
     });
     return (
         <div>
-            <h2>Steps</h2>
-            <button onClick={props.stepActions.addStep.bind(this, props.flowId)}>add step</button>
+            <button onClick={props.stepActions.addStep.bind(this, props.flowId)}>+ new step</button>
             <ul className="step-list">
                 {stepNodes}
             </ul>

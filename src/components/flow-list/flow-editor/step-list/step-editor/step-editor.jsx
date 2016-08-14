@@ -10,16 +10,16 @@ class StepEditor extends React.Component {
             actionType: props.step.actionType
         };
     }
-    handleActionTypeChange (event) {
-        console.log('changey');
+    handleActionTypeChange (actionType) {
+        this.setState({
+            actionType,            
+        });
     }
     render() {
         return (
-            <div>
+            <div className="step-editor">
                 <label htmlFor="action-type">
                     <SelectActionType handleActionTypeChange={this.handleActionTypeChange} />
-                    <div>Choose Action Type</div>
-                    <input id="action-type" onChange={this.handleActionTypeChange} type="text" value={this.state.actionType} />
                 </label>
                 <button>save</button>
             </div>

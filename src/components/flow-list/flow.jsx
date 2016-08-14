@@ -5,26 +5,23 @@ class Flow extends React.Component {
     constructor(props) {
         super(props);
 
-        this.handleClick = this.handleClick.bind(this);
+        this.toggleEditMode = this.toggleEditMode.bind(this);
         this.state = {
-            showEditor: false
+            isEditable: false
         };
     }
-    handleClick() {
-        this.setState({ showEditor: !this.state.showEditor });
+    toggleEditMode() {
+        this.setState({ isEditable: !this.state.isEditable });
     }
     render() {
         return (
-            <div className="flow">
-                <div className="flow-name" onClick={this.handleClick}>
-                    {this.props.flow.name}
-                </div>
+            <li>
                 {
-                    this.state.showEditor === true ?
-                        <FlowEditor flow={this.props.flow} flowActions={this.props.flowActions} stepActions={this.props.stepActions} />
-                        : null
+                    this.state.isEditable === true ?
+                        <FlowEditor flow={this.props.flow} flowActions={this.props.flowActions} stepActions={this.props.stepActions} toggleEditMode={this.toggleEditMode} />
+                        : <button onClick={this.toggleEditMode}>{this.props.flow.name}</button>
                 }
-            </div>
+            </li>
         );
     }
 }

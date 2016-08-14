@@ -24,7 +24,17 @@ class FlowManager extends React.Component {
 
     render() {
         const { flows } = this.props;
-        return <FlowList flowActions={this.flowActions} flows={flows} stepActions={this.stepActions} />;
+        return (
+            <div>
+                <header className="app-header">
+                    <h1>Flow Manager</h1>
+                    <nav>
+                        <button onClick={this.flowActions.addFlow}>+ create flow</button>
+                    </nav>
+                </header>
+                <FlowList flowActions={this.flowActions} flows={flows} stepActions={this.stepActions} />
+            </div>
+        );
     }
 }
 
