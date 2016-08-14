@@ -88,7 +88,6 @@ export default function flows (state = initialState, action) {
                 return flow;
             });
         case EDIT_FLOW_NAME:
-            console.log('edit flow name');
             return state.map((flow) => {
                 if (flow.id === action.id) {
                     return Object.assign({}, flow, { id: action.id, name: action.name, steps: flow.steps });
@@ -112,7 +111,6 @@ export default function flows (state = initialState, action) {
                 return flow;
             });
         case DELETE_STEP:
-            console.log('DELETE_STEP');
             return state;
         case EDIT_STEP:
             return state.map((flow) => {

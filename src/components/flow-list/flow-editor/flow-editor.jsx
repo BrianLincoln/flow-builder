@@ -25,7 +25,6 @@ class FlowEditor extends React.Component {
     }
     saveNameEdit () {
         this.props.flowActions.editFlowName(this.props.flow.id, this.state.name);
-
         this.setState({ isNameEditable: false });
     }
     showNameChangeForm () {

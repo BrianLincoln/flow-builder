@@ -82,7 +82,7 @@
 
 	var _root2 = _interopRequireDefault(_root);
 
-	var _configureStore = __webpack_require__(218);
+	var _configureStore = __webpack_require__(216);
 
 	var _configureStore2 = _interopRequireDefault(_configureStore);
 
@@ -23230,7 +23230,7 @@
 
 	var _reactRedux = __webpack_require__(177);
 
-	var _actions = __webpack_require__(216);
+	var _actions = __webpack_require__(214);
 
 	var Actions = _interopRequireWildcard(_actions);
 
@@ -23453,11 +23453,11 @@
 
 	var _stepList2 = _interopRequireDefault(_stepList);
 
-	var _flowResult = __webpack_require__(214);
+	var _flowResult = __webpack_require__(212);
 
 	var _flowResult2 = _interopRequireDefault(_flowResult);
 
-	var _editFlowName = __webpack_require__(215);
+	var _editFlowName = __webpack_require__(213);
 
 	var _editFlowName2 = _interopRequireDefault(_editFlowName);
 
@@ -23504,7 +23504,6 @@
 	        key: 'saveNameEdit',
 	        value: function saveNameEdit() {
 	            this.props.flowActions.editFlowName(this.props.flow.id, this.state.name);
-
 	            this.setState({ isNameEditable: false });
 	        }
 	    }, {
@@ -23633,7 +23632,8 @@
 
 	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Step).call(this, props));
 
-	        _this.handleClick = _this.handleClick.bind(_this);
+	        _this.showStepEditorClick = _this.showStepEditorClick.bind(_this);
+	        _this.hideStepEditor = _this.hideStepEditor.bind(_this);
 	        _this.state = {
 	            showEditor: false
 	        };
@@ -23641,9 +23641,14 @@
 	    }
 
 	    _createClass(Step, [{
-	        key: 'handleClick',
-	        value: function handleClick() {
+	        key: 'showStepEditorClick',
+	        value: function showStepEditorClick() {
 	            this.setState({ showEditor: !this.state.showEditor });
+	        }
+	    }, {
+	        key: 'hideStepEditor',
+	        value: function hideStepEditor() {
+	            this.setState({ showEditor: false });
 	        }
 	    }, {
 	        key: 'render',
@@ -23651,9 +23656,9 @@
 	            return _react2.default.createElement(
 	                'li',
 	                { className: 'step' },
-	                _react2.default.createElement(
+	                this.state.showEditor === true ? _react2.default.createElement(_stepEditor2.default, { hideStepEditor: this.hideStepEditor, step: this.props.step, stepActions: this.props.stepActions }) : _react2.default.createElement(
 	                    'button',
-	                    { className: 'step-type', onClick: this.handleClick },
+	                    { className: 'step-type', onClick: this.showStepEditorClick },
 	                    _react2.default.createElement(
 	                        'span',
 	                        { className: 'step-number' },
@@ -23662,8 +23667,7 @@
 	                    ),
 	                    ' ',
 	                    this.props.step.actionType
-	                ),
-	                this.state.showEditor === true ? _react2.default.createElement(_stepEditor2.default, { step: this.props.step, stepActions: this.props.stepActions }) : null
+	                )
 	            );
 	        }
 	    }]);
@@ -23694,11 +23698,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _selectActionType = __webpack_require__(212);
+	var _selectActionType = __webpack_require__(220);
 
 	var _selectActionType2 = _interopRequireDefault(_selectActionType);
 
-	var _pageLoad = __webpack_require__(213);
+	var _pageLoad = __webpack_require__(221);
 
 	var _pageLoad2 = _interopRequireDefault(_pageLoad);
 
@@ -23720,6 +23724,7 @@
 
 	        _this.handleActionTypeChange = _this.handleActionTypeChange.bind(_this);
 	        _this.handleUrlFieldChange = _this.handleUrlFieldChange.bind(_this);
+	        _this.saveStepEdits = _this.saveStepEdits.bind(_this);
 
 	        _this.state = {
 	            step: props.step
@@ -23728,18 +23733,9 @@
 	    }
 
 	    _createClass(StepEditor, [{
-	        key: 'actionSpecificFields',
-	        value: function actionSpecificFields() {
-	            switch (this.state.step.actionType) {
-	                case 'pageLoad':
-	                    return _react2.default.createElement(_pageLoad2.default, { handleUrlFieldChange: this.handleUrlFieldChange, url: this.state.step.url });
-	            }
-	        }
-	    }, {
 	        key: 'handleActionTypeChange',
 	        value: function handleActionTypeChange(actionType) {
-	            var updatedStep = Object.assign({}, this.state.step);
-	            updatedStep.actionType = actionType;
+	            var updatedStep = Object.assign({}, this.state.step, { actionType: actionType });
 
 	            this.setState({
 	                step: updatedStep
@@ -23748,16 +23744,26 @@
 	    }, {
 	        key: 'handleUrlFieldChange',
 	        value: function handleUrlFieldChange(url) {
-	            var updatedStep = Object.assign({}, this.state.step);
-	            updatedStep.url = url;
-
+	            var updatedStep = Object.assign({}, this.state.step, { url: url });
+	            console.log('updatedStep');
+	            console.log(updatedStep);
 	            this.setState({
 	                step: updatedStep
 	            });
 	        }
 	    }, {
+	        key: 'saveStepEdits',
+	        value: function saveStepEdits() {
+	            console.log('saveStepEdits');
+	            console.log(this.state.step);
+	            this.props.stepActions.editStep(this.props.step.id, this.state.step);
+	            this.props.hideStepEditor();
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var _this2 = this;
+
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'step-editor' },
@@ -23766,10 +23772,16 @@
 	                    { htmlFor: 'action-type' },
 	                    _react2.default.createElement(_selectActionType2.default, { handleActionTypeChange: this.handleActionTypeChange })
 	                ),
-	                this.actionSpecificFields(),
+	                function () {
+	                    console.log(_this2.state.step);
+	                    switch (_this2.state.step.actionType) {
+	                        case 'pageLoad':
+	                            return _react2.default.createElement(_pageLoad2.default, { handleUrlFieldChange: _this2.handleUrlFieldChange, url: _this2.state.step.url });
+	                    }
+	                }(),
 	                _react2.default.createElement(
 	                    'button',
-	                    { onClick: this.props.stepActions.editStep.bind(this, this.props.step.id, this.state.step) },
+	                    { onClick: this.saveStepEdits },
 	                    'save'
 	                )
 	            );
@@ -23780,6 +23792,7 @@
 	}(_react2.default.Component);
 
 	StepEditor.propTypes = {
+	    hideStepEditor: _react2.default.PropTypes.func.isRequired,
 	    step: _react2.default.PropTypes.object.isRequired,
 	    stepActions: _react2.default.PropTypes.object.isRequired
 	};
@@ -23788,104 +23801,6 @@
 
 /***/ },
 /* 212 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(3);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var SelectActionType = function SelectActionType(props) {
-	    SelectActionType.propTypes = {
-	        handleActionTypeChange: _react2.default.PropTypes.func.isRequired
-	    };
-	    var handleSelection = function handleSelection(event) {
-	        props.handleActionTypeChange(event.target.value);
-	    };
-	    return _react2.default.createElement(
-	        "div",
-	        null,
-	        _react2.default.createElement(
-	            "label",
-	            { htmlFor: "action-types" },
-	            "Choose Action:"
-	        ),
-	        _react2.default.createElement(
-	            "select",
-	            { id: "action-types", onChange: handleSelection.bind(undefined) },
-	            _react2.default.createElement(
-	                "option",
-	                { value: "pageLoad" },
-	                "Load a page"
-	            ),
-	            _react2.default.createElement(
-	                "option",
-	                { value: "input" },
-	                "Edit a field"
-	            ),
-	            _react2.default.createElement(
-	                "option",
-	                { value: "click" },
-	                "Click on something"
-	            ),
-	            _react2.default.createElement(
-	                "option",
-	                { value: "confirmElementExists" },
-	                "Check if an element exists"
-	            )
-	        )
-	    );
-	};
-
-	exports.default = SelectActionType;
-
-/***/ },
-/* 213 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(3);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var SelectActionType = function SelectActionType(props) {
-	    SelectActionType.propTypes = {
-	        handleUrlFieldChange: _react2.default.PropTypes.func.isRequired,
-	        url: _react2.default.PropTypes.string
-	    };
-	    var handleChange = function handleChange(event) {
-	        props.handleUrlFieldChange(event.target.value);
-	    };
-	    return _react2.default.createElement(
-	        "div",
-	        null,
-	        _react2.default.createElement(
-	            "label",
-	            { htmlFor: "field-url" },
-	            "Url: "
-	        ),
-	        _react2.default.createElement("input", { id: "field-url", onChange: handleChange.bind(undefined), type: "text", value: props.url })
-	    );
-	};
-
-	exports.default = SelectActionType;
-
-/***/ },
-/* 214 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -23913,7 +23828,7 @@
 	exports.default = FlowResult;
 
 /***/ },
-/* 215 */
+/* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -23958,7 +23873,7 @@
 	exports.default = EditFlowName;
 
 /***/ },
-/* 216 */
+/* 214 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23974,7 +23889,7 @@
 	exports.deleteStep = deleteStep;
 	exports.editStep = editStep;
 
-	var _ActionTypes = __webpack_require__(217);
+	var _ActionTypes = __webpack_require__(215);
 
 	var types = _interopRequireWildcard(_ActionTypes);
 
@@ -24006,7 +23921,7 @@
 	//UI actions
 
 /***/ },
-/* 217 */
+/* 215 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -24026,7 +23941,7 @@
 	//UI actions
 
 /***/ },
-/* 218 */
+/* 216 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24038,7 +23953,7 @@
 
 	var _redux = __webpack_require__(184);
 
-	var _reducers = __webpack_require__(219);
+	var _reducers = __webpack_require__(217);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -24051,7 +23966,7 @@
 	}
 
 /***/ },
-/* 219 */
+/* 217 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24062,11 +23977,11 @@
 
 	var _redux = __webpack_require__(184);
 
-	var _flows = __webpack_require__(220);
+	var _flows = __webpack_require__(218);
 
 	var _flows2 = _interopRequireDefault(_flows);
 
-	var _uiState = __webpack_require__(221);
+	var _uiState = __webpack_require__(219);
 
 	var _uiState2 = _interopRequireDefault(_uiState);
 
@@ -24080,7 +23995,7 @@
 	exports.default = rootReducer;
 
 /***/ },
-/* 220 */
+/* 218 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24090,7 +24005,7 @@
 	});
 	exports.default = flows;
 
-	var _ActionTypes = __webpack_require__(217);
+	var _ActionTypes = __webpack_require__(215);
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
@@ -24169,7 +24084,6 @@
 	                return flow;
 	            });
 	        case _ActionTypes.EDIT_FLOW_NAME:
-	            console.log('edit flow name');
 	            return state.map(function (flow) {
 	                if (flow.id === action.id) {
 	                    return Object.assign({}, flow, { id: action.id, name: action.name, steps: flow.steps });
@@ -24193,7 +24107,6 @@
 	                return flow;
 	            });
 	        case _ActionTypes.DELETE_STEP:
-	            console.log('DELETE_STEP');
 	            return state;
 	        case _ActionTypes.EDIT_STEP:
 	            return state.map(function (flow) {
@@ -24212,7 +24125,7 @@
 	}
 
 /***/ },
-/* 221 */
+/* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24222,7 +24135,7 @@
 	});
 	exports.default = flows;
 
-	__webpack_require__(217);
+	__webpack_require__(215);
 
 	var initialState = [{
 	    currentFlow: undefined,
@@ -24238,6 +24151,104 @@
 	            return state;
 	    }
 	}
+
+/***/ },
+/* 220 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(3);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var SelectActionType = function SelectActionType(props) {
+	    SelectActionType.propTypes = {
+	        handleActionTypeChange: _react2.default.PropTypes.func.isRequired
+	    };
+	    var handleSelection = function handleSelection(event) {
+	        props.handleActionTypeChange(event.target.value);
+	    };
+	    return _react2.default.createElement(
+	        "div",
+	        null,
+	        _react2.default.createElement(
+	            "label",
+	            { htmlFor: "action-types" },
+	            "Choose Action:"
+	        ),
+	        _react2.default.createElement(
+	            "select",
+	            { id: "action-types", onChange: handleSelection.bind(undefined) },
+	            _react2.default.createElement(
+	                "option",
+	                { value: "pageLoad" },
+	                "Load a page"
+	            ),
+	            _react2.default.createElement(
+	                "option",
+	                { value: "input" },
+	                "Edit a field"
+	            ),
+	            _react2.default.createElement(
+	                "option",
+	                { value: "click" },
+	                "Click on something"
+	            ),
+	            _react2.default.createElement(
+	                "option",
+	                { value: "confirmElementExists" },
+	                "Check if an element exists"
+	            )
+	        )
+	    );
+	};
+
+	exports.default = SelectActionType;
+
+/***/ },
+/* 221 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(3);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var SelectActionType = function SelectActionType(props) {
+	    SelectActionType.propTypes = {
+	        handleUrlFieldChange: _react2.default.PropTypes.func.isRequired,
+	        url: _react2.default.PropTypes.string
+	    };
+	    var handleChange = function handleChange(event) {
+	        props.handleUrlFieldChange(event.target.value);
+	    };
+	    return _react2.default.createElement(
+	        "div",
+	        null,
+	        _react2.default.createElement(
+	            "label",
+	            { htmlFor: "field-url" },
+	            "Url: "
+	        ),
+	        _react2.default.createElement("input", { id: "field-url", onChange: handleChange.bind(undefined), type: "text", value: props.url })
+	    );
+	};
+
+	exports.default = SelectActionType;
 
 /***/ }
 /******/ ]);

@@ -5,23 +5,25 @@ class Step extends React.Component {
     constructor(props) {
         super(props);
 
-        this.handleClick = this.handleClick.bind(this);
+        this.showStepEditorClick = this.showStepEditorClick.bind(this);
+        this.hideStepEditor = this.hideStepEditor.bind(this);
         this.state = {
             showEditor: false
         };
     }
-    handleClick() {
+    showStepEditorClick() {
         this.setState({ showEditor: !this.state.showEditor });
     }
-
+    hideStepEditor() {
+        this.setState({ showEditor: false });
+    }
     render() {
         return (
             <li className="step">
-                <button className="step-type" onClick={this.handleClick}><span className="step-number">{this.props.stepNumber + 1}.) </span> {this.props.step.actionType}</button>
                 {
                     this.state.showEditor === true ?
-                        <StepEditor step={this.props.step} stepActions={this.props.stepActions} />
-                        : null
+                        <StepEditor hideStepEditor={this.hideStepEditor} step={this.props.step} stepActions={this.props.stepActions} />
+                        : <button className="step-type" onClick={this.showStepEditorClick}><span className="step-number">{this.props.stepNumber + 1}.) </span> {this.props.step.actionType}</button>
                 }
             </li>
         );
