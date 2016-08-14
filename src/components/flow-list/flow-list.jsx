@@ -9,7 +9,7 @@ const FlowList = (props) => {
     };
     const flowNodes = props.flows.map((flow) => {
         return (
-            <Flow flow={flow}  flowActions={props.flowActions} key={flow.id} stepActions={props.stepActions}  />
+            <Flow flow={flow} flowActions={props.flowActions} key={flow.id} stepActions={props.stepActions}  />
         );
     });
     return (

@@ -1,12 +1,18 @@
 import React from 'react';
 import StepList from './step-list/step-list';
+import FlowResult from './flow-result';
+import EditFlowName from './edit-flow-name';
 
 class FlowEditor extends React.Component {
     constructor(props) {
         super(props);
         this.handleNameFieldChange = this.handleNameFieldChange.bind(this);
+        this.cancelNameEdit = this.cancelNameEdit.bind(this);
+        this.saveNameEdit = this.saveNameEdit.bind(this);
+        this.showNameChangeForm = this.showNameChangeForm.bind(this);
 
         this.state = {
+            isNameEditable: false,
             name: props.flow.name,
             steps: props.flow.steps
         };
@@ -14,17 +20,29 @@ class FlowEditor extends React.Component {
     handleNameFieldChange (event) {
         this.setState({ 'name': event.target.value });
     }
+    cancelNameEdit () {
+        this.setState({ 'name': this.props.flow.name, isNameEditable: false });
+    }
+    saveNameEdit () {
+        this.props.flowActions.editFlowName(this.props.flow.id, this.state.name);
+
+        this.setState({ isNameEditable: false });
+    }
+    showNameChangeForm () {
+        this.setState({ isNameEditable: true });
+    }
+    flowName () {
+        if (this.state.isNameEditable === true) {
+            return <EditFlowName cancelNameEdit={this.cancelNameEdit} flowActions={this.props.flowActions} handleNameFieldChange={this.handleNameFieldChange} name={this.state.name} saveNameEdit={this.saveNameEdit} />;
+        }
+        return <h2 onClick={this.showNameChangeForm}>{this.props.flow.name}</h2>;
+    }
     render() {
         return (
             <div className="flow-editor">
-                <header>
-                    <input className="flow-editor-name" id="name" onChange={this.handleNameFieldChange} type="text" value={this.state.name} />
-                    <nav>
-                        <button onClick={this.props.toggleEditMode.bind(this)}>cancel</button>
-                        <button onClick={this.props.flowActions.editFlow.bind(this, this.props.flow.id, this.state.name, this.state.steps)}>save</button>
-                    </nav>
-                </header>
+                {this.flowName()}
                 <StepList flowActions={this.props.flowActions} flowId={this.props.flow.id} stepActions={this.props.stepActions} steps={this.props.flow.steps} />
+                <FlowResult flow={this.props.flow} />
             </div>
         );
     }

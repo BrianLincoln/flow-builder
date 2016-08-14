@@ -5,7 +5,7 @@ const FlowResult = (props) => {
         flow: React.PropTypes.object.isRequired
     };
     return (
-        <pre>{JSON.stringify(props.flow, null, 4)}</pre>
+        <pre className="flow-result">{JSON.stringify(props.flow, null, 4)}</pre>
     );
 };
 export default FlowResult;

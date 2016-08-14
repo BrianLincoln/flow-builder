@@ -9,9 +9,11 @@ export function deleteFlow(id) {
 export function editFlow(id, name, steps) {
     return { type: types.EDIT_FLOW, id, name, steps };
 }
+export function editFlowName(id, name) {
+    return { type: types.EDIT_FLOW_NAME, id, name };
+}
 
 export function addStep(flowId) {
-    console.log('~~~~ addStep');
     return { type: types.ADD_STEP, flowId };
 }
 export function deleteStep(id) {

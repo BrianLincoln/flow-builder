@@ -82,7 +82,7 @@
 
 	var _root2 = _interopRequireDefault(_root);
 
-	var _configureStore = __webpack_require__(215);
+	var _configureStore = __webpack_require__(218);
 
 	var _configureStore2 = _interopRequireDefault(_configureStore);
 
@@ -23230,7 +23230,7 @@
 
 	var _reactRedux = __webpack_require__(177);
 
-	var _actions = __webpack_require__(213);
+	var _actions = __webpack_require__(216);
 
 	var Actions = _interopRequireWildcard(_actions);
 
@@ -23255,7 +23255,8 @@
 	        _this.flowActions = {
 	            addFlow: _this.props.actions.addFlow,
 	            deleteFlow: _this.props.actions.deleteFlow,
-	            editFlow: _this.props.actions.editFlow
+	            editFlow: _this.props.actions.editFlow,
+	            editFlowName: _this.props.actions.editFlowName
 	        };
 
 	        _this.stepActions = {
@@ -23452,6 +23453,14 @@
 
 	var _stepList2 = _interopRequireDefault(_stepList);
 
+	var _flowResult = __webpack_require__(214);
+
+	var _flowResult2 = _interopRequireDefault(_flowResult);
+
+	var _editFlowName = __webpack_require__(215);
+
+	var _editFlowName2 = _interopRequireDefault(_editFlowName);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -23469,8 +23478,12 @@
 	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(FlowEditor).call(this, props));
 
 	        _this.handleNameFieldChange = _this.handleNameFieldChange.bind(_this);
+	        _this.cancelNameEdit = _this.cancelNameEdit.bind(_this);
+	        _this.saveNameEdit = _this.saveNameEdit.bind(_this);
+	        _this.showNameChangeForm = _this.showNameChangeForm.bind(_this);
 
 	        _this.state = {
+	            isNameEditable: false,
 	            name: props.flow.name,
 	            steps: props.flow.steps
 	        };
@@ -23483,31 +23496,43 @@
 	            this.setState({ 'name': event.target.value });
 	        }
 	    }, {
+	        key: 'cancelNameEdit',
+	        value: function cancelNameEdit() {
+	            this.setState({ 'name': this.props.flow.name, isNameEditable: false });
+	        }
+	    }, {
+	        key: 'saveNameEdit',
+	        value: function saveNameEdit() {
+	            this.props.flowActions.editFlowName(this.props.flow.id, this.state.name);
+
+	            this.setState({ isNameEditable: false });
+	        }
+	    }, {
+	        key: 'showNameChangeForm',
+	        value: function showNameChangeForm() {
+	            this.setState({ isNameEditable: true });
+	        }
+	    }, {
+	        key: 'flowName',
+	        value: function flowName() {
+	            if (this.state.isNameEditable === true) {
+	                return _react2.default.createElement(_editFlowName2.default, { cancelNameEdit: this.cancelNameEdit, flowActions: this.props.flowActions, handleNameFieldChange: this.handleNameFieldChange, name: this.state.name, saveNameEdit: this.saveNameEdit });
+	            }
+	            return _react2.default.createElement(
+	                'h2',
+	                { onClick: this.showNameChangeForm },
+	                this.props.flow.name
+	            );
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'flow-editor' },
-	                _react2.default.createElement(
-	                    'header',
-	                    null,
-	                    _react2.default.createElement('input', { className: 'flow-editor-name', id: 'name', onChange: this.handleNameFieldChange, type: 'text', value: this.state.name }),
-	                    _react2.default.createElement(
-	                        'nav',
-	                        null,
-	                        _react2.default.createElement(
-	                            'button',
-	                            { onClick: this.props.toggleEditMode.bind(this) },
-	                            'cancel'
-	                        ),
-	                        _react2.default.createElement(
-	                            'button',
-	                            { onClick: this.props.flowActions.editFlow.bind(this, this.props.flow.id, this.state.name, this.state.steps) },
-	                            'save'
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(_stepList2.default, { flowActions: this.props.flowActions, flowId: this.props.flow.id, stepActions: this.props.stepActions, steps: this.props.flow.steps })
+	                this.flowName(),
+	                _react2.default.createElement(_stepList2.default, { flowActions: this.props.flowActions, flowId: this.props.flow.id, stepActions: this.props.stepActions, steps: this.props.flow.steps }),
+	                _react2.default.createElement(_flowResult2.default, { flow: this.props.flow })
 	            );
 	        }
 	    }]);
@@ -23673,6 +23698,10 @@
 
 	var _selectActionType2 = _interopRequireDefault(_selectActionType);
 
+	var _pageLoad = __webpack_require__(213);
+
+	var _pageLoad2 = _interopRequireDefault(_pageLoad);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -23690,18 +23719,40 @@
 	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(StepEditor).call(this, props));
 
 	        _this.handleActionTypeChange = _this.handleActionTypeChange.bind(_this);
+	        _this.handleUrlFieldChange = _this.handleUrlFieldChange.bind(_this);
 
 	        _this.state = {
-	            actionType: props.step.actionType
+	            step: props.step
 	        };
 	        return _this;
 	    }
 
 	    _createClass(StepEditor, [{
+	        key: 'actionSpecificFields',
+	        value: function actionSpecificFields() {
+	            switch (this.state.step.actionType) {
+	                case 'pageLoad':
+	                    return _react2.default.createElement(_pageLoad2.default, { handleUrlFieldChange: this.handleUrlFieldChange, url: this.state.step.url });
+	            }
+	        }
+	    }, {
 	        key: 'handleActionTypeChange',
 	        value: function handleActionTypeChange(actionType) {
+	            var updatedStep = Object.assign({}, this.state.step);
+	            updatedStep.actionType = actionType;
+
 	            this.setState({
-	                actionType: actionType
+	                step: updatedStep
+	            });
+	        }
+	    }, {
+	        key: 'handleUrlFieldChange',
+	        value: function handleUrlFieldChange(url) {
+	            var updatedStep = Object.assign({}, this.state.step);
+	            updatedStep.url = url;
+
+	            this.setState({
+	                step: updatedStep
 	            });
 	        }
 	    }, {
@@ -23715,9 +23766,10 @@
 	                    { htmlFor: 'action-type' },
 	                    _react2.default.createElement(_selectActionType2.default, { handleActionTypeChange: this.handleActionTypeChange })
 	                ),
+	                this.actionSpecificFields(),
 	                _react2.default.createElement(
 	                    'button',
-	                    null,
+	                    { onClick: this.props.stepActions.editStep.bind(this, this.props.step.id, this.state.step) },
 	                    'save'
 	                )
 	            );
@@ -23798,6 +23850,117 @@
 /* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(3);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var SelectActionType = function SelectActionType(props) {
+	    SelectActionType.propTypes = {
+	        handleUrlFieldChange: _react2.default.PropTypes.func.isRequired,
+	        url: _react2.default.PropTypes.string
+	    };
+	    var handleChange = function handleChange(event) {
+	        props.handleUrlFieldChange(event.target.value);
+	    };
+	    return _react2.default.createElement(
+	        "div",
+	        null,
+	        _react2.default.createElement(
+	            "label",
+	            { htmlFor: "field-url" },
+	            "Url: "
+	        ),
+	        _react2.default.createElement("input", { id: "field-url", onChange: handleChange.bind(undefined), type: "text", value: props.url })
+	    );
+	};
+
+	exports.default = SelectActionType;
+
+/***/ },
+/* 214 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(3);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var FlowResult = function FlowResult(props) {
+	    FlowResult.propTypes = {
+	        flow: _react2.default.PropTypes.object.isRequired
+	    };
+	    return _react2.default.createElement(
+	        "pre",
+	        { className: "flow-result" },
+	        JSON.stringify(props.flow, null, 4)
+	    );
+	};
+	exports.default = FlowResult;
+
+/***/ },
+/* 215 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(3);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var EditFlowName = function EditFlowName(props) {
+	    EditFlowName.propTypes = {
+	        cancelNameEdit: _react2.default.PropTypes.func.isRequired,
+	        handleNameFieldChange: _react2.default.PropTypes.func.isRequired,
+	        name: _react2.default.PropTypes.string.isRequired,
+	        saveNameEdit: _react2.default.PropTypes.func.isRequired
+	    };
+	    return _react2.default.createElement(
+	        "header",
+	        null,
+	        _react2.default.createElement("input", { className: "flow-editor-name", id: "name", onChange: props.handleNameFieldChange.bind(undefined), type: "text", value: props.name }),
+	        _react2.default.createElement(
+	            "nav",
+	            null,
+	            _react2.default.createElement(
+	                "button",
+	                { onClick: props.cancelNameEdit.bind(undefined) },
+	                "cancel"
+	            ),
+	            _react2.default.createElement(
+	                "button",
+	                { onClick: props.saveNameEdit.bind(undefined) },
+	                "save"
+	            )
+	        )
+	    );
+	};
+	exports.default = EditFlowName;
+
+/***/ },
+/* 216 */
+/***/ function(module, exports, __webpack_require__) {
+
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -23806,11 +23969,12 @@
 	exports.addFlow = addFlow;
 	exports.deleteFlow = deleteFlow;
 	exports.editFlow = editFlow;
+	exports.editFlowName = editFlowName;
 	exports.addStep = addStep;
 	exports.deleteStep = deleteStep;
 	exports.editStep = editStep;
 
-	var _ActionTypes = __webpack_require__(214);
+	var _ActionTypes = __webpack_require__(217);
 
 	var types = _interopRequireWildcard(_ActionTypes);
 
@@ -23825,9 +23989,11 @@
 	function editFlow(id, name, steps) {
 	    return { type: types.EDIT_FLOW, id: id, name: name, steps: steps };
 	}
+	function editFlowName(id, name) {
+	    return { type: types.EDIT_FLOW_NAME, id: id, name: name };
+	}
 
 	function addStep(flowId) {
-	    console.log('~~~~ addStep');
 	    return { type: types.ADD_STEP, flowId: flowId };
 	}
 	function deleteStep(id) {
@@ -23840,7 +24006,7 @@
 	//UI actions
 
 /***/ },
-/* 214 */
+/* 217 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -23851,6 +24017,7 @@
 	var ADD_FLOW = exports.ADD_FLOW = 'ADD_FLOW';
 	var DELETE_FLOW = exports.DELETE_FLOW = 'DELETE_FLOW';
 	var EDIT_FLOW = exports.EDIT_FLOW = 'EDIT_FLOW';
+	var EDIT_FLOW_NAME = exports.EDIT_FLOW_NAME = 'EDIT_FLOW_NAME';
 
 	var ADD_STEP = exports.ADD_STEP = 'ADD_STEP';
 	var DELETE_STEP = exports.DELETE_STEP = 'DELETE_STEP';
@@ -23859,7 +24026,7 @@
 	//UI actions
 
 /***/ },
-/* 215 */
+/* 218 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23871,7 +24038,7 @@
 
 	var _redux = __webpack_require__(184);
 
-	var _reducers = __webpack_require__(216);
+	var _reducers = __webpack_require__(219);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -23884,7 +24051,7 @@
 	}
 
 /***/ },
-/* 216 */
+/* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23895,11 +24062,11 @@
 
 	var _redux = __webpack_require__(184);
 
-	var _flows = __webpack_require__(217);
+	var _flows = __webpack_require__(220);
 
 	var _flows2 = _interopRequireDefault(_flows);
 
-	var _uiState = __webpack_require__(218);
+	var _uiState = __webpack_require__(221);
 
 	var _uiState2 = _interopRequireDefault(_uiState);
 
@@ -23913,7 +24080,7 @@
 	exports.default = rootReducer;
 
 /***/ },
-/* 217 */
+/* 220 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23923,7 +24090,7 @@
 	});
 	exports.default = flows;
 
-	var _ActionTypes = __webpack_require__(214);
+	var _ActionTypes = __webpack_require__(217);
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
@@ -24001,6 +24168,14 @@
 	                }
 	                return flow;
 	            });
+	        case _ActionTypes.EDIT_FLOW_NAME:
+	            console.log('edit flow name');
+	            return state.map(function (flow) {
+	                if (flow.id === action.id) {
+	                    return Object.assign({}, flow, { id: action.id, name: action.name, steps: flow.steps });
+	                }
+	                return flow;
+	            });
 	        case _ActionTypes.ADD_STEP:
 	            return state.map(function (flow) {
 	                if (flow.id === action.flowId) {
@@ -24021,15 +24196,23 @@
 	            console.log('DELETE_STEP');
 	            return state;
 	        case _ActionTypes.EDIT_STEP:
-	            console.log('EDIT_STEP');
-	            return state;
+	            return state.map(function (flow) {
+	                var updatedSteps = flow.steps.map(function (step) {
+	                    if (step.id === action.id) {
+	                        return Object.assign({}, step, { id: action.id, actionType: action.step.actionType, url: action.step.url });
+	                    }
+	                    return step;
+	                });
+	                return Object.assign({}, flow, { id: flow.id, name: flow.name, steps: updatedSteps });
+	            });
+
 	        default:
 	            return state;
 	    }
 	}
 
 /***/ },
-/* 218 */
+/* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24039,7 +24222,7 @@
 	});
 	exports.default = flows;
 
-	__webpack_require__(214);
+	__webpack_require__(217);
 
 	var initialState = [{
 	    currentFlow: undefined,

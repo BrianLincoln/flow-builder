@@ -12,7 +12,8 @@ class FlowManager extends React.Component {
         this.flowActions = {
             addFlow: this.props.actions.addFlow,
             deleteFlow: this.props.actions.deleteFlow,
-            editFlow: this.props.actions.editFlow
+            editFlow: this.props.actions.editFlow,
+            editFlowName: this.props.actions.editFlowName
         };
 
         this.stepActions = {

@@ -1,4 +1,4 @@
-import { ADD_FLOW, DELETE_FLOW, EDIT_FLOW, ADD_STEP, DELETE_STEP, EDIT_STEP } from '../constants/ActionTypes';
+import { ADD_FLOW, DELETE_FLOW, EDIT_FLOW, EDIT_FLOW_NAME, ADD_STEP, DELETE_STEP, EDIT_STEP } from '../constants/ActionTypes';
 
 const initialState = [
     {
@@ -87,6 +87,14 @@ export default function flows (state = initialState, action) {
                 }
                 return flow;
             });
+        case EDIT_FLOW_NAME:
+            console.log('edit flow name');
+            return state.map((flow) => {
+                if (flow.id === action.id) {
+                    return Object.assign({}, flow, { id: action.id, name: action.name, steps: flow.steps });
+                }
+                return flow;
+            });
         case ADD_STEP:
             return state.map((flow) => {
                 if (flow.id === action.flowId) {
@@ -107,8 +115,16 @@ export default function flows (state = initialState, action) {
             console.log('DELETE_STEP');
             return state;
         case EDIT_STEP:
-            console.log('EDIT_STEP');
-            return state;
+            return state.map((flow) => {
+                const updatedSteps = flow.steps.map((step) => {
+                    if (step.id === action.id) {
+                        return Object.assign({}, step, { id: action.id, actionType: action.step.actionType, url: action.step.url });
+                    }
+                    return step;
+                });
+                return Object.assign({}, flow, { id: flow.id, name: flow.name, steps: updatedSteps });
+            });
+
         default:
             return state;
     }

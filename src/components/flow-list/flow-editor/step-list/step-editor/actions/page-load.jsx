@@ -2,17 +2,16 @@ import React from 'react';
 
 const SelectActionType = (props) => {
     SelectActionType.propTypes = {
-        handleActionTypeChange: React.PropTypes.func.isRequired
+        handleUrlFieldChange: React.PropTypes.func.isRequired,
+        url: React.PropTypes.string
     };
-    const handleSelection = (event) => {
-        console.log('handle thing');
-        console.log(event);
-        props.handleActionTypeChange(event.target.value);
+    const handleChange = (event) => {
+        props.handleUrlFieldChange(event.target.value);
     };
     return (
         <div>
-            <label htmlFor="field-url">Choose Action:</label>
-            <input id="field-url" onChange={handleSelection.bind(this)} type="text" />
+            <label htmlFor="field-url">Url: </label>
+            <input id="field-url" onChange={handleChange.bind(this)} type="text" value={props.url} />
         </div>
     );
 };
