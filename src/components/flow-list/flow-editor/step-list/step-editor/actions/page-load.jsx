@@ -1,7 +1,7 @@
 import React from 'react';
 
-const SelectActionType = (props) => {
-    SelectActionType.propTypes = {
+const PageLoadAction = (props) => {
+    PageLoadAction.propTypes = {
         handleUrlFieldChange: React.PropTypes.func.isRequired,
         url: React.PropTypes.string
     };
@@ -16,4 +16,4 @@ const SelectActionType = (props) => {
     );
 };
 
-export default SelectActionType;
+export default PageLoadAction;

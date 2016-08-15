@@ -116,7 +116,7 @@ export default function flows (state = initialState, action) {
             return state.map((flow) => {
                 const updatedSteps = flow.steps.map((step) => {
                     if (step.id === action.id) {
-                        return Object.assign({}, step, { id: action.id, actionType: action.step.actionType, url: action.step.url });
+                        return Object.assign({}, step, action.step);
                     }
                     return step;
                 });
