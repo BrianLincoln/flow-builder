@@ -82,7 +82,7 @@
 
 	var _root2 = _interopRequireDefault(_root);
 
-	var _configureStore = __webpack_require__(219);
+	var _configureStore = __webpack_require__(220);
 
 	var _configureStore2 = _interopRequireDefault(_configureStore);
 
@@ -23230,7 +23230,7 @@
 
 	var _reactRedux = __webpack_require__(177);
 
-	var _actions = __webpack_require__(217);
+	var _actions = __webpack_require__(218);
 
 	var Actions = _interopRequireWildcard(_actions);
 
@@ -23453,11 +23453,11 @@
 
 	var _stepList2 = _interopRequireDefault(_stepList);
 
-	var _flowResult = __webpack_require__(215);
+	var _flowResult = __webpack_require__(216);
 
 	var _flowResult2 = _interopRequireDefault(_flowResult);
 
-	var _editFlowName = __webpack_require__(216);
+	var _editFlowName = __webpack_require__(217);
 
 	var _editFlowName2 = _interopRequireDefault(_editFlowName);
 
@@ -23710,6 +23710,10 @@
 
 	var _clickElement2 = _interopRequireDefault(_clickElement);
 
+	var _editInput = __webpack_require__(215);
+
+	var _editInput2 = _interopRequireDefault(_editInput);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -23727,6 +23731,7 @@
 	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(StepEditor).call(this, props));
 
 	        _this.handleActionTypeChange = _this.handleActionTypeChange.bind(_this);
+	        _this.handleInputValueChange = _this.handleInputValueChange.bind(_this);
 	        _this.handleUrlFieldChange = _this.handleUrlFieldChange.bind(_this);
 	        _this.handleSelectorTypeChange = _this.handleSelectorTypeChange.bind(_this);
 	        _this.handleSelectorValueChange = _this.handleSelectorValueChange.bind(_this);
@@ -23742,7 +23747,14 @@
 	        key: 'handleActionTypeChange',
 	        value: function handleActionTypeChange(actionType) {
 	            var updatedStep = Object.assign({}, this.state.step, { actionType: actionType });
-
+	            this.setState({
+	                step: updatedStep
+	            });
+	        }
+	    }, {
+	        key: 'handleInputValueChange',
+	        value: function handleInputValueChange(inputValue) {
+	            var updatedStep = Object.assign({}, this.state.step, { inputValue: inputValue });
 	            this.setState({
 	                step: updatedStep
 	            });
@@ -23796,6 +23808,8 @@
 	                            return _react2.default.createElement(_pageLoad2.default, { handleUrlFieldChange: _this2.handleUrlFieldChange, url: _this2.state.step.url });
 	                        case 'click':
 	                            return _react2.default.createElement(_clickElement2.default, { handleSelectorTypeChange: _this2.handleSelectorTypeChange, handleSelectorValueChange: _this2.handleSelectorValueChange, selectorType: _this2.state.step.selectorType, selectorValue: _this2.state.step.selectorValue });
+	                        case 'input':
+	                            return _react2.default.createElement(_editInput2.default, { handleInputValueChange: _this2.handleInputValueChange, handleSelectorTypeChange: _this2.handleSelectorTypeChange, handleSelectorValueChange: _this2.handleSelectorValueChange, inputValue: _this2.state.step.inputValue, selectorType: _this2.state.step.selectorType, selectorValue: _this2.state.step.selectorValue });
 	                    }
 	                }(),
 	                _react2.default.createElement(
@@ -23989,6 +24003,78 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var EditInputAction = function EditInputAction(props) {
+	    EditInputAction.propTypes = {
+	        handleInputValueChange: _react2.default.PropTypes.func.isRequired,
+	        handleSelectorTypeChange: _react2.default.PropTypes.func.isRequired,
+	        handleSelectorValueChange: _react2.default.PropTypes.func.isRequired,
+	        inputValue: _react2.default.PropTypes.string,
+	        selectorType: _react2.default.PropTypes.string,
+	        selectorValue: _react2.default.PropTypes.string
+	    };
+	    var handleInputValueChange = function handleInputValueChange(event) {
+	        props.handleInputValueChange(event.target.value);
+	    };
+	    var handleSelectorTypeChange = function handleSelectorTypeChange(event) {
+	        props.handleSelectorTypeChange(event.target.value);
+	    };
+	    var handleSelectorValueChange = function handleSelectorValueChange(event) {
+	        props.handleSelectorValueChange(event.target.value);
+	    };
+	    return _react2.default.createElement(
+	        "div",
+	        null,
+	        _react2.default.createElement(
+	            "div",
+	            null,
+	            _react2.default.createElement(
+	                "label",
+	                { htmlFor: "field-type" },
+	                "Selector Type: "
+	            ),
+	            _react2.default.createElement("input", { id: "field-type", onChange: handleSelectorTypeChange.bind(undefined), type: "text", value: props.selectorType })
+	        ),
+	        _react2.default.createElement(
+	            "div",
+	            null,
+	            _react2.default.createElement(
+	                "label",
+	                { htmlFor: "field-value" },
+	                "Selector Value: "
+	            ),
+	            _react2.default.createElement("input", { id: "field-value", onChange: handleSelectorValueChange.bind(undefined), type: "text", value: props.selectorValue })
+	        ),
+	        _react2.default.createElement(
+	            "div",
+	            null,
+	            _react2.default.createElement(
+	                "label",
+	                { htmlFor: "field-value" },
+	                "Input Value: "
+	            ),
+	            _react2.default.createElement("input", { id: "field-value", onChange: handleInputValueChange.bind(undefined), type: "text", value: props.inputValue })
+	        )
+	    );
+	};
+
+	exports.default = EditInputAction;
+
+/***/ },
+/* 216 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(3);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 	var FlowResult = function FlowResult(props) {
 	    FlowResult.propTypes = {
 	        flow: _react2.default.PropTypes.object.isRequired
@@ -24002,7 +24088,7 @@
 	exports.default = FlowResult;
 
 /***/ },
-/* 216 */
+/* 217 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -24047,7 +24133,7 @@
 	exports.default = EditFlowName;
 
 /***/ },
-/* 217 */
+/* 218 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24063,7 +24149,7 @@
 	exports.deleteStep = deleteStep;
 	exports.editStep = editStep;
 
-	var _ActionTypes = __webpack_require__(218);
+	var _ActionTypes = __webpack_require__(219);
 
 	var types = _interopRequireWildcard(_ActionTypes);
 
@@ -24095,7 +24181,7 @@
 	//UI actions
 
 /***/ },
-/* 218 */
+/* 219 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -24115,7 +24201,7 @@
 	//UI actions
 
 /***/ },
-/* 219 */
+/* 220 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24127,7 +24213,7 @@
 
 	var _redux = __webpack_require__(184);
 
-	var _reducers = __webpack_require__(220);
+	var _reducers = __webpack_require__(221);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -24140,7 +24226,7 @@
 	}
 
 /***/ },
-/* 220 */
+/* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24151,11 +24237,11 @@
 
 	var _redux = __webpack_require__(184);
 
-	var _flows = __webpack_require__(221);
+	var _flows = __webpack_require__(222);
 
 	var _flows2 = _interopRequireDefault(_flows);
 
-	var _uiState = __webpack_require__(222);
+	var _uiState = __webpack_require__(223);
 
 	var _uiState2 = _interopRequireDefault(_uiState);
 
@@ -24169,7 +24255,7 @@
 	exports.default = rootReducer;
 
 /***/ },
-/* 221 */
+/* 222 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24179,7 +24265,7 @@
 	});
 	exports.default = flows;
 
-	var _ActionTypes = __webpack_require__(218);
+	var _ActionTypes = __webpack_require__(219);
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
@@ -24299,7 +24385,7 @@
 	}
 
 /***/ },
-/* 222 */
+/* 223 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24309,7 +24395,7 @@
 	});
 	exports.default = flows;
 
-	__webpack_require__(218);
+	__webpack_require__(219);
 
 	var initialState = [{
 	    currentFlow: undefined,

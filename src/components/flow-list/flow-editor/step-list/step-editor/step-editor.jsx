@@ -2,11 +2,13 @@ import React from 'react';
 import SelectActionType from './select-action-type';
 import PageLoadAction from './actions/page-load';
 import ClickElementAction from './actions/click-element';
+import EditInputAction from './actions/edit-input';
 
 class StepEditor extends React.Component {
     constructor(props) {
         super(props);
         this.handleActionTypeChange = this.handleActionTypeChange.bind(this);
+        this.handleInputValueChange = this.handleInputValueChange.bind(this);
         this.handleUrlFieldChange = this.handleUrlFieldChange.bind(this);
         this.handleSelectorTypeChange = this.handleSelectorTypeChange.bind(this);
         this.handleSelectorValueChange = this.handleSelectorValueChange.bind(this);
@@ -18,7 +20,12 @@ class StepEditor extends React.Component {
     }
     handleActionTypeChange (actionType) {
         const updatedStep = Object.assign({}, this.state.step, { actionType });
-
+        this.setState({
+            step: updatedStep
+        });
+    }
+    handleInputValueChange (inputValue) {
+        const updatedStep = Object.assign({}, this.state.step, { inputValue });
         this.setState({
             step: updatedStep
         });
@@ -57,6 +64,8 @@ class StepEditor extends React.Component {
                             return <PageLoadAction handleUrlFieldChange={this.handleUrlFieldChange} url={this.state.step.url} />;
                         case 'click':
                             return <ClickElementAction handleSelectorTypeChange={this.handleSelectorTypeChange} handleSelectorValueChange={this.handleSelectorValueChange} selectorType={this.state.step.selectorType} selectorValue={this.state.step.selectorValue} />;
+                        case 'input':
+                            return <EditInputAction handleInputValueChange={this.handleInputValueChange} handleSelectorTypeChange={this.handleSelectorTypeChange} handleSelectorValueChange={this.handleSelectorValueChange} inputValue={this.state.step.inputValue} selectorType={this.state.step.selectorType} selectorValue={this.state.step.selectorValue} />;
                     }
                 })()}
                 <button onClick={this.saveStepEdits}>save</button>
