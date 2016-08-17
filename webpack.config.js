@@ -1,5 +1,9 @@
 var path = require('path');
 
+const PATHS = {
+  style: path.join(__dirname, './src/style')
+};
+
 module.exports = {
     entry: './src/client.js',
     output: {
@@ -22,10 +26,15 @@ module.exports = {
                 test: require.resolve('react-dom'),
                 loader: 'expose?ReactDOM',
                 include: path.resolve(__dirname, 'src/')
+            },
+            {
+                test: /\.css$/,
+                loaders: ['style', 'css'],
+                include: PATHS.style
             }
         ]
     },
     resolve: {
-        extensions: ['', '.js', '.jsx']
+        extensions: ['', '.js', '.jsx', 'css']
     }
 };
