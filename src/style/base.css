@@ -62,26 +62,6 @@ li > button:hover {
     background: #fafafa;
     text-decoration: none;
 }
-.flow-editor {
-    padding: 1em;
-}
-.flow-editor header {
-    display: flex;
-    justify-content: space-between;
-}
-.flow-editor header nav {
-    width: 33%;
-    display: flex;
-    justify-content: flex-end;
-}
-.flow-editor header nav button {
-    padding-left: 1em;
-}
-.flow-editor-name {
-    font-size: 1.5em;
-    padding: .3em;
-    width: 50%;
-}
 
 .step-type {
     align-items: center;

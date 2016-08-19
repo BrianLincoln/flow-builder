@@ -3,6 +3,8 @@ import StepList from './step-list/step-list';
 import FlowResult from './flow-result';
 import EditFlowName from './edit-flow-name';
 
+import './../../../style/flow-editor.css';
+
 class FlowEditor extends React.Component {
     constructor(props) {
         super(props);

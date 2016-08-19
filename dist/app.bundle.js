@@ -91,7 +91,7 @@
 
 
 	// module
-	exports.push([module.id, "* {\r\n    margin: 0;\r\n    padding: 0;\r\n    outline: 0;\r\n    user-select: none;\r\n}\r\nhtml, body {\r\n    min-height: 350px;\r\n    min-width: 320px;\r\n    max-width: 500px;\r\n}\r\nbody {\r\n    border: solid 1px #000;\r\n    font-family: \"Arial\", sans-serif;\r\n    font-size: 100%;\r\n}\r\nbutton {\r\n    background: transparent;\r\n    border: none;\r\n    cursor: pointer;\r\n    font-weight: bold;\r\n}\r\nbutton:hover {\r\n    text-decoration: underline;\r\n}\r\ninput, select {\r\n    border: solid 1px #ccc;\r\n    margin-bottom: 1em;\r\n}\r\nlabel {\r\n    display: block;\r\n    font-size: 11px;\r\n    font-weight: bold;\r\n}\r\n\r\n.app-header {\r\n    background: #444;\r\n    border-bottom: solid 1px #ccc;\r\n    color: #fff;\r\n    padding: 1em;\r\n    display: flex;\r\n    justify-content: space-between;\r\n}\r\n.app-header h1 {\r\n    font-size: .7em;\r\n    font-weight: bold;\r\n}\r\n.app-header nav button {\r\n    color: #fff;\r\n}\r\nli {\r\n    border-bottom: solid 1px #ccc;\r\n    display: block;\r\n}\r\nli > button {\r\n    display: block;\r\n    padding: 1em;\r\n    text-align: left;\r\n    width: 100%;\r\n}\r\nli > button:hover {\r\n    background: #fafafa;\r\n    text-decoration: none;\r\n}\r\n.flow-editor {\r\n    padding: 1em;\r\n}\r\n.flow-editor header {\r\n    display: flex;\r\n    justify-content: space-between;\r\n}\r\n.flow-editor header nav {\r\n    width: 33%;\r\n    display: flex;\r\n    justify-content: flex-end;\r\n}\r\n.flow-editor header nav button {\r\n    padding-left: 1em;\r\n}\r\n.flow-editor-name {\r\n    font-size: 1.5em;\r\n    padding: .3em;\r\n    width: 50%;\r\n}\r\n\r\n.step-type {\r\n    align-items: center;\r\n    display: flex;\r\n}\r\n.step-number {\r\n    color: #ccc;\r\n    font-weight: normal;\r\n    padding-right: 1em;\r\n}\r\n\r\n.step-editor {\r\n    border-left: solid 1px #ccc;\r\n    margin: 1em 2em;\r\n    padding-left: 2em;\r\n}\r\n\r\n.flow-result {\r\n    display: none;\r\n}\r\n@media (min-width: 1024px) {\r\n    .flow-result {\r\n        border-bottom: solid 1px #ccc;\r\n        border-left: solid 1px #ccc;\r\n        display: block;\r\n        padding: 2em;\r\n        position: absolute;\r\n        right: 0;\r\n        top: 0;\r\n    }\r\n}\r\n", ""]);
+	exports.push([module.id, "* {\r\n    margin: 0;\r\n    padding: 0;\r\n    outline: 0;\r\n    user-select: none;\r\n}\r\nhtml, body {\r\n    min-height: 350px;\r\n    min-width: 320px;\r\n    max-width: 500px;\r\n}\r\nbody {\r\n    border: solid 1px #000;\r\n    font-family: \"Arial\", sans-serif;\r\n    font-size: 100%;\r\n}\r\nbutton {\r\n    background: transparent;\r\n    border: none;\r\n    cursor: pointer;\r\n    font-weight: bold;\r\n}\r\nbutton:hover {\r\n    text-decoration: underline;\r\n}\r\ninput, select {\r\n    border: solid 1px #ccc;\r\n    margin-bottom: 1em;\r\n}\r\nlabel {\r\n    display: block;\r\n    font-size: 11px;\r\n    font-weight: bold;\r\n}\r\n\r\n.app-header {\r\n    background: #444;\r\n    border-bottom: solid 1px #ccc;\r\n    color: #fff;\r\n    padding: 1em;\r\n    display: flex;\r\n    justify-content: space-between;\r\n}\r\n.app-header h1 {\r\n    font-size: .7em;\r\n    font-weight: bold;\r\n}\r\n.app-header nav button {\r\n    color: #fff;\r\n}\r\nli {\r\n    border-bottom: solid 1px #ccc;\r\n    display: block;\r\n}\r\nli > button {\r\n    display: block;\r\n    padding: 1em;\r\n    text-align: left;\r\n    width: 100%;\r\n}\r\nli > button:hover {\r\n    background: #fafafa;\r\n    text-decoration: none;\r\n}\r\n\r\n.step-type {\r\n    align-items: center;\r\n    display: flex;\r\n}\r\n.step-number {\r\n    color: #ccc;\r\n    font-weight: normal;\r\n    padding-right: 1em;\r\n}\r\n\r\n.step-editor {\r\n    border-left: solid 1px #ccc;\r\n    margin: 1em 2em;\r\n    padding-left: 2em;\r\n}\r\n\r\n.flow-result {\r\n    display: none;\r\n}\r\n@media (min-width: 1024px) {\r\n    .flow-result {\r\n        border-bottom: solid 1px #ccc;\r\n        border-left: solid 1px #ccc;\r\n        display: block;\r\n        padding: 2em;\r\n        position: absolute;\r\n        right: 0;\r\n        top: 0;\r\n    }\r\n}\r\n", ""]);
 
 	// exports
 
@@ -431,7 +431,7 @@
 
 	var _root2 = _interopRequireDefault(_root);
 
-	var _configureStore = __webpack_require__(224);
+	var _configureStore = __webpack_require__(226);
 
 	var _configureStore2 = _interopRequireDefault(_configureStore);
 
@@ -23579,7 +23579,7 @@
 
 	var _reactRedux = __webpack_require__(181);
 
-	var _actions = __webpack_require__(222);
+	var _actions = __webpack_require__(224);
 
 	var Actions = _interopRequireWildcard(_actions);
 
@@ -23809,6 +23809,8 @@
 	var _editFlowName = __webpack_require__(221);
 
 	var _editFlowName2 = _interopRequireDefault(_editFlowName);
+
+	__webpack_require__(222);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -24485,6 +24487,46 @@
 /* 222 */
 /***/ function(module, exports, __webpack_require__) {
 
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(223);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(4)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./flow-editor.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./flow-editor.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 223 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(3)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".flow-editor {\r\n    padding: 1em;\r\n}\r\n.flow-editor header {\r\n    display: flex;\r\n    justify-content: space-between;\r\n}\r\n.flow-editor header nav {\r\n    width: 33%;\r\n    display: flex;\r\n    justify-content: flex-end;\r\n}\r\n.flow-editor header nav button {\r\n    padding-left: 1em;\r\n}\r\n.flow-editor-name {\r\n    font-size: 1.5em;\r\n    padding: .3em;\r\n    width: 50%;\r\n}\r\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 224 */
+/***/ function(module, exports, __webpack_require__) {
+
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -24498,7 +24540,7 @@
 	exports.deleteStep = deleteStep;
 	exports.editStep = editStep;
 
-	var _ActionTypes = __webpack_require__(223);
+	var _ActionTypes = __webpack_require__(225);
 
 	var types = _interopRequireWildcard(_ActionTypes);
 
@@ -24530,7 +24572,7 @@
 	//UI actions
 
 /***/ },
-/* 223 */
+/* 225 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -24550,7 +24592,7 @@
 	//UI actions
 
 /***/ },
-/* 224 */
+/* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24562,7 +24604,7 @@
 
 	var _redux = __webpack_require__(188);
 
-	var _reducers = __webpack_require__(225);
+	var _reducers = __webpack_require__(227);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -24575,7 +24617,7 @@
 	}
 
 /***/ },
-/* 225 */
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24586,11 +24628,11 @@
 
 	var _redux = __webpack_require__(188);
 
-	var _flows = __webpack_require__(226);
+	var _flows = __webpack_require__(228);
 
 	var _flows2 = _interopRequireDefault(_flows);
 
-	var _uiState = __webpack_require__(227);
+	var _uiState = __webpack_require__(229);
 
 	var _uiState2 = _interopRequireDefault(_uiState);
 
@@ -24604,7 +24646,7 @@
 	exports.default = rootReducer;
 
 /***/ },
-/* 226 */
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24614,7 +24656,7 @@
 	});
 	exports.default = flows;
 
-	var _ActionTypes = __webpack_require__(223);
+	var _ActionTypes = __webpack_require__(225);
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
@@ -24734,7 +24776,7 @@
 	}
 
 /***/ },
-/* 227 */
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24744,7 +24786,7 @@
 	});
 	exports.default = flows;
 
-	__webpack_require__(223);
+	__webpack_require__(225);
 
 	var initialState = [{
 	    currentFlow: undefined,
