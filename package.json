@@ -8,10 +8,12 @@
   "author": "Brian Lincoln",
   "license": "ISC",
   "dependencies": {
+    "isomorphic-fetch": "^2.2.1",
     "react": "^15.3.0",
     "react-redux": "^4.4.5",
     "redux": "^3.5.2",
-    "redux-devtools": "^3.3.1"
+    "redux-devtools": "^3.3.1",
+    "redux-thunk": "^2.1.0"
   },
   "devDependencies": {
     "babel-core": "^6.11.4",

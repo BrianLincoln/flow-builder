@@ -49,15 +49,16 @@ class StepEditor extends React.Component {
         });
     }
     saveStepEdits () {
-        this.props.stepActions.editStep(this.props.step.id, this.state.step);
+        this.props.actions.editStep(this.props.step.id, this.state.step);
         this.props.hideStepEditor();
     }
     render() {
         return (
-            <div className="step-editor">
-                <label htmlFor="action-type">
+            <div className="list-group-item bg-info">
+                <div className="form-group">
+                    <label htmlFor="action-type">Action to take</label>
                     <SelectActionType handleActionTypeChange={this.handleActionTypeChange} />
-                </label>
+                </div>
                 {(() => {
                     switch (this.state.step.actionType) {
                         case 'pageLoad':
@@ -75,9 +76,9 @@ class StepEditor extends React.Component {
 }
 
 StepEditor.propTypes = {
+    actions: React.PropTypes.object.isRequired,
     hideStepEditor: React.PropTypes.func.isRequired,
-    step: React.PropTypes.object.isRequired,
-    stepActions: React.PropTypes.object.isRequired
+    step: React.PropTypes.object.isRequired
 };
 
 export default StepEditor;

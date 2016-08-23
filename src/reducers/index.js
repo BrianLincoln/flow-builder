@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
-import flows from './flows';
+import flow from './flow';
 import uiState from './ui-state';
 
 const rootReducer = combineReducers({
-    flows,
+    flow,
     uiState
 });
 

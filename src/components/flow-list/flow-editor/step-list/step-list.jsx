@@ -3,23 +3,22 @@ import Step from './step';
 
 const StepList = (props) => {
     StepList.propTypes = {
-        flowActions: React.PropTypes.object.isRequired,
-        flowId: React.PropTypes.string.isRequired,
-        stepActions: React.PropTypes.object.isRequired,
-        steps: React.PropTypes.array.isRequired
+        actions: React.PropTypes.object.isRequired,
+        steps: React.PropTypes.array
     };
-    const stepNodes = props.steps.map((step, index) => {
+
+    if (props.steps !== undefined && props.steps.length > 0) {
+        const stepNodes = props.steps.map((step, index) => {
+            return (
+                <Step actions={props.actions} key={step._id} step={step} stepNumber={index} />
+            );
+        });
         return (
-            <Step key={step.id} step={step} stepActions={props.stepActions} stepNumber={index} />
+            <div>{stepNodes}</div>
         );
-    });
+    }
     return (
-        <div>
-            <button onClick={props.stepActions.addStep.bind(this, props.flowId)}>+ new step</button>
-            <ul className="step-list">
-                {stepNodes}
-            </ul>
-        </div>
+        <div>Nothing yet</div>
     );
 };
 

@@ -1,60 +1,47 @@
 import React from 'react';
-import FlowList from './flow-list/flow-list';
+import FlowEditor from './flow-list/flow-editor/flow-editor';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as Actions from '../actions';
+import * as action from '../actions';
 
 class FlowManager extends React.Component {
 
     constructor(props) {
         super(props);
 
-        this.flowActions = {
-            addFlow: this.props.actions.addFlow,
-            deleteFlow: this.props.actions.deleteFlow,
-            editFlow: this.props.actions.editFlow,
-            editFlowName: this.props.actions.editFlowName
-        };
+        this.state = {
 
-        this.stepActions = {
-            addStep: this.props.actions.addStep,
-            deleteStep: this.props.actions.deleteStep,
-            editStep: this.props.actions.editStep
         };
     }
-
+    componentDidMount() {
+        this.props.actions.fetchFlow(this.props.flowId);
+    }
     render() {
-        const { flows } = this.props;
         return (
-            <div>
-                <header className="app-header">
-                    <h1>Flow Manager</h1>
-                    <nav>
-                        <button onClick={this.flowActions.addFlow}>+ create flow</button>
-                    </nav>
-                </header>
-                <FlowList flowActions={this.flowActions} flows={flows} stepActions={this.stepActions} />
-            </div>
+            <FlowEditor actions={this.props.actions} flow={this.props.flow} />
         );
     }
 }
 
 FlowManager.propTypes = {
     actions: React.PropTypes.object.isRequired,
-    flows: React.PropTypes.array.isRequired,
+    dispatch: React.PropTypes.func.isRequired,
+    flow: React.PropTypes.object.isRequired,
+    flowId: React.PropTypes.string.isRequired,
     uiState: React.PropTypes.array.isRequired
 };
 
 function mapStateToProps(state) {
     return {
         uiState: state.uiState,
-        flows: state.flows
+        flow: state.flow
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(Actions, dispatch)
+        actions: bindActionCreators(action, dispatch),
+        dispatch
     };
 }
 

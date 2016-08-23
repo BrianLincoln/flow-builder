@@ -1,27 +1,52 @@
+import fetch from 'isomorphic-fetch';
 import * as types from '../constants/ActionTypes';
 
-export function addFlow() {
-    return { type: types.ADD_FLOW };
-}
-export function deleteFlow(id) {
-    return { type: types.DELETE_FLOW, id };
-}
-export function editFlow(id, name, steps) {
-    return { type: types.EDIT_FLOW, id, name, steps };
-}
-export function editFlowName(id, name) {
-    return { type: types.EDIT_FLOW_NAME, id, name };
+export function fetchFlow(flowId) {
+    return (dispatch) => {
+        dispatch(requestFlow(flowId));
+
+        return fetch('http://localhost:8080/api/flows/' + flowId)
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            dispatch(receiveFlow(data.flow));
+        });
+    };
 }
 
 export function addStep(flowId) {
-    return { type: types.ADD_STEP, flowId };
-}
-export function deleteStep(id) {
-    return { type: types.DELETE_STEP, id };
-}
-export function editStep(id, step) {
-    return { type: types.EDIT_STEP, id, step };
+    return (dispatch) => {
+        dispatch(requestFlow(flowId));
+
+        return fetch('http://localhost:8080/api/flows/' + flowId, {
+            method: 'POST',
+            body: {
+                flowId
+            }
+        })
+
+        .then(fetch('http://localhost:8080/api/flows/' + flowId))
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            dispatch(receiveFlow(flowId, data.flow));
+        });
+    };
 }
 
+export function requestFlow(flowId) {
+    return {
+        type: types.REQUEST_FLOW,
+        flowId
+    };
+}
 
-//UI actions
+export function receiveFlow(flow) {
+    return {
+        type: types.RECEIVE_FLOW,
+        receivedAt: Date.now(),
+        flow
+    };
+}

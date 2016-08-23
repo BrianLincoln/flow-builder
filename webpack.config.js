@@ -26,15 +26,15 @@ module.exports = {
                 test: require.resolve('react-dom'),
                 loader: 'expose?ReactDOM',
                 include: path.resolve(__dirname, 'src/')
-            },
-            {
-                test: /\.css$/,
-                loaders: ['style', 'css'],
-                include: PATHS.style
             }
+            //{
+            //    test: /\.css$/,
+            //    loaders: ['style', 'css'],
+            //    include: PATHS.style
+            //}
         ]
     },
     resolve: {
-        extensions: ['', '.js', '.jsx', 'css']
+        extensions: ['', '.js', '.jsx']
     }
 };

@@ -18,21 +18,17 @@ class Step extends React.Component {
         this.setState({ showEditor: false });
     }
     render() {
-        return (
-            <li className="step">
-                {
-                    this.state.showEditor === true ?
-                        <StepEditor hideStepEditor={this.hideStepEditor} step={this.props.step} stepActions={this.props.stepActions} />
-                        : <button className="step-type" onClick={this.showStepEditorClick}><span className="step-number">{this.props.stepNumber + 1}.) </span> {this.props.step.actionType}</button>
-                }
-            </li>
-        );
+        if (this.state.showEditor === true) {
+            return <StepEditor actions={this.props.actions} hideStepEditor={this.hideStepEditor} step={this.props.step} />;
+        } else {
+            return <a className="list-group-item" onClick={this.showStepEditorClick}><span>{this.props.stepNumber + 1}.) </span> {this.props.step.stepType}</a>;
+        }
     }
 }
 
 Step.propTypes = {
+    actions: React.PropTypes.object.isRequired,
     step: React.PropTypes.object.isRequired,
-    stepActions: React.PropTypes.object.isRequired,
     stepNumber: React.PropTypes.number.isRequired
 };
 export default Step;
