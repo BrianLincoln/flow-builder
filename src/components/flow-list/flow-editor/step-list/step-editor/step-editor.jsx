@@ -56,7 +56,10 @@ class StepEditor extends React.Component {
         return (
             <div className="list-group-item bg-info">
                 <div className="form-group">
-                    <label htmlFor="action-type">Action to take</label>
+                    <span className="pull-right fa fa-times" onClick={this.props.hideStepEditor} />
+                    <div>
+                        <div>Action to take</div>
+                    </div>
                     <SelectActionType handleActionTypeChange={this.handleActionTypeChange} />
                 </div>
                 {(() => {
