@@ -10,7 +10,7 @@ export function fetchFlow(flowId) {
             return response.json();
         })
         .then((data) => {
-            dispatch(receiveFlow(data.flow));
+            dispatch(receiveFlow(data));
         });
     };
 }
@@ -25,13 +25,21 @@ export function addStep(flowId) {
                 flowId
             }
         })
+        .then(() => {
+            dispatch(fetchFlow(flowId));
+        });
+    };
+}
 
-        .then(fetch('http://localhost:8080/api/flows/' + flowId))
-        .then((response) => {
-            return response.json();
+export function removeStep(flowId, stepId) {
+    return (dispatch) => {
+        dispatch(requestFlow(flowId));
+
+        return fetch('http://localhost:8080/api/flows/' + flowId + '/steps/' + stepId, {
+            method: 'DELETE'
         })
-        .then((data) => {
-            dispatch(receiveFlow(flowId, data.flow));
+        .then(() => {
+            dispatch(fetchFlow(flowId));
         });
     };
 }

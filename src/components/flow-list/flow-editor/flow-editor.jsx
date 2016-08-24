@@ -21,7 +21,7 @@ class FlowEditor extends React.Component {
             <div className="row">
                 <div className="col-md-6 list-group">
                     <a className="list-group-item list-group-item-info" onClick={this.props.actions.addStep.bind(this, this.props.flow.id)}>+ new step</a>
-                    <StepList actions={this.props.actions} steps={this.props.flow.steps} />
+                    <StepList actions={this.props.actions} flowId={this.props.flow.id} steps={this.props.flow.steps} />
                 </div>
                 <FlowResult flow={this.props.flow} />
             </div>
