@@ -49,7 +49,7 @@ class StepEditor extends React.Component {
         });
     }
     saveStepEdits () {
-        this.props.actions.editStep(this.props.step.id, this.state.step);
+        this.props.actions.editStep(this.props.flowId, this.props.step._id, this.state.step);
         this.props.hideStepEditor();
     }
     render() {
@@ -80,6 +80,7 @@ class StepEditor extends React.Component {
 
 StepEditor.propTypes = {
     actions: React.PropTypes.object.isRequired,
+    flowId: React.PropTypes.string.isRequired,
     hideStepEditor: React.PropTypes.func.isRequired,
     step: React.PropTypes.object.isRequired
 };

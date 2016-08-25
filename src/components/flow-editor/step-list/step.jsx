@@ -25,7 +25,7 @@ class Step extends React.Component {
     }
     render() {
         if (this.state.showEditor === true) {
-            return <StepEditor actions={this.props.actions} hideStepEditor={this.hideStepEditor} step={this.props.step} />;
+            return <StepEditor actions={this.props.actions} flowId={this.props.flowId} hideStepEditor={this.hideStepEditor} step={this.props.step} />;
         } else {
             return (
                 <a className="list-group-item" onClick={this.showStepEditorClick}>
