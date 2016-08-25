@@ -1,5 +1,5 @@
 import React from 'react';
-import FlowEditor from './flow-list/flow-editor/flow-editor';
+import FlowEditor from './flow-editor/flow-editor';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as action from '../actions';
