@@ -9,7 +9,7 @@ const PageLoadAction = (props) => {
         props.handleUrlFieldChange(event.target.value);
     };
     return (
-        <div className="form-group">
+        <div>
             <label htmlFor="field-url">Url: </label>
             <input className="form-control" id="field-url" onChange={handleChange.bind(this)} type="text" value={props.url} />
         </div>

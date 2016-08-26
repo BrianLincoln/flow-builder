@@ -7,7 +7,7 @@ import EditInputAction from './actions/edit-input';
 class StepEditor extends React.Component {
     constructor(props) {
         super(props);
-        this.handleActionTypeChange = this.handleActionTypeChange.bind(this);
+        this.handleStepTypeChange = this.handleStepTypeChange.bind(this);
         this.handleInputValueChange = this.handleInputValueChange.bind(this);
         this.handleUrlFieldChange = this.handleUrlFieldChange.bind(this);
         this.handleSelectorTypeChange = this.handleSelectorTypeChange.bind(this);
@@ -18,8 +18,8 @@ class StepEditor extends React.Component {
             step: props.step
         };
     }
-    handleActionTypeChange (actionType) {
-        const updatedStep = Object.assign({}, this.state.step, { actionType });
+    handleStepTypeChange (stepType) {
+        const updatedStep = Object.assign({}, this.state.step, { stepType });
         this.setState({
             step: updatedStep
         });
@@ -54,25 +54,24 @@ class StepEditor extends React.Component {
     }
     render() {
         return (
-            <div className="list-group-item bg-info">
+            <div>
+                <span>{this.props.stepNumber + 1}.) {this.props.step.stepType}</span>
+                <span className="pull-right fa fa-times" onClick={this.props.hideStepEditor} />
                 <div className="form-group">
-                    <span className="pull-right fa fa-times" onClick={this.props.hideStepEditor} />
-                    <div>
-                        <div>Action to take</div>
-                    </div>
-                    <SelectActionType handleActionTypeChange={this.handleActionTypeChange} />
+                    <SelectActionType handleStepTypeChange={this.handleStepTypeChange} stepType={this.props.step.stepType} />
+
+                    {(() => {
+                        switch (this.state.step.stepType) {
+                            case 'pageLoad':
+                                return <PageLoadAction handleUrlFieldChange={this.handleUrlFieldChange} url={this.state.step.url} />;
+                            case 'click':
+                                return <ClickElementAction handleSelectorTypeChange={this.handleSelectorTypeChange} handleSelectorValueChange={this.handleSelectorValueChange} selectorType={this.state.step.selectorType} selectorValue={this.state.step.selectorValue} />;
+                            case 'input':
+                                return <EditInputAction handleInputValueChange={this.handleInputValueChange} handleSelectorTypeChange={this.handleSelectorTypeChange} handleSelectorValueChange={this.handleSelectorValueChange} inputValue={this.state.step.inputValue} selectorType={this.state.step.selectorType} selectorValue={this.state.step.selectorValue} />;
+                        }
+                    })()}
+                    <button className="btn btn-primary" onClick={this.saveStepEdits}>save</button>
                 </div>
-                {(() => {
-                    switch (this.state.step.actionType) {
-                        case 'pageLoad':
-                            return <PageLoadAction handleUrlFieldChange={this.handleUrlFieldChange} url={this.state.step.url} />;
-                        case 'click':
-                            return <ClickElementAction handleSelectorTypeChange={this.handleSelectorTypeChange} handleSelectorValueChange={this.handleSelectorValueChange} selectorType={this.state.step.selectorType} selectorValue={this.state.step.selectorValue} />;
-                        case 'input':
-                            return <EditInputAction handleInputValueChange={this.handleInputValueChange} handleSelectorTypeChange={this.handleSelectorTypeChange} handleSelectorValueChange={this.handleSelectorValueChange} inputValue={this.state.step.inputValue} selectorType={this.state.step.selectorType} selectorValue={this.state.step.selectorValue} />;
-                    }
-                })()}
-                <button onClick={this.saveStepEdits}>save</button>
             </div>
         );
     }
@@ -82,7 +81,8 @@ StepEditor.propTypes = {
     actions: React.PropTypes.object.isRequired,
     flowId: React.PropTypes.string.isRequired,
     hideStepEditor: React.PropTypes.func.isRequired,
-    step: React.PropTypes.object.isRequired
+    step: React.PropTypes.object.isRequired,
+    stepNumber: React.PropTypes.number.isRequired
 };
 
 export default StepEditor;

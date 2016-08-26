@@ -2,13 +2,14 @@ import React from 'react';
 
 const SelectActionType = (props) => {
     SelectActionType.propTypes = {
-        handleActionTypeChange: React.PropTypes.func.isRequired
+        handleStepTypeChange: React.PropTypes.func.isRequired,
+        stepType: React.PropTypes.string.isRequired
     };
     const handleSelection = (event) => {
-        props.handleActionTypeChange(event.target.value);
+        props.handleStepTypeChange(event.target.value);
     };
     return (
-        <select className="form-control"  id="action-types" onChange={handleSelection.bind(this)}>
+        <select className="form-control" defaultValue={props.stepType} id="action-types" onChange={handleSelection.bind(this)} >
             <option value="pageLoad">Load a page</option>
             <option value="input">Edit a field</option>
             <option value="click">Click on something</option>

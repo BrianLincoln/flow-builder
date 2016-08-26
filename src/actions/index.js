@@ -32,7 +32,6 @@ export function addStep(flowId) {
 }
 
 export function editStep(flowId, stepId, step) {
-    console.log('editSte');
     return (dispatch) => {
         dispatch(requestFlow(flowId));
 
