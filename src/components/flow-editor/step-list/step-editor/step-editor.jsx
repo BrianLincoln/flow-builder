@@ -10,8 +10,7 @@ class StepEditor extends React.Component {
         this.handleStepTypeChange = this.handleStepTypeChange.bind(this);
         this.handleInputValueChange = this.handleInputValueChange.bind(this);
         this.handleUrlFieldChange = this.handleUrlFieldChange.bind(this);
-        this.handleSelectorTypeChange = this.handleSelectorTypeChange.bind(this);
-        this.handleSelectorValueChange = this.handleSelectorValueChange.bind(this);
+        this.handleSelectorChange = this.handleSelectorChange.bind(this);
         this.saveStepEdits = this.saveStepEdits.bind(this);
 
         this.state = {
@@ -36,14 +35,8 @@ class StepEditor extends React.Component {
             step: updatedStep
         });
     }
-    handleSelectorTypeChange (selectorType) {
-        const updatedStep = Object.assign({}, this.state.step, { selectorType });
-        this.setState({
-            step: updatedStep
-        });
-    }
-    handleSelectorValueChange (selectorValue) {
-        const updatedStep = Object.assign({}, this.state.step, { selectorValue });
+    handleSelectorChange (selector) {
+        const updatedStep = Object.assign({}, this.state.step, { selector });
         this.setState({
             step: updatedStep
         });
@@ -65,9 +58,9 @@ class StepEditor extends React.Component {
                             case 'pageLoad':
                                 return <PageLoadAction handleUrlFieldChange={this.handleUrlFieldChange} url={this.state.step.url} />;
                             case 'click':
-                                return <ClickElementAction handleSelectorTypeChange={this.handleSelectorTypeChange} handleSelectorValueChange={this.handleSelectorValueChange} selectorType={this.state.step.selectorType} selectorValue={this.state.step.selectorValue} />;
+                                return <ClickElementAction handleSelectorChange={this.handleSelectorChange} selector={this.state.step.selector} />;
                             case 'input':
-                                return <EditInputAction handleInputValueChange={this.handleInputValueChange} handleSelectorTypeChange={this.handleSelectorTypeChange} handleSelectorValueChange={this.handleSelectorValueChange} inputValue={this.state.step.inputValue} selectorType={this.state.step.selectorType} selectorValue={this.state.step.selectorValue} />;
+                                return <EditInputAction handleInputValueChange={this.handleInputValueChange} handleSelectorChange={this.handleSelectorChange} inputValue={this.state.step.inputValue} selector={this.state.step.selector} />;
                         }
                     })()}
                     <button className="btn btn-primary" onClick={this.saveStepEdits}>save</button>

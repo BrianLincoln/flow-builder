@@ -2,26 +2,17 @@ import React from 'react';
 
 const ClickElementAction = (props) => {
     ClickElementAction.propTypes = {
-        handleSelectorTypeChange: React.PropTypes.func.isRequired,
-        handleSelectorValueChange: React.PropTypes.func.isRequired,
-        selectorType: React.PropTypes.string,
-        selectorValue: React.PropTypes.string
+        handleSelectorChange: React.PropTypes.func.isRequired,
+        selector: React.PropTypes.string
     };
-    const handleSelectorTypeChange = (event) => {
-        props.handleSelectorTypeChange(event.target.value);
-    };
-    const handleSelectorValueChange = (event) => {
-        props.handleSelectorValueChange(event.target.value);
+    const handleSelectorChange = (event) => {
+        props.handleSelectorChange(event.target.value);
     };
     return (
         <div>
             <div className="form-group">
-                <label htmlFor="field-type">Selector Type: </label>
-                <input className="form-control" id="field-type" onChange={handleSelectorTypeChange.bind(this)} type="text" value={props.selectorType} />
-            </div>
-            <div className="form-group">
-                <label htmlFor="field-value">Selector Value: </label>
-                <input className="form-control" id="field-value" onChange={handleSelectorValueChange.bind(this)} type="text" value={props.selectorValue} />
+                <label htmlFor="field-type">Selector: </label>
+                <input className="form-control" id="field-type" onChange={handleSelectorChange.bind(this)} type="text" value={props.selector} />
             </div>
         </div>
     );
