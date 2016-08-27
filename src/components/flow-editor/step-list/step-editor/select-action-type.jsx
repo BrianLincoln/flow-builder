@@ -13,7 +13,7 @@ const SelectActionType = (props) => {
             <option value="pageLoad">Load a page</option>
             <option value="input">Edit a field</option>
             <option value="click">Click on something</option>
-            <option value="confirmElementExists">Check if an element exists</option>
+            <option value="confirmElementExists">Confirm an element exists</option>
         </select>
     );
 };

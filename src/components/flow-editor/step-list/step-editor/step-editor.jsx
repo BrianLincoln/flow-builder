@@ -1,6 +1,7 @@
 import React from 'react';
 import SelectActionType from './select-action-type';
 import PageLoadAction from './actions/page-load';
+import ConfirmElementExistsAction from './actions/confirm-element-exists';
 import ClickElementAction from './actions/click-element';
 import EditInputAction from './actions/edit-input';
 
@@ -57,6 +58,8 @@ class StepEditor extends React.Component {
                         switch (this.state.step.stepType) {
                             case 'pageLoad':
                                 return <PageLoadAction handleUrlFieldChange={this.handleUrlFieldChange} url={this.state.step.url} />;
+                            case 'confirmElementExists':
+                                return <ConfirmElementExistsAction handleSelectorChange={this.handleSelectorChange} selector={this.state.step.selector} />;
                             case 'click':
                                 return <ClickElementAction handleSelectorChange={this.handleSelectorChange} selector={this.state.step.selector} />;
                             case 'input':
