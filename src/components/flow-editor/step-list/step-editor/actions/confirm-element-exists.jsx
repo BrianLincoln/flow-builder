@@ -9,11 +9,9 @@ const ConfirmElementExistsAction = (props) => {
         props.handleSelectorChange(event.target.value);
     };
     return (
-        <div>
-            <div className="form-group">
-                <label htmlFor="field-type">Selector: </label>
-                <input className="form-control" id="field-type" onChange={handleSelectorChange.bind(this)} type="text" value={props.selector} />
-            </div>
+        <div className="form-group">
+            <label htmlFor="field-type">Selector: </label>
+            <input className="form-control" id="field-type" onChange={handleSelectorChange.bind(this)} type="text" value={props.selector} />
         </div>
     );
 };

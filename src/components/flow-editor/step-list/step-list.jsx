@@ -15,7 +15,7 @@ const StepList = (props) => {
             );
         });
         return (
-            <div>{stepNodes}</div>
+            <div className="list-group">{stepNodes}</div>
         );
     }
     return (

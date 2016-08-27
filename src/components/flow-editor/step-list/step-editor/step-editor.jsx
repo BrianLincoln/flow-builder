@@ -48,10 +48,12 @@ class StepEditor extends React.Component {
     }
     render() {
         return (
-            <div>
-                <span>{this.props.stepNumber + 1}.) {this.props.step.stepType}</span>
-                <span className="pull-right fa fa-times" onClick={this.props.hideStepEditor} />
-                <div className="form-group">
+            <div className="panel panel-primary">
+                <div className="panel-heading">
+                    <h3 className="panel-title">{this.props.stepNumber + 1}.) {this.props.step.stepType} <span className="pull-right fa fa-times" onClick={this.props.hideStepEditor} /></h3>
+
+                </div>
+                <div className="panel-body">
                     <SelectActionType handleStepTypeChange={this.handleStepTypeChange} stepType={this.props.step.stepType} />
 
                     {(() => {
