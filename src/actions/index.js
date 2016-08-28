@@ -76,3 +76,22 @@ export function receiveFlow(flow) {
         flow
     };
 }
+
+
+
+
+export function runTest(flowId) {
+    return (dispatch) => {
+        dispatch(requestFlow(flowId));
+
+        return fetch('http://localhost:8080/api/test-runner/', {
+            method: 'POST',
+            body: {
+                flowId
+            }
+        })
+        .then(() => {
+            dispatch(fetchFlow(flowId));
+        });
+    };
+}

@@ -20,6 +20,7 @@ class StepEditor extends React.Component {
     }
     handleStepTypeChange (stepType) {
         const updatedStep = Object.assign({}, this.state.step, { stepType });
+
         this.setState({
             step: updatedStep
         });
