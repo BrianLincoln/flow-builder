@@ -28,7 +28,7 @@ class Step extends React.Component {
             return <StepEditor {...this.props} hideStepEditor={this.hideStepEditor}  />;
         } else {
             return (
-                <a className="list-group-item" onClick={this.showStepEditorClick}>
+                <a className="list-group-item" data-tar={'step' + this.props.step.id} onClick={this.showStepEditorClick}>
                     <span>{this.props.stepNumber + 1}.) {this.props.step.stepType}</span>
                     <span className="pull-right fa fa-trash-o" onClick={this.handleDeleteClick} />
                 </a>

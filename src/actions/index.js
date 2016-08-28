@@ -78,20 +78,15 @@ export function receiveFlow(flow) {
 }
 
 
-
-
-export function runTest(flowId) {
-    return (dispatch) => {
-        dispatch(requestFlow(flowId));
-
+export function runTest(flow) {
+    return () => {
         return fetch('http://localhost:8080/api/test-runner/', {
             method: 'POST',
-            body: {
-                flowId
-            }
-        })
-        .then(() => {
-            dispatch(fetchFlow(flowId));
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(flow)
         });
     };
 }

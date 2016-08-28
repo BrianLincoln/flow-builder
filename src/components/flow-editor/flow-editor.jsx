@@ -18,13 +18,17 @@ class FlowEditor extends React.Component {
     }
     render() {
         return (
-            <div className="row">
-                <div className="col-xs-12">
-                    <button className="btn btn-primary" onClick={this.props.actions.runTest.bind(this, this.props.flow.id)}>Run Test</button>
+            <div>
+                <div className="row">
+                    <div className="col-xs-12">
+                        <button className="btn btn-primary" data-tar="run-test" onClick={this.props.actions.runTest.bind(this, this.props.flow)}>Run Test</button>
+                    </div>
                 </div>
-                <div className="col-md-6">
-                    <StepList actions={this.props.actions} flowId={this.props.flow.id} steps={this.props.flow.steps} />
-                    <button className="btn btn-primary" onClick={this.props.actions.addStep.bind(this, this.props.flow.id)}>+ new step</button>
+                <div className="row">
+                    <div className="col-md-6">
+                        <StepList actions={this.props.actions} flowId={this.props.flow.id} steps={this.props.flow.steps} />
+                        <button className="btn btn-primary" onClick={this.props.actions.addStep.bind(this, this.props.flow.id)}>+ new step</button>
+                    </div>
                 </div>
                 <FlowResult flow={this.props.flow} />
             </div>
