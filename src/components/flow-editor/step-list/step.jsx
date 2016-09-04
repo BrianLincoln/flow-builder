@@ -8,6 +8,8 @@ class Step extends React.Component {
         this.showStepEditorClick = this.showStepEditorClick.bind(this);
         this.hideStepEditor = this.hideStepEditor.bind(this);
         this.handleDeleteClick = this.handleDeleteClick.bind(this);
+        this.handleMoveDownclick = this.handleMoveDownclick.bind(this);
+        this.handleMoveUpclick = this.handleMoveUpclick.bind(this);
 
         this.state = {
             showEditor: false
@@ -23,14 +25,24 @@ class Step extends React.Component {
         e.stopPropagation();
         this.props.actions.removeStep(this.props.flowId, this.props.step._id);
     }
+    handleMoveDownclick(e) {
+        e.stopPropagation();
+        this.props.actions.moveStep(this.props.flowId, this.props.step._id, 'down');
+    }
+    handleMoveUpclick(e) {
+        e.stopPropagation();
+        this.props.actions.moveStep(this.props.flowId, this.props.step._id, 'up');
+    }
     render() {
         if (this.state.showEditor === true) {
             return <StepEditor {...this.props} hideStepEditor={this.hideStepEditor}  />;
         } else {
             return (
                 <a className="list-group-item" data-tar={'step' + this.props.step.id} onClick={this.showStepEditorClick}>
-                    <span>{this.props.stepNumber + 1}.) {this.props.step.stepType}</span>
+                    <span>{this.props.stepNumber}.) {this.props.step.stepType}</span>
                     <span className="pull-right fa fa-trash-o" onClick={this.handleDeleteClick} />
+                    <span className="pull-right fa fa-arrow-down" onClick={this.handleMoveDownclick} />
+                    <span className="pull-right fa fa-arrow-up" onClick={this.handleMoveUpclick} />
                 </a>
             );
         }

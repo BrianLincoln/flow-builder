@@ -62,6 +62,28 @@ export function removeStep(flowId, stepId) {
     };
 }
 
+export function moveStep(flowId, stepId, direction) {
+    return (dispatch) => {
+        dispatch(requestFlow(flowId));
+
+        const body = {
+            direction
+        };
+        return fetch('http://localhost:8080/api/flows/' + flowId + '/reorder/' + stepId, {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+
+        })
+        .then(() => {
+            dispatch(fetchFlow(flowId));
+        });
+    };
+}
+
 export function requestFlow(flowId) {
     return {
         type: types.REQUEST_FLOW,

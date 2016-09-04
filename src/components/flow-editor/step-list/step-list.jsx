@@ -11,7 +11,7 @@ const StepList = (props) => {
     if (props.steps !== undefined && props.steps.length > 0) {
         const stepNodes = props.steps.map((step, index) => {
             return (
-                <Step actions={props.actions} flowId={props.flowId} key={step._id} step={step} stepNumber={index} />
+                <Step actions={props.actions} flowId={props.flowId} key={step._id} step={step} stepNumber={index + 1} />
             );
         });
         return (

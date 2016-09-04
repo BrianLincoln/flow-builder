@@ -27,11 +27,6 @@ module.exports = {
                 loader: 'expose?ReactDOM',
                 include: path.resolve(__dirname, 'src/')
             }
-            //{
-            //    test: /\.css$/,
-            //    loaders: ['style', 'css'],
-            //    include: PATHS.style
-            //}
         ]
     },
     resolve: {
