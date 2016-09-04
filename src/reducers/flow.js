@@ -15,7 +15,8 @@ export default function flow (state = initialState, action) {
                 id: action.flow._id,
                 isFetching: false,
                 lastUpdated: action.receivedAt,
-                steps: action.flow.steps
+                steps: action.flow.steps,
+                name: action.flow.name
             });
 
 
