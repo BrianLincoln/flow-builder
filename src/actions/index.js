@@ -15,6 +15,30 @@ export function fetchFlow(flowId) {
     };
 }
 
+export function editFlowName(flowId, name) {
+    return (dispatch) => {
+        dispatch(requestFlow(flowId));
+
+        const body = {
+            name
+        };
+        console.log('~~~editFlowName');
+        console.log(body);
+        console.log(JSON.stringify(body));
+        return fetch('http://localhost:8080/api/flows/' + flowId, {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        })
+        .then(() => {
+            dispatch(fetchFlow(flowId));
+        });
+    };
+}
+
 export function addStep(flowId) {
     return (dispatch) => {
         dispatch(requestFlow(flowId));
@@ -76,7 +100,6 @@ export function moveStep(flowId, stepId, direction) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(body)
-
         })
         .then(() => {
             dispatch(fetchFlow(flowId));
@@ -102,13 +125,16 @@ export function receiveFlow(flow) {
 
 export function runTest(flow) {
     return () => {
-        return fetch('http://localhost:8080/api/test-runner/', {
+        const body = {
+            flow
+        };
+        return fetch('http://localhost:8080/api/test-runner', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(flow)
+            body: JSON.stringify(body)
         });
     };
 }

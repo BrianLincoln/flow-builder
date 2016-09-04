@@ -21,12 +21,8 @@ class FlowManager extends React.Component {
             return (
                 <FlowEditor actions={this.props.actions} flow={this.props.flow} />
             );
-        } else {
-            return (
-                <h1>Hold up</h1>
-            );
         }
-
+        return null;
     }
 }
 

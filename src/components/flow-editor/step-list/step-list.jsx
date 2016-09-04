@@ -19,7 +19,7 @@ const StepList = (props) => {
         );
     }
     return (
-        <div>Nothing yet</div>
+        null
     );
 };
 
