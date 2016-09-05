@@ -19,7 +19,7 @@ const StepList = (props) => {
         );
     }
     return (
-        null
+        <h3>Add a step to get started</h3>
     );
 };
 

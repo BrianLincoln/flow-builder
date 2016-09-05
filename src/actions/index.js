@@ -22,9 +22,7 @@ export function editFlowName(flowId, name) {
         const body = {
             name
         };
-        console.log('~~~editFlowName');
-        console.log(body);
-        console.log(JSON.stringify(body));
+
         return fetch('http://localhost:8080/api/flows/' + flowId, {
             method: 'PUT',
             headers: {
@@ -123,8 +121,11 @@ export function receiveFlow(flow) {
 }
 
 
+
 export function runTest(flow) {
-    return () => {
+    return (dispatch) => {
+        dispatch(startTest(flow.id));
+
         const body = {
             flow
         };
@@ -135,6 +136,51 @@ export function runTest(flow) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(body)
+        })
+
+        .then(() => {
+            dispatch(followTestStatus(flow.id));
         });
+    };
+}
+
+
+
+export function followTestStatus(flowId) {
+    return (dispatch) => {
+
+        return fetch('http://localhost:8080/api/tests/' + flowId, {
+            method: 'GET',
+        })
+        .then((res) => {
+            return res.json();
+        })
+        .then((resJSON) => {
+            if (resJSON.status === 'complete') {
+                dispatch(receiveTestComplete(flowId, resJSON.result, resJSON.status));
+            } else {
+                setTimeout(() => {
+                    dispatch(followTestStatus(flowId));
+                }, 2000);
+            }
+
+        });
+    };
+}
+
+export function startTest(flowId) {
+    return {
+        type: types.START_TEST,
+        flowId
+    };
+}
+
+export function receiveTestComplete(flowId, result, status) {
+    return {
+        type: types.RECEIVE_TEST_COMPLETED,
+        receivedAt: Date.now(),
+        flowId,
+        result,
+        status
     };
 }
