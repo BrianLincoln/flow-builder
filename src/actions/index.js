@@ -157,7 +157,9 @@ export function followTestStatus(flowId) {
         })
         .then((resJSON) => {
             if (resJSON.status === 'complete') {
-                dispatch(receiveTestComplete(flowId, resJSON.result, resJSON.status));
+                console.log('resJSON.status');
+                console.log(resJSON);
+                dispatch(receiveTestComplete(flowId, resJSON.result, resJSON.status, resJSON.failureMessage, resJSON.failedStep));
             } else {
                 setTimeout(() => {
                     dispatch(followTestStatus(flowId));
@@ -175,12 +177,14 @@ export function startTest(flowId) {
     };
 }
 
-export function receiveTestComplete(flowId, result, status) {
+export function receiveTestComplete(flowId, result, status, failureMessage, failedStep) {
     return {
         type: types.RECEIVE_TEST_COMPLETED,
         receivedAt: Date.now(),
         flowId,
         result,
-        status
+        status,
+        failureMessage,
+        failedStep
     };
 }
