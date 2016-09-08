@@ -5,7 +5,7 @@ export function fetchFlow(flowId) {
     return (dispatch) => {
         dispatch(requestFlow(flowId));
 
-        return fetch('http://localhost:8080/api/flows/' + flowId)
+        return fetch('/api/flows/' + flowId)
         .then((response) => {
             return response.json();
         })
@@ -23,7 +23,7 @@ export function editFlowName(flowId, name) {
             name
         };
 
-        return fetch('http://localhost:8080/api/flows/' + flowId, {
+        return fetch('/api/flows/' + flowId, {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',
@@ -41,7 +41,7 @@ export function addStep(flowId) {
     return (dispatch) => {
         dispatch(requestFlow(flowId));
 
-        return fetch('http://localhost:8080/api/flows/' + flowId, {
+        return fetch('/api/flows/' + flowId, {
             method: 'POST',
             body: {
                 flowId
@@ -57,7 +57,7 @@ export function editStep(flowId, stepId, step) {
     return (dispatch) => {
         dispatch(requestFlow(flowId));
 
-        return fetch('http://localhost:8080/api/flows/' + flowId + '/steps/' + stepId, {
+        return fetch('/api/flows/' + flowId + '/steps/' + stepId, {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',
@@ -75,7 +75,7 @@ export function removeStep(flowId, stepId) {
     return (dispatch) => {
         dispatch(requestFlow(flowId));
 
-        return fetch('http://localhost:8080/api/flows/' + flowId + '/steps/' + stepId, {
+        return fetch('/api/flows/' + flowId + '/steps/' + stepId, {
             method: 'DELETE'
         })
         .then(() => {
@@ -91,7 +91,7 @@ export function moveStep(flowId, stepId, direction) {
         const body = {
             direction
         };
-        return fetch('http://localhost:8080/api/flows/' + flowId + '/reorder/' + stepId, {
+        return fetch('/api/flows/' + flowId + '/reorder/' + stepId, {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',
@@ -129,7 +129,7 @@ export function runTest(flow) {
         const body = {
             flow
         };
-        return fetch('http://localhost:8080/api/test-runner', {
+        return fetch('/api/test-runner', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -149,7 +149,7 @@ export function runTest(flow) {
 export function followTestStatus(flowId) {
     return (dispatch) => {
 
-        return fetch('http://localhost:8080/api/tests/' + flowId, {
+        return fetch('/api/tests/' + flowId, {
             method: 'GET',
         })
         .then((res) => {
@@ -157,13 +157,11 @@ export function followTestStatus(flowId) {
         })
         .then((resJSON) => {
             if (resJSON.status === 'complete') {
-                console.log('resJSON.status');
-                console.log(resJSON);
                 dispatch(receiveTestComplete(flowId, resJSON.result, resJSON.status, resJSON.failureMessage, resJSON.failedStep));
             } else {
                 setTimeout(() => {
                     dispatch(followTestStatus(flowId));
-                }, 2000);
+                }, 1000);
             }
 
         });
