@@ -6,20 +6,41 @@ class FlowPlayback extends React.Component {
         super(props);
 
         this.handlePlayClick = this.handlePlayClick.bind(this);
+        this.finishPlayThrough = this.finishPlayThrough.bind(this);
+        this.handlePauseClick = this.handlePauseClick.bind(this);
 
         this.state = {
             activeSlide: 0,
             playing: false,
-            speed: 500
+            speed: 1000
         };
     }
 
     handlePlayClick() {
-        setInterval(() => {
-            const nextSlide = this.state.activeSlide <= this.props.flow.steps.length ? this.state.activeSlide + 1 : 0;
+        console.log('play click');
+        console.log(this.state);
 
-            this.setState({ activeSlide: nextSlide });
+        if (this.state.playing) {
+            return;
+        }
+
+        this.setState({ playing: true });
+
+        const playthrough = setInterval(() => {
+            if (this.state.activeSlide >= this.props.flow.steps.length) {
+                clearInterval(playthrough);
+                this.finishPlayThrough();
+                return;
+            }
+            const nextSlide = this.state.activeSlide <= this.props.flow.steps.length ? this.state.activeSlide + 1 : 0;
+            this.setState({ activeSlide: nextSlide , playing: true });
         }, this.state.speed);
+    }
+    handlePauseClick() {
+        this.setState({ playing: false });
+    }
+    finishPlayThrough() {
+        this.setState({ playing: false });
     }
     render() {
         const stepSlides = this.props.flow.steps.map((step, index) => {
@@ -27,19 +48,23 @@ class FlowPlayback extends React.Component {
             const slideClasses = index === this.state.activeSlide ? 'flow-playback-slide active' : 'flow-playback-slide';
             return (
                 <div className={slideClasses} key={step._id}>
-                    <h3>#{index + 1}</h3>
+                    <h3>
+                        step {index + 1}
+                        <span className="pull-right fa fa-play" onClick={this.handlePlayClick} />
+                        <span className="pull-right fa fa-pause" onClick={this.handlePauseClick} />
+                    </h3>
                     <img src={'http://localhost:8181/screenshots/' + step._id + '.png'} />
                 </div>
             );
         });
 
 
-        switch (this.props.test.status) {       
+        switch (this.props.test.status) {
             case 'failed':
             case 'success':
                 return (
                     <div className="flow-playback">
-                        <div onClick={this.handlePlayClick}>play</div>
+                        <div />
                         {stepSlides}
                     </div>
                 );
