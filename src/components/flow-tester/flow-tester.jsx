@@ -10,7 +10,7 @@ const FlowTester = (props) => {
     };
 
     return (
-        <div className="flow-tester col-xs-12 col-md-6">
+        <div className="col-xs-12 col-md-6">
             <FlowResult {...props} />
             <FlowPlayback {...props} />
         </div>

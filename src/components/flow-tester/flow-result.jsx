@@ -11,10 +11,10 @@ const FlowResult = (props) => {
         case 'notStarted':
             return null;
         case 'running':
-            return <div className="loader">Loading...</div>;
+            return <div className="flow-tester loader">Loading...</div>;
         case 'failed':
             return (
-                <div className="bg-danger">
+                <div className="col-xs-12 flow-tester bg-danger">
                     <h1 className="text-center"><span className="fa fa-exclamation-triangle" /></h1>
                     <h3>Failed on step #{props.test.failedStep}</h3>
                     <p>{props.test.failureMessage}</p>
@@ -22,7 +22,7 @@ const FlowResult = (props) => {
             );
         case 'success':
             return (
-                <div className="bg-success">
+                <div className="col-xs-12 flow-tester bg-success">
                     <h1 className="text-center"><span className="fa fa-thumbs-up" /></h1>
                     <h3>Lookin good.</h3>
                     <p>Test passed with no issues to report.</p>
@@ -30,7 +30,7 @@ const FlowResult = (props) => {
             );
         default:
             return (
-                <div>
+                <div className="col-xs-12 flow-tester bg-danger">
                     <h4>Huh... that is weird.</h4>
                     <p>Something is not right, try refreshing your browser</p>
                     {props.test.status}
