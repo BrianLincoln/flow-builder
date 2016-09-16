@@ -1,4 +1,5 @@
 import React from 'react';
+import FlowPlaybackSlide from './flow-playback-slide';
 
 class FlowPlayback extends React.Component {
 
@@ -17,14 +18,7 @@ class FlowPlayback extends React.Component {
     }
 
     handlePlayClick() {
-        console.log('play click');
-        console.log(this.state);
-
-        if (this.state.playing) {
-            return;
-        }
-
-        this.setState({ playing: true });
+        this.setState({ playing: true, activeSlide: 0 });
 
         const playthrough = setInterval(() => {
             if (this.state.activeSlide >= this.props.flow.steps.length) {
@@ -44,27 +38,24 @@ class FlowPlayback extends React.Component {
     }
     render() {
         const stepSlides = this.props.flow.steps.map((step, index) => {
-
             const slideClasses = index === this.state.activeSlide ? 'flow-playback-slide active' : 'flow-playback-slide';
+            const fallbackImage = './explosion.gif';
             return (
                 <div className={slideClasses} key={step._id}>
-                    <h3>
-                        step {index + 1}
-                        <span className="pull-right fa fa-play" onClick={this.handlePlayClick} />
-                        <span className="pull-right fa fa-pause" onClick={this.handlePauseClick} />
-                    </h3>
-                    <img src={'http://localhost:8181/screenshots/' + step._id + '.png'} />
+                    <FlowPlaybackSlide fallbackImage={fallbackImage} src={'http://localhost:8181/screenshots/' + step._id + '.png'} />
                 </div>
             );
         });
-
 
         switch (this.props.test.status) {
             case 'failed':
             case 'success':
                 return (
-                    <div className="flow-playback">
-                        <div />
+                    <div className="col-xs-12 flow-playback">
+                        <h3>
+                            step {this.state.activeSlide + 1}
+                            <span className="pull-right fa fa-play" onClick={this.handlePlayClick} />
+                        </h3>
                         {stepSlides}
                     </div>
                 );
