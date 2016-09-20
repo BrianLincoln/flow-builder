@@ -124,7 +124,9 @@ export function receiveFlow(flow) {
 
 export function runTest(flow) {
     return (dispatch) => {
-        dispatch(startTest(flow.id));
+        const startTime = Date.now();
+
+        dispatch(startTest(flow.id, startTime));
 
         const body = {
             flow
@@ -139,50 +141,55 @@ export function runTest(flow) {
         })
 
         .then(() => {
-            dispatch(followTestStatus(flow.id));
+            dispatch(followTestStatus(flow.id, startTime));
         });
     };
 }
 
 
 
-export function followTestStatus(flowId) {
+export function followTestStatus(flowId, startTime) {
     return (dispatch) => {
 
         return fetch('/api/tests/' + flowId, {
             method: 'GET',
         })
         .then((res) => {
-            return res.json();
+            if (res.ok) {
+                const resJson = res.json();
+                return resJson;
+            } else {
+                return;
+            }
         })
-        .then((resJSON) => {
-            if (resJSON.status === 'complete') {
-                dispatch(receiveTestComplete(flowId, resJSON.result, resJSON.status, resJSON.failure.reason, resJSON.failure.stepId));
+        .then((resJson) => {
+            if (resJson.status === 'complete' && startTime < Date.parse(resJson.finished)) {
+                dispatch(receiveTestComplete(flowId, resJson.result, resJson.status, resJson.failure));
             } else {
                 setTimeout(() => {
-                    dispatch(followTestStatus(flowId));
+                    dispatch(followTestStatus(flowId, startTime));
                 }, 1000);
             }
-
         });
     };
 }
 
-export function startTest(flowId) {
+export function startTest(flowId, startTime) {
     return {
         type: types.START_TEST,
-        flowId
+        flowId,
+        startTime
     };
 }
 
-export function receiveTestComplete(flowId, result, status, failureMessage, failedStep) {
+export function receiveTestComplete(flowId, result, status, failure) {
     return {
         type: types.RECEIVE_TEST_COMPLETED,
         receivedAt: Date.now(),
         flowId,
         result,
         status,
-        failureMessage,
-        failedStep
+        failureMessage: failure !== null ? failure.reason : undefined,
+        failedStep: failure !== null ? failure.stepId : undefined
     };
 }

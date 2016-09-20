@@ -18,9 +18,6 @@ export default function flow (state = initialState, action) {
                 steps: action.flow.steps,
                 name: action.flow.name
             });
-
-
-
         case EDIT_STEP:
             return Object.assign({}, state, { steps: state.steps.map((step) => {
                 if (step.id === action.id) {

@@ -5,6 +5,7 @@ class Step extends React.Component {
     constructor(props) {
         super(props);
 
+        this.generateDisplayName = this.generateDisplayName.bind(this);
         this.showStepEditorClick = this.showStepEditorClick.bind(this);
         this.hideStepEditor = this.hideStepEditor.bind(this);
         this.handleDeleteClick = this.handleDeleteClick.bind(this);
@@ -12,8 +13,53 @@ class Step extends React.Component {
         this.handleMoveUpclick = this.handleMoveUpclick.bind(this);
 
         this.state = {
+            displayName: this.generateDisplayName(this.props.step),
             showEditor: false
         };
+    }
+    generateDisplayName(step) {
+        let result = null;
+
+        switch (step.stepType) {
+            case 'pageLoad':
+                result = (
+                    <div className="flow-editor-step-name">
+                        <samp>{this.props.stepNumber}. </samp>
+                        <strong>Load: </strong>
+                        <samp className="flow-editor-step-value">{step.url}</samp>
+                    </div>
+                );
+                break;
+            case 'click':
+                result = (
+                    <div className="flow-editor-step-name">
+                        <samp>{this.props.stepNumber}. </samp>
+                        <strong>Click: </strong>
+                        <samp className="flow-editor-step-value">{step.selector}</samp>
+                    </div>
+                );
+                break;
+            case 'confirmElementExists':
+                result = (
+                    <div className="flow-editor-step-name">
+                        <samp>{this.props.stepNumber}. </samp>
+                        <strong>Confirm element exists: </strong>
+                        <samp className="flow-editor-step-value">{step.selector}</samp>
+                    </div>
+                );
+                break;
+            case 'input':
+                result = (
+                    <div className="flow-editor-step-name">
+                        <samp>{this.props.stepNumber}. </samp>
+                        <strong>Edit input: </strong>
+                        <samp className="flow-editor-step-value">{step.selector}</samp>
+                    </div>
+                );
+                break;
+        }
+
+        return result;
     }
     showStepEditorClick() {
         this.setState({ showEditor: !this.state.showEditor });
@@ -38,11 +84,13 @@ class Step extends React.Component {
             return <StepEditor {...this.props} hideStepEditor={this.hideStepEditor}  />;
         } else {
             return (
-                <a className="list-group-item" data-tar={'step' + this.props.step.id} onClick={this.showStepEditorClick}>
-                    <span>{this.props.stepNumber}.) {this.props.step.stepType}</span>
-                    <span className="pull-right fa fa-trash-o" onClick={this.handleDeleteClick} />
-                    <span className="pull-right fa fa-arrow-down" onClick={this.handleMoveDownclick} />
-                    <span className="pull-right fa fa-arrow-up" onClick={this.handleMoveUpclick} />
+                <a className="list-group-item flow-editor-step" data-tar={'step' + this.props.step._id} onClick={this.showStepEditorClick}>
+                    <div className="flow-editor-step-name-wrapper">{this.state.displayName}</div>
+                    <div className="flow-editor-step-button-wrapper">
+                        <div className="flow-editor-step-button fa fa-trash-o" onClick={this.handleDeleteClick} />
+                        <div className="flow-editor-step-button fa fa-arrow-down" onClick={this.handleMoveDownclick} />
+                        <div className="flow-editor-step-button fa fa-arrow-up" onClick={this.handleMoveUpclick} />
+                    </div>
                 </a>
             );
         }

@@ -12,7 +12,7 @@ const FlowName = (props) => {
 
     if (props.isEditable) {
         return (
-            <div className="input-group input-group-lg">
+            <div className="flow-edit-name input-group input-group-lg">
                 <input className="form-control" id="name" onChange={props.handleNameFieldChange} type="text" value={props.name} />
                 <div className="input-group-btn">
                     <button className="btn btn-default" onClick={props.cancelNameChangeForm.bind(this)} title="cancel change"><span className="fa fa-times" /></button>

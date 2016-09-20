@@ -7,7 +7,7 @@ const StepList = (props) => {
         flowId: React.PropTypes.string.isRequired,
         steps: React.PropTypes.array
     };
-
+    
     if (props.steps !== undefined && props.steps.length > 0) {
         const stepNodes = props.steps.map((step, index) => {
             return (

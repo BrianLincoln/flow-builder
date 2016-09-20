@@ -7,72 +7,94 @@ class FlowPlayback extends React.Component {
         super(props);
 
         this.handlePlayClick = this.handlePlayClick.bind(this);
-        this.finishPlayThrough = this.finishPlayThrough.bind(this);
         this.handlePauseClick = this.handlePauseClick.bind(this);
         this.handlePreviousClick = this.handlePreviousClick.bind(this);
         this.handleNextClick = this.handleNextClick.bind(this);
 
         this.state = {
-            activeSlide: 0,
+            activeSlidePath: this.getStepScreenshotPathFromSlideNumber(1),
+            activeSlideNumber: 1,
             playing: false,
             speed: 1000
         };
     }
 
     handlePlayClick() {
-        this.setState({ playing: true, activeSlide: 0 });
+        this.setState({ playing: true });
 
         const playthrough = setInterval(() => {
-            if (this.state.activeSlide >= this.props.flow.steps.length) {
+            if (!this.state.playing) {
                 clearInterval(playthrough);
-                this.finishPlayThrough();
                 return;
             }
-            const nextSlide = this.state.activeSlide <= this.props.flow.steps.length ? this.state.activeSlide + 1 : 0;
-            this.setState({ activeSlide: nextSlide , playing: true });
+
+            const nextSlide = this.state.activeSlideNumber < this.props.slideCount ? this.state.activeSlideNumber + 1 : 1;
+
+            this.setState({
+                activeSlidePath: this.getStepScreenshotPathFromSlideNumber(nextSlide),
+                activeSlideNumber: nextSlide,
+                playing: true
+            });
         }, this.state.speed);
     }
     handleNextClick() {
-        if (this.state.activeSlide > this.props.flow.steps.length) {
+        if (this.state.activeSlideNumber >= this.props.slideCount) {
             return;
         }
-        this.setState({ playing: false, activeSlide: this.state.activeSlide + 1 });
+
+        const nextSlide = this.state.activeSlideNumber + 1;
+
+        this.setState({
+            playing: false,
+            activeSlidePath: this.getStepScreenshotPathFromSlideNumber(nextSlide),
+            activeSlideNumber: nextSlide
+        });
     }
     handlePreviousClick() {
-        if (this.state.activeSlide <= 1) {
+        if (this.state.activeSlideNumber <= 1) {
             return;
         }
-        this.setState({ playing: false, activeSlide: this.state.activeSlide - 1 });
+
+        const nextSlide = this.state.activeSlideNumber - 1;
+
+        this.setState({
+            playing: false,
+            activeSlidePath: this.getStepScreenshotPathFromSlideNumber(nextSlide),
+            activeSlideNumber: nextSlide
+        });
     }
     handlePauseClick() {
-        this.setState({ playing: false });
-    }
-    finishPlayThrough() {
-        this.setState({ playing: false });
-    }
-    render() {
-        const stepSlides = this.props.flow.steps.map((step, index) => {
-            const slideClasses = index === this.state.activeSlide ? 'flow-playback-slide active' : 'flow-playback-slide';
-            const fallbackImage = './explosion.gif';
-            return (
-                <div className={slideClasses} key={step._id}>
-                    <FlowPlaybackSlide fallbackImage={fallbackImage} src={'http://localhost:8181/screenshots/' + step._id + '.png'} />
-                </div>
-            );
+        this.setState({
+            playing: false
         });
+    }
+    getStepScreenshotPathFromSlideNumber(slideNumber) {
+        const step = this.props.flow.steps[slideNumber - 1];
 
+        return 'http://localhost:8181/screenshots/' + step._id + '.png';
+    }
+
+    render() {
         switch (this.props.test.status) {
             case 'failed':
             case 'success':
                 return (
                     <div className="col-xs-12 flow-playback">
-                        <h3>
-                            step {this.state.activeSlide + 1}
-                            <span className="pull-right fa fa-play" onClick={this.handlePlayClick} />
-                            <span className="pull-right fa fa-chevron-right" onClick={this.handleNextClick} />
-                            <span className="pull-right fa fa-chevron-left" onClick={this.handlePreviousClick} />
-                        </h3>
-                        {stepSlides}
+                        <div className="flow-playback-header">
+                            <samp>{this.state.activeSlideNumber}.</samp>
+                            <div className="flow-playback-controls pull-right">
+                                <div className="flow-playback-control fa fa-chevron-left" onClick={this.handlePreviousClick} />
+                                <div className="flow-playback-control fa fa-chevron-right" onClick={this.handleNextClick} />
+                                {(() => {
+                                    if (this.state.playing) {
+                                        return <div className="flow-playback-control fa fa-pause" onClick={this.handlePauseClick} />;
+                                    } else {
+                                        return <div className="flow-playback-control fa fa-play" onClick={this.handlePlayClick} />;
+                                    }
+                                })()}
+                            </div>
+                        </div>
+                        <FlowPlaybackSlide fallbackImage={'./explosion.gif'} src={this.state.activeSlidePath} />
                     </div>
                 );
             default:
@@ -83,7 +105,9 @@ class FlowPlayback extends React.Component {
 
 FlowPlayback.propTypes = {
     actions: React.PropTypes.object.isRequired,
+    failedStepNumber: React.PropTypes.number,
     flow: React.PropTypes.object.isRequired,
+    slideCount: React.PropTypes.number.isRequired,
     test: React.PropTypes.object.isRequired
 };
 
