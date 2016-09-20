@@ -3,11 +3,12 @@ import React from 'react';
 const FlowResult = (props) => {
     FlowResult.propTypes = {
         actions: React.PropTypes.object.isRequired,
+        failedStepNumber: React.PropTypes.number,
         flow: React.PropTypes.object.isRequired,
         test: React.PropTypes.object.isRequired
     };
 
-    const failedText = props.test.failedStep !== undefined ? 'Failed on step #' + props.test.failedStep : 'Failed';
+    const failedText = props.failedStepNumber !== undefined ? 'Failed on step #' + props.failedStepNumber : 'Failed';
 
     switch (props.test.status) {
         case 'notStarted':

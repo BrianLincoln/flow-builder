@@ -157,7 +157,7 @@ export function followTestStatus(flowId) {
         })
         .then((resJSON) => {
             if (resJSON.status === 'complete') {
-                dispatch(receiveTestComplete(flowId, resJSON.result, resJSON.status, resJSON.failureMessage, resJSON.failedStep));
+                dispatch(receiveTestComplete(flowId, resJSON.result, resJSON.status, resJSON.failure.reason, resJSON.failure.stepId));
             } else {
                 setTimeout(() => {
                     dispatch(followTestStatus(flowId));

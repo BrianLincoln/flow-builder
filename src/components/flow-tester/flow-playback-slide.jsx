@@ -14,7 +14,6 @@ class FlowPlaybackSlide extends React.Component {
         const img = new Image();
 
         img.onerror = () => {
-            console.log('error');
             this.setState({
                 src: './../explosion.gif'
             });
@@ -23,7 +22,6 @@ class FlowPlaybackSlide extends React.Component {
     }
 
     render() {
-        console.log(this.state);
         return (
             <img src={this.state.src} />
         );

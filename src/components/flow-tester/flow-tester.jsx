@@ -9,9 +9,33 @@ const FlowTester = (props) => {
         test: React.PropTypes.object.isRequired
     };
 
+    let failedStepNumber = undefined;
+
+    if (props.test.failedStep !== undefined) {
+        console.log('~~~~');
+        console.log(props);
+        console.log(findStepNumber(props.flow.steps, props.test.failedStep));
+
+        failedStepNumber = findStepNumber(props.flow.steps, props.test.failedStep);
+    }
+
+    function findStepNumber (steps, stepId)  {
+        let result = undefined;
+
+        for (let i = 0; i < steps.length; i++) {
+            const step = steps[i];
+
+            if (step._id === stepId) {
+                result = i + 1;
+            }
+        }
+
+        return result;
+    }
+
     return (
         <div className="col-xs-12 col-md-6">
-            <FlowResult {...props} />
+            <FlowResult {...props} failedStepNumber={failedStepNumber} />
             <FlowPlayback {...props} />
         </div>
     );

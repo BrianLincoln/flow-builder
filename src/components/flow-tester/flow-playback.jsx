@@ -9,6 +9,8 @@ class FlowPlayback extends React.Component {
         this.handlePlayClick = this.handlePlayClick.bind(this);
         this.finishPlayThrough = this.finishPlayThrough.bind(this);
         this.handlePauseClick = this.handlePauseClick.bind(this);
+        this.handlePreviousClick = this.handlePreviousClick.bind(this);
+        this.handleNextClick = this.handleNextClick.bind(this);
 
         this.state = {
             activeSlide: 0,
@@ -29,6 +31,18 @@ class FlowPlayback extends React.Component {
             const nextSlide = this.state.activeSlide <= this.props.flow.steps.length ? this.state.activeSlide + 1 : 0;
             this.setState({ activeSlide: nextSlide , playing: true });
         }, this.state.speed);
+    }
+    handleNextClick() {
+        if (this.state.activeSlide > this.props.flow.steps.length) {
+            return;
+        }
+        this.setState({ playing: false, activeSlide: this.state.activeSlide + 1 });
+    }
+    handlePreviousClick() {
+        if (this.state.activeSlide <= 1) {
+            return;
+        }
+        this.setState({ playing: false, activeSlide: this.state.activeSlide - 1 });
     }
     handlePauseClick() {
         this.setState({ playing: false });
@@ -55,6 +69,8 @@ class FlowPlayback extends React.Component {
                         <h3>
                             step {this.state.activeSlide + 1}
                             <span className="pull-right fa fa-play" onClick={this.handlePlayClick} />
+                            <span className="pull-right fa fa-chevron-right" onClick={this.handleNextClick} />
+                            <span className="pull-right fa fa-chevron-left" onClick={this.handlePreviousClick} />
                         </h3>
                         {stepSlides}
                     </div>
