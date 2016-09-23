@@ -39,6 +39,15 @@ class Step extends React.Component {
                     </div>
                 );
                 break;
+            case 'hover':
+                result = (
+                    <div className="flow-editor-step-name">
+                        <samp>{this.props.stepNumber}. </samp>
+                        <strong>Hover: </strong>
+                        <samp className="flow-editor-step-value">{step.selector}</samp>
+                    </div>
+                );
+                break;
             case 'confirmElementExists':
                 result = (
                     <div className="flow-editor-step-name">
