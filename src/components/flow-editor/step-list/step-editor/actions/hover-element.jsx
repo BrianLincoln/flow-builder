@@ -1,0 +1,19 @@
+import React from 'react';
+
+const ClickElementAction = (props) => {
+    ClickElementAction.propTypes = {
+        handleSelectorChange: React.PropTypes.func.isRequired,
+        selector: React.PropTypes.string
+    };
+    const handleSelectorChange = (event) => {
+        props.handleSelectorChange(event.target.value);
+    };
+    return (
+        <div className="form-group">
+            <label htmlFor="field-type">Selector: </label>
+            <input className="form-control" id="field-type" onChange={handleSelectorChange.bind(this)} type="text" value={props.selector} />
+        </div>
+    );
+};
+
+export default ClickElementAction;

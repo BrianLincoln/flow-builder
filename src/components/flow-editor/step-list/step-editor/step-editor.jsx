@@ -3,6 +3,7 @@ import SelectActionType from './select-action-type';
 import PageLoadAction from './actions/page-load';
 import ConfirmElementExistsAction from './actions/confirm-element-exists';
 import ClickElementAction from './actions/click-element';
+import HoverElementAction from './actions/hover-element';
 import EditInputAction from './actions/edit-input';
 
 class StepEditor extends React.Component {
@@ -64,6 +65,8 @@ class StepEditor extends React.Component {
                                 return <ConfirmElementExistsAction handleSelectorChange={this.handleSelectorChange} selector={this.state.step.selector} />;
                             case 'click':
                                 return <ClickElementAction handleSelectorChange={this.handleSelectorChange} selector={this.state.step.selector} />;
+                            case 'hover':
+                                return <HoverElementAction handleSelectorChange={this.handleSelectorChange} selector={this.state.step.selector} />;
                             case 'input':
                                 return <EditInputAction handleInputValueChange={this.handleInputValueChange} handleSelectorChange={this.handleSelectorChange} inputValue={this.state.step.inputValue} selector={this.state.step.selector} />;
                         }
