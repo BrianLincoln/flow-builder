@@ -14,6 +14,7 @@ class FlowManager extends React.Component {
         this.showNameChangeForm = this.showNameChangeForm.bind(this);
         this.cancelNameChangeForm = this.cancelNameChangeForm.bind(this);
         this.handleNameFieldChange = this.handleNameFieldChange.bind(this);
+        this.handleRunTestButtonClick = this.handleRunTestButtonClick.bind(this);
     }
     componentDidMount() {
         this.props.actions.fetchFlow(this.props.flowId);
@@ -40,7 +41,14 @@ class FlowManager extends React.Component {
     handleNameFieldChange (e) {
         this.setState({ name: e.target.value });
     }
+    handleRunTestButtonClick () {
+        if (this.props.flow.steps !== undefined && this.props.flow.steps.length > 0) {
+            this.props.actions.runTest(this.props.flow);
+        }
+    }
     render() {
+        const runTestButtonClasses = (this.props.flow.steps !== undefined && this.props.flow.steps.length > 0) ? 'btn btn-primary' : 'btn btn-primary disabled';
+
         if (this.props.flow.id !== undefined) {
             return (
                 <div className="flow-manager">
@@ -48,7 +56,7 @@ class FlowManager extends React.Component {
                         <FlowName cancelNameChangeForm={this.cancelNameChangeForm} handleNameFieldChange={this.handleNameFieldChange} isEditable={this.state.showNameEditField} name={this.state.name} saveNameEdit={this.saveNameChangeForm} showNameChangeForm={this.showNameChangeForm} />
 
                         <div className="btn-group pull-right">
-                            <button className="btn btn-primary" data-tar="run-test" onClick={this.props.actions.runTest.bind(this, this.props.flow)}>Run Test</button>
+                            <button className={runTestButtonClasses} data-tar="run-test" onClick={this.handleRunTestButtonClick}>Run Test</button>
                             <a className="btn btn-default" href={'/flow/' + this.props.flow.id + '/delete'}><span className="fa fa-trash-o" /></a>
                         </div>
                     </div>
