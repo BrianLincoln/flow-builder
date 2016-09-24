@@ -11,7 +11,7 @@ const PageLoadAction = (props) => {
     return (
         <div className="form-group">
             <label htmlFor="field-url">Url: </label>
-            <input className="form-control" id="field-url" onChange={handleChange.bind(this)} type="text" value={props.url} />
+            <input className="form-control" id="field-url" onChange={handleChange.bind(this)} type="text" value={props.url ? props.url : ''} />
         </div>
     );
 };

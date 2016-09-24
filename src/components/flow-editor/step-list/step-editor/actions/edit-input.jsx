@@ -17,11 +17,11 @@ const EditInputAction = (props) => {
         <div>
             <div className="form-group">
                 <label htmlFor="field-type">Selector: </label>
-                <input className="form-control" id="field-type" onChange={handleSelectorChange.bind(this)} type="text" value={props.selector} />
+                <input className="form-control" id="field-type" onChange={handleSelectorChange.bind(this)} type="text" value={props.selector ? props.selector : ''} />
             </div>
             <div className="form-group">
                 <label htmlFor="field-value">Input Value: </label>
-                <input className="form-control" id="field-value" onChange={handleInputValueChange.bind(this)} type="text" value={props.inputValue} />
+                <input className="form-control" id="field-value" onChange={handleInputValueChange.bind(this)} type="text" value={props.inputValue ? props.inputValue : ''} />
             </div>
         </div>
     );
