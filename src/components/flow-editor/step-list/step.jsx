@@ -5,7 +5,7 @@ class Step extends React.Component {
     constructor(props) {
         super(props);
 
-        this.generateDisplayName = this.generateDisplayName.bind(this);
+        this.generateStepListItem = this.generateStepListItem.bind(this);
         this.showStepEditorClick = this.showStepEditorClick.bind(this);
         this.hideStepEditor = this.hideStepEditor.bind(this);
         this.handleDeleteClick = this.handleDeleteClick.bind(this);
@@ -13,11 +13,16 @@ class Step extends React.Component {
         this.handleMoveUpclick = this.handleMoveUpclick.bind(this);
 
         this.state = {
-            displayName: this.generateDisplayName(this.props.step),
+            displayName: this.generateStepListItem(this.props.step),
             showEditor: false
         };
     }
-    generateDisplayName(step) {
+    componentWillReceiveProps(nextProps) {
+        this.state = {
+            displayName: this.generateStepListItem(nextProps.step)
+        };
+    }
+    generateStepListItem(step) {
         let result = null;
 
         switch (step.stepType) {
@@ -67,7 +72,6 @@ class Step extends React.Component {
                 );
                 break;
         }
-
         return result;
     }
     showStepEditorClick() {
