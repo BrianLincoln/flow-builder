@@ -12,8 +12,8 @@ class FlowPlayback extends React.Component {
         this.handleNextClick = this.handleNextClick.bind(this);
 
         this.state = {
-            activeSlidePath: this.getStepScreenshotPathFromSlideNumber(1),
-            activeSlideNumber: 1,
+            activeSlide: props.test.screenshots[0],
+            activeSlideIndex: 0,
             playing: false,
             speed: 1000
         };
@@ -28,39 +28,33 @@ class FlowPlayback extends React.Component {
                 return;
             }
 
-            const nextSlide = this.state.activeSlideNumber < this.props.slideCount ? this.state.activeSlideNumber + 1 : 1;
+            const nextSlideIndex = this.state.activeSlideIndex < this.props.test.screenshots.length - 1 ? this.state.activeSlideIndex + 1 : 0;
 
             this.setState({
-                activeSlidePath: this.getStepScreenshotPathFromSlideNumber(nextSlide),
-                activeSlideNumber: nextSlide,
+                activeSlide: this.props.test.screenshots[nextSlideIndex],
+                activeSlideIndex: nextSlideIndex,
                 playing: true
             });
         }, this.state.speed);
     }
     handleNextClick() {
-        if (this.state.activeSlideNumber >= this.props.slideCount) {
-            return;
-        }
-
-        const nextSlide = this.state.activeSlideNumber + 1;
-
+        const nextSlideIndex = this.state.activeSlideIndex < this.props.test.screenshots.length - 1 ? this.state.activeSlideIndex + 1 : 0;
+        console.log(this.props.test.screenshots.length);
+        console.log(nextSlideIndex);
+        console.log(this.props.test.screenshots[nextSlideIndex]);
         this.setState({
             playing: false,
-            activeSlidePath: this.getStepScreenshotPathFromSlideNumber(nextSlide),
-            activeSlideNumber: nextSlide
+            activeSlide: this.props.test.screenshots[nextSlideIndex],
+            activeSlideIndex: nextSlideIndex
         });
     }
     handlePreviousClick() {
-        if (this.state.activeSlideNumber <= 1) {
-            return;
-        }
-
-        const nextSlide = this.state.activeSlideNumber - 1;
+        const nextSlideIndex = this.state.activeSlideIndex === 0 ? this.props.test.screenshots.length - 1 : 0;
 
         this.setState({
             playing: false,
-            activeSlidePath: this.getStepScreenshotPathFromSlideNumber(nextSlide),
-            activeSlideNumber: nextSlide
+            activeSlide: this.props.test.screenshots[nextSlideIndex],
+            activeSlideIndex: nextSlideIndex
         });
     }
     handlePauseClick() {
@@ -68,20 +62,16 @@ class FlowPlayback extends React.Component {
             playing: false
         });
     }
-    getStepScreenshotPathFromSlideNumber(slideNumber) {
-        const step = this.props.flow.steps[slideNumber - 1];
-
-        return 'http://localhost:8181/screenshots/' + step._id + '.png';
-    }
 
     render() {
         switch (this.props.test.status) {
             case 'failed':
             case 'success':
+            default:
                 return (
                     <div className="col-xs-12 flow-playback">
                         <div className="flow-playback-header">
-                            <samp>{this.state.activeSlideNumber}.</samp>
+                            <samp>{this.state.activeSlideIndex + 1}.</samp>
                             <div className="flow-playback-controls pull-right">
                                 <div className="flow-playback-control fa fa-chevron-left" onClick={this.handlePreviousClick} />
                                 <div className="flow-playback-control fa fa-chevron-right" onClick={this.handleNextClick} />
@@ -94,11 +84,9 @@ class FlowPlayback extends React.Component {
                                 })()}
                             </div>
                         </div>
-                        <FlowPlaybackSlide fallbackImage={'./explosion.gif'} src={this.state.activeSlidePath} />
+                        <FlowPlaybackSlide fallbackImage={'./explosion.gif'} src={this.state.activeSlide.fullURL} />
                     </div>
                 );
-            default:
-                return null;
         }
     }
 }

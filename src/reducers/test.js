@@ -15,6 +15,7 @@ export default function test (state = initialState, action) {
         case RECEIVE_TEST_COMPLETED:
             return Object.assign({}, state, {
                 status: action.result,
+                screenshots: action.screenshots,
                 failureMessage: action.failureMessage,
                 failedStep: action.failedStep
             });

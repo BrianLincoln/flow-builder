@@ -164,11 +164,11 @@ export function followTestStatus(flowId, startTime) {
         })
         .then((resJson) => {
             if (resJson.status === 'complete' && startTime < Date.parse(resJson.finished)) {
-                dispatch(receiveTestComplete(flowId, resJson.result, resJson.status, resJson.failure));
+                dispatch(receiveTestComplete(flowId, resJson.result, resJson.status, resJson.screenshots, resJson.failure));
             } else {
                 setTimeout(() => {
                     dispatch(followTestStatus(flowId, startTime));
-                }, 1000);
+                }, 500);
             }
         });
     };
@@ -182,13 +182,14 @@ export function startTest(flowId, startTime) {
     };
 }
 
-export function receiveTestComplete(flowId, result, status, failure) {
+export function receiveTestComplete(flowId, result, status, screenshots, failure) {
     return {
         type: types.RECEIVE_TEST_COMPLETED,
         receivedAt: Date.now(),
         flowId,
         result,
         status,
+        screenshots,
         failureMessage: failure !== null ? failure.reason : undefined,
         failedStep: failure !== null ? failure.stepId : undefined
     };
