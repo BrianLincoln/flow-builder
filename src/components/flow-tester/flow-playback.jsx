@@ -39,9 +39,7 @@ class FlowPlayback extends React.Component {
     }
     handleNextClick() {
         const nextSlideIndex = this.state.activeSlideIndex < this.props.test.screenshots.length - 1 ? this.state.activeSlideIndex + 1 : 0;
-        console.log(this.props.test.screenshots.length);
-        console.log(nextSlideIndex);
-        console.log(this.props.test.screenshots[nextSlideIndex]);
+
         this.setState({
             playing: false,
             activeSlide: this.props.test.screenshots[nextSlideIndex],
