@@ -28,45 +28,40 @@ class Step extends React.Component {
         switch (step.stepType) {
             case 'pageLoad':
                 result = (
-                    <div className="flow-editor-step-name">
-                        <samp>{this.props.stepNumber}. </samp>
-                        <strong>Load: </strong>
+                    <div className="flow-editor-step-info">
+                        <strong className="flow-editor-step-type">Load: </strong>
                         <samp className="flow-editor-step-value">{step.url}</samp>
                     </div>
                 );
                 break;
             case 'click':
                 result = (
-                    <div className="flow-editor-step-name">
-                        <samp>{this.props.stepNumber}. </samp>
-                        <strong>Click: </strong>
+                    <div className="flow-editor-step-info">
+                        <strong className="flow-editor-step-type">Click: </strong>
                         <samp className="flow-editor-step-value">{step.selector}</samp>
                     </div>
                 );
                 break;
             case 'hover':
                 result = (
-                    <div className="flow-editor-step-name">
-                        <samp>{this.props.stepNumber}. </samp>
-                        <strong>Hover: </strong>
+                    <div className="flow-editor-step-info">
+                        <strong className="flow-editor-step-type">Hover: </strong>
                         <samp className="flow-editor-step-value">{step.selector}</samp>
                     </div>
                 );
                 break;
             case 'confirmElementExists':
                 result = (
-                    <div className="flow-editor-step-name">
-                        <samp>{this.props.stepNumber}. </samp>
-                        <strong>Confirm element exists: </strong>
+                    <div className="flow-editor-step-info">
+                        <strong className="flow-editor-step-type">Confirm element exists: </strong>
                         <samp className="flow-editor-step-value">{step.selector}</samp>
                     </div>
                 );
                 break;
             case 'input':
                 result = (
-                    <div className="flow-editor-step-name">
-                        <samp>{this.props.stepNumber}. </samp>
-                        <strong>Edit input: </strong>
+                    <div className="flow-editor-step-info">
+                        <strong className="flow-editor-step-type">Edit input: </strong>
                         <samp className="flow-editor-step-value">{step.selector}</samp>
                     </div>
                 );
@@ -97,8 +92,9 @@ class Step extends React.Component {
             return <StepEditor {...this.props} hideStepEditor={this.hideStepEditor}  />;
         } else {
             return (
-                <a className="list-group-item flow-editor-step" data-tar={'step' + this.props.step._id} onClick={this.showStepEditorClick}>
-                    <div className="flow-editor-step-name-wrapper">{this.state.displayName}</div>
+                <a className="flow-editor-step" data-tar={'step' + this.props.step._id} onClick={this.showStepEditorClick}>
+                    <samp className="flow-editor-step-number">{this.props.stepNumber}</samp>
+                    {this.state.displayName}
                     <div className="flow-editor-step-button-wrapper">
                         <div className="flow-editor-step-button fa fa-trash-o" onClick={this.handleDeleteClick} />
                         <div className="flow-editor-step-button fa fa-arrow-down" onClick={this.handleMoveDownclick} />

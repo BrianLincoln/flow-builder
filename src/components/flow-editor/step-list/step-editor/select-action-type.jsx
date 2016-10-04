@@ -10,6 +10,7 @@ const SelectActionType = (props) => {
     };
     return (
         <div className="form-group">
+            <label htmlFor="action-types">Action: </label>
             <select className="form-control" defaultValue={props.stepType} id="action-types" onChange={handleSelection.bind(this)} >
                 <option value="pageLoad">Load page</option>
                 <option value="input">Edit text field</option>

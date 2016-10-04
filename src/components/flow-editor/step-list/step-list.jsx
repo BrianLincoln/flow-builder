@@ -7,7 +7,7 @@ const StepList = (props) => {
         flowId: React.PropTypes.string.isRequired,
         steps: React.PropTypes.array
     };
-    
+
     if (props.steps !== undefined && props.steps.length > 0) {
         const stepNodes = props.steps.map((step, index) => {
             return (
@@ -15,11 +15,11 @@ const StepList = (props) => {
             );
         });
         return (
-            <div className="list-group">{stepNodes}</div>
+            <div className="step-list">{stepNodes}</div>
         );
     }
     return (
-        <h3>Add a step to get started</h3>
+        <h4>Add a step to get started</h4>
     );
 };
 

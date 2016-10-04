@@ -54,7 +54,6 @@ class FlowManager extends React.Component {
                 <div className="flow-manager">
                     <div className="page-header text-center clearfix">
                         <FlowName cancelNameChangeForm={this.cancelNameChangeForm} handleNameFieldChange={this.handleNameFieldChange} isEditable={this.state.showNameEditField} name={this.state.name} saveNameEdit={this.saveNameChangeForm} showNameChangeForm={this.showNameChangeForm} />
-
                         <div className="btn-group pull-right">
                             <button className={runTestButtonClasses} data-tar="run-test" onClick={this.handleRunTestButtonClick}>Run Test</button>
                             <a className="btn btn-default" href={'/flow/' + this.props.flow.id + '/delete'}><span className="fa fa-trash-o" /></a>

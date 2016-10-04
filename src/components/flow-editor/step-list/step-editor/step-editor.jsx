@@ -50,28 +50,29 @@ class StepEditor extends React.Component {
     }
     render() {
         return (
-            <div className="panel panel-primary">
-                <div className="panel-heading">
-                    <h3 className="panel-title">{this.props.stepNumber}.) {this.props.step.stepType} <span className="pull-right fa fa-times" onClick={this.props.hideStepEditor} /></h3>
-                </div>
-                <div className="panel-body">
-                    <SelectActionType handleStepTypeChange={this.handleStepTypeChange} stepType={this.props.step.stepType} />
+            <div className="flow-editor-step">
+                <samp className="flow-editor-step-number">{this.props.stepNumber} </samp>
+                <div className="flow-editor-step-info">
+                    <span className="pull-right fa fa-times" onClick={this.props.hideStepEditor} />
+                    <div className="step-editor-body">
+                        <SelectActionType handleStepTypeChange={this.handleStepTypeChange} stepType={this.props.step.stepType} />
 
-                    {(() => {
-                        switch (this.state.step.stepType) {
-                            case 'pageLoad':
-                                return <PageLoadAction handleUrlFieldChange={this.handleUrlFieldChange} url={this.state.step.url} />;
-                            case 'confirmElementExists':
-                                return <ConfirmElementExistsAction handleSelectorChange={this.handleSelectorChange} selector={this.state.step.selector} />;
-                            case 'click':
-                                return <ClickElementAction handleSelectorChange={this.handleSelectorChange} selector={this.state.step.selector} />;
-                            case 'hover':
-                                return <HoverElementAction handleSelectorChange={this.handleSelectorChange} selector={this.state.step.selector} />;
-                            case 'input':
-                                return <EditInputAction handleInputValueChange={this.handleInputValueChange} handleSelectorChange={this.handleSelectorChange} inputValue={this.state.step.inputValue} selector={this.state.step.selector} />;
-                        }
-                    })()}
-                    <button className="btn btn-primary" onClick={this.saveStepEdits}>save</button>
+                        {(() => {
+                            switch (this.state.step.stepType) {
+                                case 'pageLoad':
+                                    return <PageLoadAction handleUrlFieldChange={this.handleUrlFieldChange} url={this.state.step.url} />;
+                                case 'confirmElementExists':
+                                    return <ConfirmElementExistsAction handleSelectorChange={this.handleSelectorChange} selector={this.state.step.selector} />;
+                                case 'click':
+                                    return <ClickElementAction handleSelectorChange={this.handleSelectorChange} selector={this.state.step.selector} />;
+                                case 'hover':
+                                    return <HoverElementAction handleSelectorChange={this.handleSelectorChange} selector={this.state.step.selector} />;
+                                case 'input':
+                                    return <EditInputAction handleInputValueChange={this.handleInputValueChange} handleSelectorChange={this.handleSelectorChange} inputValue={this.state.step.inputValue} selector={this.state.step.selector} />;
+                            }
+                        })()}
+                        <button className="btn btn-primary" onClick={this.saveStepEdits}>save</button>
+                    </div>
                 </div>
             </div>
         );
