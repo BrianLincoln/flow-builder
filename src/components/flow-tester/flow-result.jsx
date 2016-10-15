@@ -24,7 +24,7 @@ const FlowResult = (props) => {
             );
         case 'success':
             return (
-                <div className="col-xs-12 flow-result bg-success">
+                <div className="col-xs-12 flow-result flow-result-success">
                     <h3>Lookin Good <span className="fa fa-thumbs-up pull-right" /></h3>
                     <p>Test passed with no issues to report.</p>
                 </div>
