@@ -26,7 +26,7 @@ const FlowTester = (props) => {
         return result;
     }
 
-    const flowPlayback = props.test.status === 'failed' || props.test.status === 'success'
+    const flowPlayback = props.test.status === 'failed' || props.test.status === 'complete'
         ? <FlowPlayback {...props} failedStepNumber={failedStepNumber} slideCount={slideCount} />
         : null;
 

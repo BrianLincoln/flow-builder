@@ -18,6 +18,7 @@ class FlowManager extends React.Component {
     }
     componentDidMount() {
         this.props.actions.fetchFlow(this.props.flowId);
+        this.props.actions.fetchTest(this.props.flowId);
     }
     componentWillReceiveProps (newProps) {
         this.state = {

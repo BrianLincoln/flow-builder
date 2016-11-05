@@ -15,6 +15,20 @@ export function fetchFlow(flowId) {
     };
 }
 
+export function fetchTest(flowId) {
+    return (dispatch) => {
+        dispatch(requestTest(flowId));
+
+        return fetch('/api/tests/' + flowId)
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            dispatch(receiveTest(data));
+        });
+    };
+}
+
 export function editFlowName(flowId, name) {
     return (dispatch) => {
         dispatch(requestFlow(flowId));
@@ -117,6 +131,20 @@ export function receiveFlow(flow) {
         type: types.RECEIVE_FLOW,
         receivedAt: Date.now(),
         flow
+    };
+}
+
+export function requestTest(flowId) {
+    return {
+        type: types.REQUEST_TEST
+    };
+}
+
+export function receiveTest(test) {
+    return {
+        type: types.RECEIVE_TEST,
+        receivedAt: Date.now(),
+        test
     };
 }
 

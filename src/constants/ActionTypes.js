@@ -4,6 +4,9 @@ export const FETCH_FLOW = 'FETCH_FLOW';
 export const REQUEST_FLOW = 'REQUEST_FLOW';
 export const RECEIVE_FLOW = 'RECEIVE_FLOW';
 
+export const REQUEST_TEST = 'REQUEST_TEST';
+export const RECEIVE_TEST = 'RECEIVE_TEST';
+
 
 
 
