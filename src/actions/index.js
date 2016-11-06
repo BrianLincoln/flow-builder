@@ -25,6 +25,9 @@ export function fetchTest(flowId) {
         })
         .then((data) => {
             dispatch(receiveTest(data));
+            if (data.status === "running") {
+                dispatch(followTestStatus(flowId));
+            }
         });
     };
 }
@@ -169,14 +172,14 @@ export function runTest(flow) {
         })
 
         .then(() => {
-            dispatch(followTestStatus(flow.id, startTime));
+            dispatch(followTestStatus(flow.id));
         });
     };
 }
 
 
 
-export function followTestStatus(flowId, startTime) {
+export function followTestStatus(flowId) {
     return (dispatch) => {
 
         return fetch('/api/tests/' + flowId, {
@@ -191,11 +194,11 @@ export function followTestStatus(flowId, startTime) {
             }
         })
         .then((resJson) => {
-            if (resJson.status === 'complete' && startTime < Date.parse(resJson.finished)) {
-                dispatch(receiveTestComplete(flowId, resJson.result, resJson.status, resJson.screenshots, resJson.failure));
+            if (resJson.status !== 'running') {
+                dispatch(receiveTestComplete(flowId, resJson.status, resJson.screenshots, resJson.failure));
             } else {
                 setTimeout(() => {
-                    dispatch(followTestStatus(flowId, startTime));
+                    dispatch(followTestStatus(flowId));
                 }, 500);
             }
         });
@@ -210,12 +213,11 @@ export function startTest(flowId, startTime) {
     };
 }
 
-export function receiveTestComplete(flowId, result, status, screenshots, failure) {
+export function receiveTestComplete(flowId, status, screenshots, failure) {
     return {
         type: types.RECEIVE_TEST_COMPLETED,
         receivedAt: Date.now(),
         flowId,
-        result,
         status,
         screenshots,
         failureMessage: failure !== null ? failure.reason : undefined,
