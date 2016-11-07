@@ -48,11 +48,12 @@ class FlowManager extends React.Component {
         }
     }
     render() {
+        const flowManagerClasses = this.props.flow.isFetching ? "flow-manager fetching" : "flow-manager";
         const runTestButtonClasses = (this.props.flow.steps !== undefined && this.props.flow.steps.length > 0) ? 'btn btn-primary' : 'btn btn-primary disabled';
 
         if (this.props.flow.id !== undefined) {
             return (
-                <div className="flow-manager">
+                <div className={flowManagerClasses}>
                     <div className="page-header text-center clearfix">
                         <FlowName cancelNameChangeForm={this.cancelNameChangeForm} handleNameFieldChange={this.handleNameFieldChange} isEditable={this.state.showNameEditField} name={this.state.name} saveNameEdit={this.saveNameChangeForm} showNameChangeForm={this.showNameChangeForm} />
                         <div className="btn-group pull-right">
