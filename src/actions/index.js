@@ -177,6 +177,18 @@ export function runTest(flow) {
     };
 }
 
+export function cancelTest(flowId) {
+    return (dispatch) => {
+
+        return fetch('/api/tests/' + flowId + '/cancel', {
+            method: 'PUT'
+        })
+        .then(() => {
+            dispatch(followTestStatus(flowId));
+        });
+    };
+}
+
 
 
 export function followTestStatus(flowId) {
@@ -195,6 +207,7 @@ export function followTestStatus(flowId) {
         })
         .then((resJson) => {
             if (resJson.status !== 'running') {
+                console.log(resJson);
                 dispatch(receiveTestComplete(flowId, resJson.status, resJson.screenshots, resJson.failure));
             } else {
                 setTimeout(() => {
@@ -220,7 +233,7 @@ export function receiveTestComplete(flowId, status, screenshots, failure) {
         flowId,
         status,
         screenshots,
-        failureMessage: failure !== null ? failure.reason : undefined,
-        failedStep: failure !== null ? failure.stepId : undefined
+        failureMessage: failure ? failure.reason : undefined,
+        failedStep: failure ? failure.stepId : undefined
     };
 }

@@ -11,10 +11,16 @@ const FlowResult = (props) => {
     const failedText = props.failedStepNumber !== undefined ? 'Failed on step #' + props.failedStepNumber : 'Failed';
 
     switch (props.test.status) {
+        case 'stopped':
         case 'notStarted':
             return null;
         case 'running':
-            return <div className="flow-result loader">Loading...</div>;
+            return (
+                <div className="flow-result">
+                    <div className="loader">Loading...</div>
+                    <button className="btn btn-primary btn-sm" onClick={() => {props.actions.cancelTest(props.flow.id)}}>cancel</button>
+                </div>
+            );         
         case 'failed':
             return (
                 <div className="col-xs-12 flow-result bg-danger">

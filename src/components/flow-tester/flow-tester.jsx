@@ -33,7 +33,7 @@ const FlowTester = (props) => {
     return (
         <div className="col-xs-12 col-md-6">
             <FlowResult {...props} failedStepNumber={failedStepNumber} />
-            {flowPlayback}
+            {flowPlayback}        
         </div>
     );
 

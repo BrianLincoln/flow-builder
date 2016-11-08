@@ -7,8 +7,5 @@ export const RECEIVE_FLOW = 'RECEIVE_FLOW';
 export const REQUEST_TEST = 'REQUEST_TEST';
 export const RECEIVE_TEST = 'RECEIVE_TEST';
 
-
-
-
 export const START_TEST = 'START_TEST';
 export const RECEIVE_TEST_COMPLETED = 'RECEIVE_TEST_COMPLETED';
