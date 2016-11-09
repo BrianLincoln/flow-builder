@@ -207,7 +207,6 @@ export function followTestStatus(flowId) {
         })
         .then((resJson) => {
             if (resJson.status !== 'running') {
-                console.log(resJson);
                 dispatch(receiveTestComplete(flowId, resJson.status, resJson.screenshots, resJson.failure));
             } else {
                 setTimeout(() => {
