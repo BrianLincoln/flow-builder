@@ -19,7 +19,7 @@ const StepList = (props) => {
         );
     }
     return (
-        <h3 className="flow-editor-empty"><span className="flow-editor-empty-arrow fa fa-hand-o-down" /> Add a step</h3>
+        <h2 className="flow-editor-empty"><span className="flow-editor-empty-arrow fa fa-hand-o-down" /> Add a step</h2>
     );
 };
 

@@ -13,7 +13,7 @@ class FlowEditor extends React.Component {
         return (
             <div className="flow-editor col-xs-12 col-md-6">
                 <StepList actions={this.props.actions} flowId={this.props.flow.id} steps={this.props.flow.steps} />
-                <button className="btn btn-primary" onClick={this.props.actions.addStep.bind(this, this.props.flow.id)}><span className="fa fa-plus" /> new step</button>
+                <button className="button button_sm button_valencia" onClick={this.props.actions.addStep.bind(this, this.props.flow.id)}><span className="fa fa-plus" /> new step</button>
             </div>
         );
     }

@@ -12,17 +12,17 @@ const FlowName = (props) => {
 
     if (props.isEditable) {
         return (
-            <div className="flow-edit-name input-group input-group-lg">
+            <div className="flow-edit-name form-group">
                 <input className="form-control" id="name" onChange={props.handleNameFieldChange} type="text" value={props.name} />
-                <div className="input-group-btn">
-                    <button className="btn btn-default" onClick={props.cancelNameChangeForm.bind(this)} title="cancel change"><span className="fa fa-times" /></button>
-                    <button className="btn btn-primary" onClick={props.saveNameEdit.bind(this)} title="save change"><span className="fa fa-check" /> save</button>
+                <div className="button-group_left">
+                    <button className="button button_bluewood button_sm" onClick={props.cancelNameChangeForm.bind(this)} title="cancel change"><span className="fa fa-times" /></button>
+                    <button className="button button_valencia button_sm" onClick={props.saveNameEdit.bind(this)} title="save change"><span className="fa fa-check" /> save</button>
                 </div>
             </div>
         );
     } else {
         return (
-            <h1 onClick={props.showNameChangeForm}>{props.name}</h1>
+            <h1 className="flow-page-header" onClick={props.showNameChangeForm}>{props.name} <span className="flow-page-header-edit fa fa-pencil-square-o" /></h1>
         );
     }
 
